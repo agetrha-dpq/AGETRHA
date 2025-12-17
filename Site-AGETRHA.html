@@ -1877,505 +1877,506 @@
 // CONFIGURAÇÕES DO GAS
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbzkTLPDcwXG0e_Tpa-FBzLAO9vX94G2bEVE4l-Y-1mAzJ1HxN6EsQoGFDCGoZsZ179o/exec';
 
-// Estado da aplicação
-let currentUser = null;
-let authToken = null;
-let userLevel = null;
-
-// Elementos do Modal de Gestão do Site
-const openSiteManagement = document.getElementById('openSiteManagement');
-const siteManagementModal = document.getElementById('siteManagementModal');
-const closeSiteManagementModal = document.getElementById('closeSiteManagementModal');
-
-// Elementos do Login
-const loginSection = document.getElementById('loginSection');
-const managementSection = document.getElementById('managementSection');
-const loginForm = document.getElementById('loginForm');
-const loginAlert = document.getElementById('loginAlert');
-const loginBtn = document.getElementById('loginBtn');
-
-// Elementos de Gestão
-const managementNavBtns = document.querySelectorAll('.management-nav-btn');
-const managementSections = {
-    content: document.getElementById('contentManagement'),
-    members: document.getElementById('membersManagement'),
-    stats: document.getElementById('statsManagement')
-};
-
-// Elementos de Conteúdo
-const contentList = document.getElementById('contentList');
-const contentForm = document.getElementById('contentForm');
-const contentSection = document.getElementById('contentSection');
-const contentTitle = document.getElementById('contentTitle');
-const contentText = document.getElementById('contentText');
-const contentImage = document.getElementById('contentImage');
-const saveContentBtn = document.getElementById('saveContentBtn');
-
-// Elementos de Gestores (ajustados)
-const membersList = document.getElementById('membersList');
-const memberForm = document.getElementById('memberForm');
-const saveMemberBtn = document.getElementById('saveMemberBtn');
-
-// Elementos de Estatísticas
-const statsGrid = document.getElementById('statsGrid');
-const refreshStatsBtn = document.getElementById('refreshStatsBtn');
-const managementAlert = document.getElementById('managementAlert');
-
-// Abrir modal de gestão do site
-if (openSiteManagement) {
-    openSiteManagement.addEventListener('click', () => {
-        siteManagementModal.style.display = 'block';
-        resetManagementUI();
-    });
-}
-
-// Fechar modal de gestão do site
-if (closeSiteManagementModal) {
-    closeSiteManagementModal.addEventListener('click', () => {
-        siteManagementModal.style.display = 'none';
-    });
-}
-
-// Fechar modal ao clicar fora
-window.addEventListener('click', (e) => {
-    if (siteManagementModal && e.target === siteManagementModal) {
-        siteManagementModal.style.display = 'none';
-    }
-});
-
-// Navegação entre seções de gestão
-managementNavBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Remover classe active de todos os botões
-        managementNavBtns.forEach(b => b.classList.remove('active'));
-        // Adicionar classe active ao botão clicado
-        btn.classList.add('active');
         
-        // Esconder todas as seções
-        Object.values(managementSections).forEach(section => {
-            section.classList.remove('active');
+        // Estado da aplicação
+        let currentUser = null;
+        let authToken = null;
+        let userLevel = null;
+
+        // Elementos do Modal de Gestão do Site
+        const openSiteManagement = document.getElementById('openSiteManagement');
+        const siteManagementModal = document.getElementById('siteManagementModal');
+        const closeSiteManagementModal = document.getElementById('closeSiteManagementModal');
+
+        // Elementos do Login
+        const loginSection = document.getElementById('loginSection');
+        const managementSection = document.getElementById('managementSection');
+        const loginForm = document.getElementById('loginForm');
+        const loginAlert = document.getElementById('loginAlert');
+        const loginBtn = document.getElementById('loginBtn');
+
+        // Elementos de Gestão
+        const managementNavBtns = document.querySelectorAll('.management-nav-btn');
+        const managementSections = {
+            content: document.getElementById('contentManagement'),
+            members: document.getElementById('membersManagement'),
+            stats: document.getElementById('statsManagement')
+        };
+
+        // Elementos de Conteúdo
+        const contentList = document.getElementById('contentList');
+        const contentForm = document.getElementById('contentForm');
+        const contentSection = document.getElementById('contentSection');
+        const contentTitle = document.getElementById('contentTitle');
+        const contentText = document.getElementById('contentText');
+        const contentImage = document.getElementById('contentImage');
+        const saveContentBtn = document.getElementById('saveContentBtn');
+
+        // Elementos de Gestores (ajustados)
+        const membersList = document.getElementById('membersList');
+        const memberForm = document.getElementById('memberForm');
+        const saveMemberBtn = document.getElementById('saveMemberBtn');
+
+        // Elementos de Estatísticas
+        const statsGrid = document.getElementById('statsGrid');
+        const refreshStatsBtn = document.getElementById('refreshStatsBtn');
+        const managementAlert = document.getElementById('managementAlert');
+
+        // Abrir modal de gestão do site
+        if (openSiteManagement) {
+            openSiteManagement.addEventListener('click', () => {
+                siteManagementModal.style.display = 'block';
+                resetManagementUI();
+            });
+        }
+
+        // Fechar modal de gestão do site
+        if (closeSiteManagementModal) {
+            closeSiteManagementModal.addEventListener('click', () => {
+                siteManagementModal.style.display = 'none';
+            });
+        }
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', (e) => {
+            if (siteManagementModal && e.target === siteManagementModal) {
+                siteManagementModal.style.display = 'none';
+            }
         });
-        
-        // Mostrar a seção correspondente
-        const section = btn.dataset.section;
-        if (managementSections[section]) {
-            managementSections[section].classList.add('active');
-            
-            // Carregar dados da seção se necessário
-            if (section === 'content') {
-                loadContent();
-            } else if (section === 'members') {
-                loadGestores();
-            } else if (section === 'stats') {
-                loadStats();
-            }
-        }
-    });
-});
 
-// Função AJAX para contornar CORS
-function callGAS(action, params = {}) {
-    return new Promise((resolve, reject) => {
-        // Criar formulário dinâmico
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = GAS_URL;
-        form.target = '_blank'; // Para evitar problemas de navegação
-        
-        // Adicionar ação
-        const actionInput = document.createElement('input');
-        actionInput.type = 'hidden';
-        actionInput.name = 'action';
-        actionInput.value = action;
-        form.appendChild(actionInput);
-        
-        // Adicionar outros parâmetros
-        Object.keys(params).forEach(key => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = params[key];
-            form.appendChild(input);
+        // Navegação entre seções de gestão
+        managementNavBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remover classe active de todos os botões
+                managementNavBtns.forEach(b => b.classList.remove('active'));
+                // Adicionar classe active ao botão clicado
+                btn.classList.add('active');
+
+                // Esconder todas as seções
+                Object.values(managementSections).forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Mostrar a seção correspondente
+                const section = btn.dataset.section;
+                if (managementSections[section]) {
+                    managementSections[section].classList.add('active');
+
+                    // Carregar dados da seção se necessário
+                    if (section === 'content') {
+                        loadContent();
+                    } else if (section === 'members') {
+                        loadGestores();
+                    } else if (section === 'stats') {
+                        loadStats();
+                    }
+                }
+            });
         });
-        
-        // Adicionar ao documento
-        form.style.display = 'none';
-        document.body.appendChild(form);
-        
-        // Enviar formulário
-        form.submit();
-        
-        // Limpar após envio
-        setTimeout(() => {
-            document.body.removeChild(form);
-        }, 1000);
-        
-        // Para simular resposta (em produção você precisa de um callback do GAS)
-        // Esta é uma solução simplificada
-        setTimeout(() => {
-            // Em produção, você implementaria um WebSocket ou polling
-            // Para demonstração, vamos simular uma resposta
-            const mockResponses = {
-                'test': { success: true, message: 'API funcionando' },
-                'login': { success: true, token: 'mock-token', username: 'admin', nivel: 'admin' },
-                'getAllContent': { success: true, content: [] },
-                'getGestores': { success: true, gestores: [] },
-                'getStats': { 
-                    success: true, 
-                    stats: { 
-                        totalVisitas: 0, 
-                        totalGestores: 0, 
-                        totalNovosMembros: 0, 
-                        conteudoAtualizado: 0 
-                    } 
-                }
-            };
-            
-            if (mockResponses[action]) {
-                resolve(mockResponses[action]);
-            } else {
-                resolve({ success: false, error: 'Ação não implementada' });
-            }
-        }, 500);
-    });
-}
 
-// Login usando a nova função
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    // Mostrar loading
-    loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
-    loginBtn.disabled = true;
-    
-    try {
-        const data = await callGAS('login', { username, password });
-        
-        if (data.success) {
-            // Login bem-sucedido
-            currentUser = data.username;
-            userLevel = data.nivel;
-            authToken = data.token;
-            
-            // Salvar no localStorage
-            localStorage.setItem('agetrha_user', JSON.stringify({
-                username: currentUser,
-                nivel: userLevel,
-                token: authToken
-            }));
-            
-            // Mostrar tela de gestão
-            showManagementUI();
-            showAlert('loginAlert', 'success', 'Login realizado com sucesso!');
-            
-            // Carregar conteúdo inicial
-            loadContent();
-            
-            // Ajustar visibilidade do botão de gestores baseado no nível
-            const gestoresBtn = document.querySelector('.management-nav-btn[data-section="members"]');
-            if (gestoresBtn) {
-                if (userLevel === 'admin') {
-                    gestoresBtn.style.display = 'block';
-                    gestoresBtn.innerHTML = '<i class="fas fa-users"></i> Gestores';
+        // Função AJAX para contornar CORS
+        function callGAS(action, params = {}) {
+            return new Promise((resolve, reject) => {
+                // Criar formulário dinâmico
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = GAS_URL;
+                form.target = '_blank'; // Para evitar problemas de navegação
+
+                // Adicionar ação
+                const actionInput = document.createElement('input');
+                actionInput.type = 'hidden';
+                actionInput.name = 'action';
+                actionInput.value = action;
+                form.appendChild(actionInput);
+
+                // Adicionar outros parâmetros
+                Object.keys(params).forEach(key => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = params[key];
+                    form.appendChild(input);
+                });
+
+                // Adicionar ao documento
+                form.style.display = 'none';
+                document.body.appendChild(form);
+
+                // Enviar formulário
+                form.submit();
+
+                // Limpar após envio
+                setTimeout(() => {
+                    document.body.removeChild(form);
+                }, 1000);
+
+                // Para simular resposta (em produção você precisa de um callback do GAS)
+                // Esta é uma solução simplificada
+                setTimeout(() => {
+                    // Em produção, você implementaria um WebSocket ou polling
+                    // Para demonstração, vamos simular uma resposta
+                    const mockResponses = {
+                        'test': { success: true, message: 'API funcionando' },
+                        'login': { success: true, token: 'mock-token', username: 'admin', nivel: 'admin' },
+                        'getAllContent': { success: true, content: [] },
+                        'getGestores': { success: true, gestores: [] },
+                        'getStats': {
+                            success: true,
+                            stats: {
+                                totalVisitas: 0,
+                                totalGestores: 0,
+                                totalNovosMembros: 0,
+                                conteudoAtualizado: 0
+                            }
+                        }
+                    };
+
+                    if (mockResponses[action]) {
+                        resolve(mockResponses[action]);
+                    } else {
+                        resolve({ success: false, error: 'Ação não implementada' });
+                    }
+                }, 500);
+            });
+        }
+
+        // Login usando a nova função
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Mostrar loading
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+            loginBtn.disabled = true;
+
+            try {
+                const data = await callGAS('login', { username, password });
+
+                if (data.success) {
+                    // Login bem-sucedido
+                    currentUser = data.username;
+                    userLevel = data.nivel;
+                    authToken = data.token;
+
+                    // Salvar no localStorage
+                    localStorage.setItem('agetrha_user', JSON.stringify({
+                        username: currentUser,
+                        nivel: userLevel,
+                        token: authToken
+                    }));
+
+                    // Mostrar tela de gestão
+                    showManagementUI();
+                    showAlert('loginAlert', 'success', 'Login realizado com sucesso!');
+
+                    // Carregar conteúdo inicial
+                    loadContent();
+
+                    // Ajustar visibilidade do botão de gestores baseado no nível
+                    const gestoresBtn = document.querySelector('.management-nav-btn[data-section="members"]');
+                    if (gestoresBtn) {
+                        if (userLevel === 'admin') {
+                            gestoresBtn.style.display = 'block';
+                            gestoresBtn.innerHTML = '<i class="fas fa-users"></i> Gestores';
+                        } else {
+                            gestoresBtn.style.display = 'none';
+                        }
+                    }
                 } else {
-                    gestoresBtn.style.display = 'none';
+                    showAlert('loginAlert', 'error', data.error || 'Credenciais inválidas');
+                }
+            } catch (error) {
+                showAlert('loginAlert', 'error', 'Erro ao conectar com o servidor');
+                console.error('Erro no login:', error);
+            } finally {
+                // Restaurar botão
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+                loginBtn.disabled = false;
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            logout();
+        });
+
+        // Função para mostrar alerta
+        function showAlert(elementId, type, message) {
+            const alertElement = document.getElementById(elementId);
+            alertElement.textContent = message;
+            alertElement.className = `alert alert-${type}`;
+            alertElement.style.display = 'block';
+
+            // Esconder alerta após 5 segundos
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+            }, 5000);
+        }
+
+        // Função para mostrar UI de gestão
+        function showManagementUI() {
+            loginSection.style.display = 'none';
+            managementSection.style.display = 'block';
+        }
+
+        // Função para resetar UI
+        function resetManagementUI() {
+            // Verificar se há usuário salvo
+            const savedUser = localStorage.getItem('agetrha_user');
+            if (savedUser) {
+                try {
+                    const userData = JSON.parse(savedUser);
+                    currentUser = userData.username;
+                    userLevel = userData.nivel;
+                    authToken = userData.token;
+                    showManagementUI();
+                    loadContent();
+
+                    // Ajustar visibilidade do botão de gestores
+                    const gestoresBtn = document.querySelector('.management-nav-btn[data-section="members"]');
+                    if (gestoresBtn) {
+                        if (userLevel === 'admin') {
+                            gestoresBtn.style.display = 'block';
+                            gestoresBtn.innerHTML = '<i class="fas fa-users"></i> Gestores';
+                        } else {
+                            gestoresBtn.style.display = 'none';
+                        }
+                    }
+
+                    return;
+                } catch (e) {
+                    console.error('Erro ao carregar usuário salvo:', e);
                 }
             }
-        } else {
-            showAlert('loginAlert', 'error', data.error || 'Credenciais inválidas');
+
+            // Se não houver usuário, mostrar tela de login
+            loginSection.style.display = 'block';
+            managementSection.style.display = 'none';
+            loginForm.reset();
+            if (loginAlert) loginAlert.style.display = 'none';
         }
-    } catch (error) {
-        showAlert('loginAlert', 'error', 'Erro ao conectar com o servidor');
-        console.error('Erro no login:', error);
-    } finally {
-        // Restaurar botão
-        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
-        loginBtn.disabled = false;
-    }
-});
 
-// Logout
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    logout();
-});
+        // Função para fazer logout
+        function logout() {
+            currentUser = null;
+            userLevel = null;
+            authToken = null;
+            localStorage.removeItem('agetrha_user');
+            resetManagementUI();
+            showAlert('loginAlert', 'success', 'Logout realizado com sucesso!');
+        }
 
-// Função para mostrar alerta
-function showAlert(elementId, type, message) {
-    const alertElement = document.getElementById(elementId);
-    alertElement.textContent = message;
-    alertElement.className = `alert alert-${type}`;
-    alertElement.style.display = 'block';
-    
-    // Esconder alerta após 5 segundos
-    setTimeout(() => {
-        alertElement.style.display = 'none';
-    }, 5000);
-}
+        // Carregar conteúdo do site
+        async function loadContent() {
+            try {
+                const data = await callGAS('getAllContent');
 
-// Função para mostrar UI de gestão
-function showManagementUI() {
-    loginSection.style.display = 'none';
-    managementSection.style.display = 'block';
-}
-
-// Função para resetar UI
-function resetManagementUI() {
-    // Verificar se há usuário salvo
-    const savedUser = localStorage.getItem('agetrha_user');
-    if (savedUser) {
-        try {
-            const userData = JSON.parse(savedUser);
-            currentUser = userData.username;
-            userLevel = userData.nivel;
-            authToken = userData.token;
-            showManagementUI();
-            loadContent();
-            
-            // Ajustar visibilidade do botão de gestores
-            const gestoresBtn = document.querySelector('.management-nav-btn[data-section="members"]');
-            if (gestoresBtn) {
-                if (userLevel === 'admin') {
-                    gestoresBtn.style.display = 'block';
-                    gestoresBtn.innerHTML = '<i class="fas fa-users"></i> Gestores';
+                if (data.success) {
+                    displayContentList(data.content || []);
                 } else {
-                    gestoresBtn.style.display = 'none';
+                    showAlert('managementAlert', 'error', 'Erro ao carregar conteúdo');
                 }
+            } catch (error) {
+                console.error('Erro ao carregar conteúdo:', error);
+                showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
             }
-            
-            return;
-        } catch (e) {
-            console.error('Erro ao carregar usuário salvo:', e);
         }
-    }
-    
-    // Se não houver usuário, mostrar tela de login
-    loginSection.style.display = 'block';
-    managementSection.style.display = 'none';
-    loginForm.reset();
-    if (loginAlert) loginAlert.style.display = 'none';
-}
 
-// Função para fazer logout
-function logout() {
-    currentUser = null;
-    userLevel = null;
-    authToken = null;
-    localStorage.removeItem('agetrha_user');
-    resetManagementUI();
-    showAlert('loginAlert', 'success', 'Logout realizado com sucesso!');
-}
+        // Exibir lista de conteúdo
+        function displayContentList(contentArray) {
+            if (!contentList) return;
 
-// Carregar conteúdo do site
-async function loadContent() {
-    try {
-        const data = await callGAS('getAllContent');
-        
-        if (data.success) {
-            displayContentList(data.content || []);
-        } else {
-            showAlert('managementAlert', 'error', 'Erro ao carregar conteúdo');
-        }
-    } catch (error) {
-        console.error('Erro ao carregar conteúdo:', error);
-        showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
-    }
-}
+            contentList.innerHTML = '';
 
-// Exibir lista de conteúdo
-function displayContentList(contentArray) {
-    if (!contentList) return;
-    
-    contentList.innerHTML = '';
-    
-    if (!contentArray || contentArray.length === 0) {
-        contentList.innerHTML = '<p class="text-center">Nenhum conteúdo encontrado</p>';
-        return;
-    }
-    
-    contentArray.forEach(content => {
-        const contentItem = document.createElement('div');
-        contentItem.className = 'content-item';
-        contentItem.innerHTML = `
+            if (!contentArray || contentArray.length === 0) {
+                contentList.innerHTML = '<p class="text-center">Nenhum conteúdo encontrado</p>';
+                return;
+            }
+
+            contentArray.forEach(content => {
+                const contentItem = document.createElement('div');
+                contentItem.className = 'content-item';
+                contentItem.innerHTML = `
             <h4>${content.titulo || content.section}</h4>
             <p><strong>Seção:</strong> ${content.section}</p>
             <p>${(content.conteudo || '').substring(0, 100)}...</p>
         `;
-        
-        contentItem.addEventListener('click', () => {
-            editContent(content);
-        });
-        
-        contentList.appendChild(contentItem);
-    });
-}
 
-// Editar conteúdo
-function editContent(content) {
-    if (contentSection) contentSection.value = content.section;
-    if (contentTitle) contentTitle.value = content.titulo || '';
-    if (contentText) contentText.value = content.conteudo || '';
-    if (contentImage) contentImage.value = content.imagem || '';
-    
-    // Rolar para o formulário
-    if (contentForm) contentForm.scrollIntoView({ behavior: 'smooth' });
-}
+                contentItem.addEventListener('click', () => {
+                    editContent(content);
+                });
 
-// Salvar conteúdo
-if (contentForm) {
-    contentForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const contentData = {
-            section: contentSection.value,
-            titulo: contentTitle.value,
-            conteudo: contentText.value,
-            imagem: contentImage.value
-        };
-        
-        // Mostrar loading
-        saveContentBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
-        saveContentBtn.disabled = true;
-        
-        try {
-            const data = await callGAS('saveContent', contentData);
-            
-            if (data.success) {
-                showAlert('managementAlert', 'success', 'Conteúdo salvo com sucesso!');
-                
-                // Atualizar a lista
-                loadContent();
-                
-                // Limpar formulário
-                contentForm.reset();
-                
-                // Atualizar o site em tempo real
-                updateLiveSite(contentData.section, contentData);
-            } else {
-                showAlert('managementAlert', 'error', data.error || 'Erro ao salvar conteúdo');
+                contentList.appendChild(contentItem);
+            });
+        }
+
+        // Editar conteúdo
+        function editContent(content) {
+            if (contentSection) contentSection.value = content.section;
+            if (contentTitle) contentTitle.value = content.titulo || '';
+            if (contentText) contentText.value = content.conteudo || '';
+            if (contentImage) contentImage.value = content.imagem || '';
+
+            // Rolar para o formulário
+            if (contentForm) contentForm.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Salvar conteúdo
+        if (contentForm) {
+            contentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const contentData = {
+                    section: contentSection.value,
+                    titulo: contentTitle.value,
+                    conteudo: contentText.value,
+                    imagem: contentImage.value
+                };
+
+                // Mostrar loading
+                saveContentBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+                saveContentBtn.disabled = true;
+
+                try {
+                    const data = await callGAS('saveContent', contentData);
+
+                    if (data.success) {
+                        showAlert('managementAlert', 'success', 'Conteúdo salvo com sucesso!');
+
+                        // Atualizar a lista
+                        loadContent();
+
+                        // Limpar formulário
+                        contentForm.reset();
+
+                        // Atualizar o site em tempo real
+                        updateLiveSite(contentData.section, contentData);
+                    } else {
+                        showAlert('managementAlert', 'error', data.error || 'Erro ao salvar conteúdo');
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar conteúdo:', error);
+                    showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
+                } finally {
+                    // Restaurar botão
+                    saveContentBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Conteúdo';
+                    saveContentBtn.disabled = false;
+                }
+            });
+        }
+
+        // Carregar gestores
+        async function loadGestores() {
+            try {
+                const data = await callGAS('getGestores');
+
+                if (data.success) {
+                    displayGestoresList(data.gestores || []);
+                } else {
+                    showAlert('managementAlert', 'error', data.error || 'Erro ao carregar gestores');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar gestores:', error);
+                showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
             }
-        } catch (error) {
-            console.error('Erro ao salvar conteúdo:', error);
-            showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
-        } finally {
-            // Restaurar botão
-            saveContentBtn.innerHTML = '<i class="fas fa-save"></i> Salvar Conteúdo';
-            saveContentBtn.disabled = false;
         }
-    });
-}
 
-// Carregar gestores
-async function loadGestores() {
-    try {
-        const data = await callGAS('getGestores');
-        
-        if (data.success) {
-            displayGestoresList(data.gestores || []);
-        } else {
-            showAlert('managementAlert', 'error', data.error || 'Erro ao carregar gestores');
-        }
-    } catch (error) {
-        console.error('Erro ao carregar gestores:', error);
-        showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
-    }
-}
+        // Exibir lista de gestores
+        function displayGestoresList(gestoresArray) {
+            if (!membersList) return;
 
-// Exibir lista de gestores
-function displayGestoresList(gestoresArray) {
-    if (!membersList) return;
-    
-    membersList.innerHTML = '';
-    
-    if (!gestoresArray || gestoresArray.length === 0) {
-        membersList.innerHTML = '<p class="text-center">Nenhum gestor encontrado</p>';
-        return;
-    }
-    
-    gestoresArray.forEach(gestor => {
-        const memberItem = document.createElement('div');
-        memberItem.className = 'member-item';
-        memberItem.innerHTML = `
+            membersList.innerHTML = '';
+
+            if (!gestoresArray || gestoresArray.length === 0) {
+                membersList.innerHTML = '<p class="text-center">Nenhum gestor encontrado</p>';
+                return;
+            }
+
+            gestoresArray.forEach(gestor => {
+                const memberItem = document.createElement('div');
+                memberItem.className = 'member-item';
+                memberItem.innerHTML = `
             <div class="member-info">
                 <p><strong>Usuário:</strong> ${gestor.username}</p>
                 <p><strong>Nível:</strong> ${gestor.nivel}</p>
             </div>
         `;
-        
-        membersList.appendChild(memberItem);
-    });
-}
 
-// Adicionar gestor
-if (memberForm) {
-    memberForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Verificar se o usuário atual é admin
-        if (userLevel !== 'admin') {
-            showAlert('managementAlert', 'error', 'Apenas administradores podem adicionar gestores');
-            return;
+                membersList.appendChild(memberItem);
+            });
         }
-        
-        const gestorData = {
-            username: document.getElementById('memberName').value,
-            password: document.getElementById('memberEmail').value,
-            nivel: document.getElementById('memberPhone').value || 'gestor',
-            currentUser: currentUser
-        };
-        
-        // Mostrar loading
-        saveMemberBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
-        saveMemberBtn.disabled = true;
-        
-        try {
-            const data = await callGAS('addGestor', gestorData);
-            
-            if (data.success) {
-                showAlert('managementAlert', 'success', 'Gestor adicionado com sucesso!');
-                
-                // Atualizar a lista
-                loadGestores();
-                
-                // Limpar formulário
-                memberForm.reset();
-            } else {
-                showAlert('managementAlert', 'error', data.error || 'Erro ao adicionar gestor');
+
+        // Adicionar gestor
+        if (memberForm) {
+            memberForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Verificar se o usuário atual é admin
+                if (userLevel !== 'admin') {
+                    showAlert('managementAlert', 'error', 'Apenas administradores podem adicionar gestores');
+                    return;
+                }
+
+                const gestorData = {
+                    username: document.getElementById('memberName').value,
+                    password: document.getElementById('memberEmail').value,
+                    nivel: document.getElementById('memberPhone').value || 'gestor',
+                    currentUser: currentUser
+                };
+
+                // Mostrar loading
+                saveMemberBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+                saveMemberBtn.disabled = true;
+
+                try {
+                    const data = await callGAS('addGestor', gestorData);
+
+                    if (data.success) {
+                        showAlert('managementAlert', 'success', 'Gestor adicionado com sucesso!');
+
+                        // Atualizar a lista
+                        loadGestores();
+
+                        // Limpar formulário
+                        memberForm.reset();
+                    } else {
+                        showAlert('managementAlert', 'error', data.error || 'Erro ao adicionar gestor');
+                    }
+                } catch (error) {
+                    console.error('Erro ao adicionar gestor:', error);
+                    showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
+                } finally {
+                    // Restaurar botão
+                    saveMemberBtn.innerHTML = '<i class="fas fa-user-plus"></i> Adicionar Gestor';
+                    saveMemberBtn.disabled = false;
+                }
+            });
+        }
+
+        // Carregar estatísticas
+        async function loadStats() {
+            try {
+                const data = await callGAS('getStats');
+
+                if (data.success) {
+                    displayStats(data.stats || {});
+                } else {
+                    showAlert('managementAlert', 'error', 'Erro ao carregar estatísticas');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+                showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
             }
-        } catch (error) {
-            console.error('Erro ao adicionar gestor:', error);
-            showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
-        } finally {
-            // Restaurar botão
-            saveMemberBtn.innerHTML = '<i class="fas fa-user-plus"></i> Adicionar Gestor';
-            saveMemberBtn.disabled = false;
         }
-    });
-}
 
-// Carregar estatísticas
-async function loadStats() {
-    try {
-        const data = await callGAS('getStats');
-        
-        if (data.success) {
-            displayStats(data.stats || {});
-        } else {
-            showAlert('managementAlert', 'error', 'Erro ao carregar estatísticas');
-        }
-    } catch (error) {
-        console.error('Erro ao carregar estatísticas:', error);
-        showAlert('managementAlert', 'error', 'Erro ao conectar com o servidor');
-    }
-}
+        // Exibir estatísticas
+        function displayStats(stats) {
+            if (!statsGrid) return;
 
-// Exibir estatísticas
-function displayStats(stats) {
-    if (!statsGrid) return;
-    
-    statsGrid.innerHTML = `
+            statsGrid.innerHTML = `
         <div class="stat-card">
             <h3>${stats.totalVisitas || 0}</h3>
             <p>Total de Visitas</p>
@@ -2393,86 +2394,82 @@ function displayStats(stats) {
             <p>Conteúdo Atualizado</p>
         </div>
     `;
-}
+        }
 
-// Atualizar estatísticas
-if (refreshStatsBtn) {
-    refreshStatsBtn.addEventListener('click', () => {
-        loadStats();
-        showAlert('managementAlert', 'success', 'Estatísticas atualizadas!');
-    });
-}
+        // Atualizar estatísticas
+        if (refreshStatsBtn) {
+            refreshStatsBtn.addEventListener('click', () => {
+                loadStats();
+                showAlert('managementAlert', 'success', 'Estatísticas atualizadas!');
+            });
+        }
 
-// Atualizar site em tempo real
-function updateLiveSite(section, content) {
-    // Atualizar as seções específicas do site
-    switch(section) {
-        case 'hero':
-            const heroTitle = document.querySelector('.hero h1');
-            const heroText = document.querySelector('.hero p');
-            if (heroTitle && content.titulo) heroTitle.textContent = content.titulo;
-            if (heroText && content.conteudo) heroText.textContent = content.conteudo;
-            break;
-        case 'sobre':
-            const sobreSection = document.querySelector('#sobre .sobre-text');
-            if (sobreSection) {
-                const paragraphs = sobreSection.querySelectorAll('p');
-                if (paragraphs.length > 0 && content.conteudo) {
-                    paragraphs[0].textContent = content.conteudo;
-                }
+        // Atualizar site em tempo real
+        function updateLiveSite(section, content) {
+            // Atualizar as seções específicas do site
+            switch (section) {
+                case 'hero':
+                    const heroTitle = document.querySelector('.hero h1');
+                    const heroText = document.querySelector('.hero p');
+                    if (heroTitle && content.titulo) heroTitle.textContent = content.titulo;
+                    if (heroText && content.conteudo) heroText.textContent = content.conteudo;
+                    break;
+                case 'sobre':
+                    const sobreSection = document.querySelector('#sobre .sobre-text');
+                    if (sobreSection) {
+                        const paragraphs = sobreSection.querySelectorAll('p');
+                        if (paragraphs.length > 0 && content.conteudo) {
+                            paragraphs[0].textContent = content.conteudo;
+                        }
+                    }
+                    break;
+                case 'missao':
+                    const missaoCards = document.querySelectorAll('.valor-card');
+                    if (missaoCards.length > 0 && content.conteudo) {
+                        missaoCards[0].querySelector('p').textContent = content.conteudo;
+                    }
+                    break;
+                case 'visao':
+                    const visaoCards = document.querySelectorAll('.valor-card');
+                    if (visaoCards.length > 1 && content.conteudo) {
+                        visaoCards[1].querySelector('p').textContent = content.conteudo;
+                    }
+                    break;
+                case 'valores':
+                    const valoresCards = document.querySelectorAll('.valor-card');
+                    if (valoresCards.length > 2 && content.conteudo) {
+                        valoresCards[2].querySelector('p').textContent = content.conteudo;
+                    }
+                    break;
+                case 'contato':
+                    const contatoSection = document.querySelector('.footer-contact p');
+                    if (contatoSection && content.conteudo) {
+                        contatoSection.innerHTML = content.conteudo;
+                    }
+                    break;
             }
-            break;
-        case 'missao':
-            const missaoCards = document.querySelectorAll('.valor-card');
-            if (missaoCards.length > 0 && content.conteudo) {
-                missaoCards[0].querySelector('p').textContent = content.conteudo;
-            }
-            break;
-        case 'visao':
-            const visaoCards = document.querySelectorAll('.valor-card');
-            if (visaoCards.length > 1 && content.conteudo) {
-                visaoCards[1].querySelector('p').textContent = content.conteudo;
-            }
-            break;
-        case 'valores':
-            const valoresCards = document.querySelectorAll('.valor-card');
-            if (valoresCards.length > 2 && content.conteudo) {
-                valoresCards[2].querySelector('p').textContent = content.conteudo;
-            }
-            break;
-        case 'contato':
-            const contatoSection = document.querySelector('.footer-contact p');
-            if (contatoSection && content.conteudo) {
-                contatoSection.innerHTML = content.conteudo;
-            }
-            break;
-    }
-}
+        }
 
-// Teste simplificado
-function testGASConnection() {
-    console.log('🔄 Testando conexão com GAS...');
-    console.log('URL do GAS:', GAS_URL);
-    
-    // Tente abrir o URL em uma nova aba para verificar
-    window.open(GAS_URL + '?action=test', '_blank');
-    
-    console.log('✅ Para verificar se o GAS está funcionando, abra este link:');
-    console.log(GAS_URL + '?action=test');
-    console.log('Se você ver {"success":true,"message":"API funcionando"}, o GAS está funcionando.');
-}
+        // Teste simplificado
+        function testGASConnection() {
+            console.log('🔄 Testando conexão com GAS...');
+            console.log('URL do GAS:', GAS_URL);
 
-// Inicializar
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ Site AGETRHA carregado');
-    testGASConnection();
-});;
+            // Tente abrir o URL em uma nova aba para verificar
+            window.open(GAS_URL + '?action=test', '_blank');
+
+            console.log('✅ Para verificar se o GAS está funcionando, abra este link:');
+            console.log(GAS_URL + '?action=test');
+            console.log('Se você ver {"success":true,"message":"API funcionando"}, o GAS está funcionando.');
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ Site AGETRHA carregado');
+            testGASConnection();
+        });
 
 </script>
 
 </body>
-
 </html>
-
-
-
