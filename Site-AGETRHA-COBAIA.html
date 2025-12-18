@@ -1400,7 +1400,7 @@ const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzMC6kv
 
 // Função universal para chamar o GAS (usa JSONP quando necessário)
 function callGAS(action, params = {}, method = 'GET') {
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxBWr7QXGO7VUcCrQ-qdvLd0OZATF4p75_IShiIZSGvzJvpxPr5POxe8bLEpcPf7qfkhA/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzMC6kvtw6zj7WLJSnw8GL8KFTAVnZMygqhcrd-t3iCDhP8msyOKf4k1NX7DmQ8gO1pUA/exec';
   
   // Se for GET e estiver em origem file:// ou localhost, usa JSONP
   if (method === 'GET' && (window.location.protocol === 'file:' || window.location.hostname === 'localhost')) {
