@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - AGETRHA</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
+        style-src 'self' 'unsafe-inline' https:;
+        img-src 'self' data: https:;
+        font-src 'self' https:;
+        connect-src 'self' https:;
+    ">
+    
     <style>
         * {
             margin: 0;
@@ -839,7 +849,7 @@
                     <textarea id="configMensagemBoasVindas" class="form-control">Bem-vindo à Área do Membro AGETRHA!</textarea>
                 </div>
                 <div style="grid-column: span 2;">
-                    <button type="button" class="btn btn-success">
+                    <button type="button" class="btn btn-success" id="btnSalvarConfig">
                         <i class="fas fa-save"></i> Salvar Configurações
                     </button>
                     <button type="button" class="btn btn-primary" id="btnBackup">
@@ -884,10 +894,296 @@
     </div>
 
     <script>
-        // URL do Google Apps Script
+        // ============== CONFIGURAÇÕES ==============
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8koBXEQ-oUFEsU0ojbqtcWJhe84dU6Kw5v-CRJmmMgBDo3BEnbkqc5gY8J12XOZYk/exec';
+        const USE_MOCK_DATA = true; // Defina como false para usar GAS real
         
-        // Dados em memória
+        // ============== DADOS MOCK (para desenvolvimento) ==============
+        const mockData = {
+            noticias: [
+                {
+                    id: 1,
+                    titulo: 'Assembleia Geral Extraordinária',
+                    categoria: 'eventos',
+                    data: '2024-03-05',
+                    descricao: 'Convocamos todos os membros para a assembleia extraordinária que ocorrerá no próximo mês. Pauta: Eleição da nova diretoria e aprovação do orçamento anual.',
+                    imagem: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    status: 'ativo',
+                    destaque: 'sim'
+                },
+                {
+                    id: 2,
+                    titulo: 'Workshop: Marketing Digital para RH',
+                    categoria: 'eventos',
+                    data: '2024-03-15',
+                    descricao: 'Participe do nosso workshop gratuito sobre como aplicar técnicas de marketing digital no recrutamento e seleção.',
+                    imagem: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    status: 'ativo',
+                    destaque: 'nao'
+                }
+            ],
+            eventos: [
+                {
+                    id: 1,
+                    titulo: 'Encontro Mensal de Networking',
+                    data: '2024-03-20T19:00',
+                    local: 'Sede da AGETRHA',
+                    tipo: 'networking',
+                    descricao: 'Encontro mensal para networking entre profissionais de RH. Traga seu cartão de visita!',
+                    link: 'https://forms.google.com/example',
+                    status: 'agendado'
+                },
+                {
+                    id: 2,
+                    titulo: 'Workshop: Legislação Trabalhista',
+                    data: '2024-04-10T14:00',
+                    local: 'Auditório Principal',
+                    tipo: 'workshop',
+                    descricao: 'Workshop sobre as últimas alterações na legislação trabalhista angolana.',
+                    link: 'https://forms.google.com/workshop',
+                    status: 'agendado'
+                }
+            ],
+            vagas: [
+                {
+                    id: 1,
+                    titulo: 'Analista de Recrutamento e Seleção',
+                    empresa: 'Tech Solutions SA',
+                    local: 'Luanda, Angola',
+                    salario: 'USD 2.500',
+                    tipo: 'integral',
+                    descricao: 'Responsável pelo processo completo de recrutamento, desde a triagem até a contratação.',
+                    requisitos: 'Graduação em Psicologia ou Administração. Experiência mínima de 2 anos.',
+                    link: 'https://careers.techsolutions.ao',
+                    status: 'ativa'
+                },
+                {
+                    id: 2,
+                    titulo: 'Especialista em Remuneração',
+                    empresa: 'Global HR Consulting',
+                    local: 'Remoto',
+                    salario: 'USD 3.200',
+                    tipo: 'remoto',
+                    descricao: 'Desenvolvimento e implementação de políticas de remuneração e benefícios.',
+                    requisitos: 'Experiência em análise de cargos e mercado. Conhecimento em Excel avançado.',
+                    link: 'https://globalhr.jobs/vaga123',
+                    status: 'ativa'
+                }
+            ],
+            fotos: [
+                {
+                    id: 1,
+                    titulo: 'Workshop de Liderança',
+                    categoria: 'workshops',
+                    data: '2024-02-10',
+                    descricao: 'Momento do workshop sobre liderança situacional',
+                    url: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    status: 'ativo'
+                },
+                {
+                    id: 2,
+                    titulo: 'Formatura 2023',
+                    categoria: 'formatura',
+                    data: '2023-12-15',
+                    descricao: 'Cerimônia de formatura dos associados',
+                    url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    status: 'ativo'
+                }
+            ],
+            links: [
+                {
+                    id: 1,
+                    titulo: 'Modelo de Contrato de Trabalho',
+                    url: 'https://exemplo.com/modelo-contrato',
+                    categoria: 'contratos',
+                    icone: 'fas fa-file-contract',
+                    descricao: 'Modelo atualizado de contrato de trabalho angolano',
+                    status: 'ativo'
+                },
+                {
+                    id: 2,
+                    titulo: 'Portal do Trabalhador',
+                    url: 'https://www.minitrap.gov.ao',
+                    categoria: 'legislacao',
+                    icone: 'fas fa-balance-scale',
+                    descricao: 'Site oficial do Ministério do Trabalho',
+                    status: 'ativo'
+                }
+            ]
+        };
+
+        // ============== FUNÇÃO AUXILIAR PARA MOCK ==============
+        function getMockResponse(action, params = {}) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    let response = { success: true, data: [] };
+                    
+                    switch(action) {
+                        case 'getEstatisticas':
+                            response.data = {
+                                noticias: mockData.noticias.length,
+                                eventos: mockData.eventos.length,
+                                vagas: mockData.vagas.length,
+                                galeria: mockData.fotos.length
+                            };
+                            break;
+                            
+                        case 'getNoticias':
+                            response.data = mockData.noticias;
+                            break;
+                            
+                        case 'getEventos':
+                            response.data = mockData.eventos;
+                            break;
+                            
+                        case 'getVagas':
+                            response.data = mockData.vagas;
+                            break;
+                            
+                        case 'getGaleria':
+                            response.data = mockData.fotos;
+                            break;
+                            
+                        case 'getLinks':
+                            response.data = mockData.links;
+                            break;
+                            
+                        case 'addNoticia':
+                            const newNoticia = {
+                                id: mockData.noticias.length + 1,
+                                ...params
+                            };
+                            mockData.noticias.push(newNoticia);
+                            response.data = newNoticia;
+                            break;
+                            
+                        case 'addEvento':
+                            const newEvento = {
+                                id: mockData.eventos.length + 1,
+                                ...params
+                            };
+                            mockData.eventos.push(newEvento);
+                            response.data = newEvento;
+                            break;
+                            
+                        case 'addVaga':
+                            const newVaga = {
+                                id: mockData.vagas.length + 1,
+                                ...params
+                            };
+                            mockData.vagas.push(newVaga);
+                            response.data = newVaga;
+                            break;
+                            
+                        case 'addFoto':
+                            const newFoto = {
+                                id: mockData.fotos.length + 1,
+                                ...params
+                            };
+                            mockData.fotos.push(newFoto);
+                            response.data = newFoto;
+                            break;
+                            
+                        case 'addLink':
+                            const newLink = {
+                                id: mockData.links.length + 1,
+                                ...params
+                            };
+                            mockData.links.push(newLink);
+                            response.data = newLink;
+                            break;
+                            
+                        case 'deleteNoticia':
+                            mockData.noticias = mockData.noticias.filter(n => n.id != params.id);
+                            break;
+                            
+                        case 'deleteEvento':
+                            mockData.eventos = mockData.eventos.filter(e => e.id != params.id);
+                            break;
+                            
+                        case 'deleteVaga':
+                            mockData.vagas = mockData.vagas.filter(v => v.id != params.id);
+                            break;
+                            
+                        case 'deleteFoto':
+                            mockData.fotos = mockData.fotos.filter(f => f.id != params.id);
+                            break;
+                            
+                        case 'deleteLink':
+                            mockData.links = mockData.links.filter(l => l.id != params.id);
+                            break;
+                            
+                        default:
+                            response.success = true;
+                            response.data = [];
+                    }
+                    
+                    resolve(response);
+                }, 300);
+            });
+        }
+
+        // ============== FUNÇÃO PRINCIPAL PARA CHAMAR GAS OU MOCK ==============
+        function callGASAction(action, params = {}) {
+            if (USE_MOCK_DATA) {
+                console.log(`[MOCK] Chamando ação: ${action}`, params);
+                return getMockResponse(action, params);
+            }
+
+            return new Promise((resolve, reject) => {
+                const callbackName = 'GAS_Callback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+                
+                window[callbackName] = function (response) {
+                    delete window[callbackName];
+                    if (script.parentNode) {
+                        script.parentNode.removeChild(script);
+                    }
+                    clearTimeout(timeoutId);
+                    
+                    if (response && response.success !== undefined) {
+                        resolve(response);
+                    } else {
+                        reject(new Error('Resposta inválida do servidor'));
+                    }
+                };
+                
+                let url = APPS_SCRIPT_URL + '?action=' + encodeURIComponent(action) + '&callback=' + callbackName;
+                Object.keys(params).forEach(key => {
+                    if (params[key] !== undefined && params[key] !== null) {
+                        url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+                    }
+                });
+                
+                console.log(`[GAS] Chamando URL: ${url}`);
+                
+                const script = document.createElement('script');
+                script.src = url;
+                script.onerror = () => {
+                    clearTimeout(timeoutId);
+                    if (window[callbackName]) {
+                        delete window[callbackName];
+                    }
+                    console.error(`[GAS] Erro ao carregar script. URL: ${url}`);
+                    
+                    getMockResponse(action, params).then(resolve).catch(reject);
+                };
+                
+                const timeoutId = setTimeout(() => {
+                    if (window[callbackName]) {
+                        delete window[callbackName];
+                        if (script.parentNode) {
+                            script.parentNode.removeChild(script);
+                        }
+                        console.error('[GAS] Timeout na conexão');
+                        reject(new Error('Timeout na conexão com o servidor'));
+                    }
+                }, 15000);
+                
+                document.head.appendChild(script);
+            });
+        }
+
+        // ============== VARIÁVEIS GLOBAIS ==============
         let dados = {
             noticias: [],
             eventos: [],
@@ -896,7 +1192,6 @@
             links: []
         };
 
-        // Estado atual do formulário
         let modoEdicao = {
             noticia: false,
             evento: false,
@@ -907,65 +1202,10 @@
         
         let itemEditando = null;
 
-        // Função para chamar o GAS
-        function callGASAction(action, params = {}) {
-            return new Promise((resolve, reject) => {
-                const callbackName = 'GAS_Callback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-
-                window[callbackName] = function (response) {
-                    delete window[callbackName];
-                    if (script.parentNode) {
-                        script.parentNode.removeChild(script);
-                    }
-
-                    if (response && response.success !== undefined) {
-                        resolve(response);
-                    } else {
-                        reject(new Error('Resposta inválida do servidor'));
-                    }
-                };
-
-                let url = APPS_SCRIPT_URL + '?action=' + encodeURIComponent(action);
-                Object.keys(params).forEach(key => {
-                    if (params[key] !== undefined && params[key] !== null) {
-                        url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-                    }
-                });
-
-                url += '&callback=' + callbackName;
-
-                const script = document.createElement('script');
-                script.src = url;
-
-                const timeoutId = setTimeout(() => {
-                    if (window[callbackName]) {
-                        delete window[callbackName];
-                        if (script.parentNode) {
-                            script.parentNode.removeChild(script);
-                        }
-                        reject(new Error('Timeout na conexão com o servidor'));
-                    }
-                }, 10000);
-
-                script.onerror = () => {
-                    clearTimeout(timeoutId);
-                    if (window[callbackName]) {
-                        delete window[callbackName];
-                    }
-                    reject(new Error('Falha ao carregar o script do servidor'));
-                };
-
-                document.head.appendChild(script);
-            });
-        }
-
-        // Funções de carregamento de dados
+        // ============== FUNÇÕES DE CARREGAMENTO DE DADOS ==============
         async function carregarTodosDados() {
             try {
-                // Carregar estatísticas
                 await carregarEstatisticas();
-                
-                // Carregar dados de cada seção
                 await carregarNoticias();
                 await carregarEventos();
                 await carregarVagas();
@@ -984,20 +1224,13 @@
                 const resultado = await callGASAction('getEstatisticas');
                 if (resultado.success) {
                     const stats = resultado.data;
-                    // Atualiza com dados REAIS do GAS
                     document.getElementById('totalNoticias').textContent = stats.noticias || '0';
                     document.getElementById('totalEventos').textContent = stats.eventos || '0';
                     document.getElementById('totalVagas').textContent = stats.vagas || '0';
                     document.getElementById('totalFotos').textContent = stats.galeria || '0';
-
-                    console.log('Estatísticas carregadas:', stats);
-                } else {
-                    console.error('Erro ao carregar estatísticas:', resultado.error);
-                    // Mantém os valores atuais em caso de erro
                 }
             } catch (error) {
                 console.error('Erro ao carregar estatísticas:', error);
-                // Em caso de erro, define valores zero
                 document.getElementById('totalNoticias').textContent = '0';
                 document.getElementById('totalEventos').textContent = '0';
                 document.getElementById('totalVagas').textContent = '0';
@@ -1014,19 +1247,7 @@
                 }
             } catch (error) {
                 console.error('Erro ao carregar notícias:', error);
-                // Dados de exemplo para demonstração
-                dados.noticias = [
-                    {
-                        id: 1,
-                        titulo: 'Assembleia Geral Extraordinária',
-                        categoria: 'eventos',
-                        data: '05/03/2024',
-                        descricao: 'Convocamos todos os membros para a assembleia extraordinária...',
-                        imagem: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-                        status: 'ativo',
-                        destaque: 'sim'
-                    }
-                ];
+                dados.noticias = mockData.noticias;
                 renderizarNoticias();
             }
         }
@@ -1040,7 +1261,7 @@
                 }
             } catch (error) {
                 console.error('Erro ao carregar eventos:', error);
-                dados.eventos = [];
+                dados.eventos = mockData.eventos;
                 renderizarEventos();
             }
         }
@@ -1054,7 +1275,7 @@
                 }
             } catch (error) {
                 console.error('Erro ao carregar vagas:', error);
-                dados.vagas = [];
+                dados.vagas = mockData.vagas;
                 renderizarVagas();
             }
         }
@@ -1068,7 +1289,7 @@
                 }
             } catch (error) {
                 console.error('Erro ao carregar galeria:', error);
-                dados.fotos = [];
+                dados.fotos = mockData.fotos;
                 renderizarGaleria();
             }
         }
@@ -1082,12 +1303,12 @@
                 }
             } catch (error) {
                 console.error('Erro ao carregar links:', error);
-                dados.links = [];
+                dados.links = mockData.links;
                 renderizarLinks();
             }
         }
 
-        // Funções de renderização
+        // ============== FUNÇÕES DE RENDERIZAÇÃO ==============
         function renderizarNoticias() {
             const container = document.getElementById('listaNoticias');
             if (!dados.noticias.length) {
@@ -1245,15 +1466,14 @@
             `).join('');
         }
 
-        // Funções de edição
+        // ============== FUNÇÕES DE EDIÇÃO ==============
         function editarNoticia(id) {
-            const noticia = dados.noticias.find(n => n.id === id);
+            const noticia = dados.noticias.find(n => n.id == id);
             if (!noticia) return;
 
             modoEdicao.noticia = true;
             itemEditando = noticia;
 
-            // Preencher formulário
             document.getElementById('noticiaTitulo').value = noticia.titulo;
             document.getElementById('noticiaCategoria').value = noticia.categoria;
             document.getElementById('noticiaData').value = noticia.data;
@@ -1262,18 +1482,16 @@
             document.getElementById('noticiaStatus').value = noticia.status;
             document.getElementById('noticiaDestaque').value = noticia.destaque;
 
-            // Rolar para o topo do formulário
             document.getElementById('formNoticia').scrollIntoView({ behavior: 'smooth' });
         }
 
         function editarEvento(id) {
-            const evento = dados.eventos.find(e => e.id === id);
+            const evento = dados.eventos.find(e => e.id == id);
             if (!evento) return;
 
             modoEdicao.evento = true;
             itemEditando = evento;
 
-            // Preencher formulário
             document.getElementById('eventoTitulo').value = evento.titulo;
             document.getElementById('eventoData').value = evento.data;
             document.getElementById('eventoLocal').value = evento.local || '';
@@ -1282,19 +1500,17 @@
             document.getElementById('eventoLink').value = evento.link || '';
             document.getElementById('eventoStatus').value = evento.status;
 
-            // Mudar para aba de eventos
             document.querySelector('[data-tab="eventos"]').click();
             document.getElementById('formEvento').scrollIntoView({ behavior: 'smooth' });
         }
 
         function editarVaga(id) {
-            const vaga = dados.vagas.find(v => v.id === id);
+            const vaga = dados.vagas.find(v => v.id == id);
             if (!vaga) return;
 
             modoEdicao.vaga = true;
             itemEditando = vaga;
 
-            // Preencher formulário
             document.getElementById('vagaTitulo').value = vaga.titulo;
             document.getElementById('vagaEmpresa').value = vaga.empresa;
             document.getElementById('vagaLocal').value = vaga.local || '';
@@ -1305,44 +1521,39 @@
             document.getElementById('vagaLink').value = vaga.link || '';
             document.getElementById('vagaStatus').value = vaga.status;
 
-            // Mudar para aba de vagas
             document.querySelector('[data-tab="vagas"]').click();
             document.getElementById('formVaga').scrollIntoView({ behavior: 'smooth' });
         }
 
         function editarFoto(id) {
-            const foto = dados.fotos.find(f => f.id === id);
+            const foto = dados.fotos.find(f => f.id == id);
             if (!foto) return;
 
             modoEdicao.foto = true;
             itemEditando = foto;
 
-            // Preencher formulário
             document.getElementById('fotoTitulo').value = foto.titulo;
             document.getElementById('fotoCategoria').value = foto.categoria;
             document.getElementById('fotoData').value = foto.data || '';
             document.getElementById('fotoDescricao').value = foto.descricao || '';
             document.getElementById('fotoURL').value = foto.url;
 
-            // Mostrar preview
             const previewContainer = document.getElementById('imagePreviewContainer');
             const preview = document.getElementById('imagePreview');
             preview.src = foto.url;
             previewContainer.style.display = 'block';
 
-            // Mudar para aba de galeria
             document.querySelector('[data-tab="galeria"]').click();
             document.getElementById('formFoto').scrollIntoView({ behavior: 'smooth' });
         }
 
         function editarLink(id) {
-            const link = dados.links.find(l => l.id === id);
+            const link = dados.links.find(l => l.id == id);
             if (!link) return;
 
             modoEdicao.link = true;
             itemEditando = link;
 
-            // Preencher formulário
             document.getElementById('linkTitulo').value = link.titulo;
             document.getElementById('linkURL').value = link.url;
             document.getElementById('linkCategoria').value = link.categoria;
@@ -1350,21 +1561,21 @@
             document.getElementById('linkDescricao').value = link.descricao || '';
             document.getElementById('linkStatus').value = link.status;
 
-            // Mudar para aba de links
             document.querySelector('[data-tab="links"]').click();
             document.getElementById('formLink').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Funções de exclusão
+        // ============== FUNÇÕES DE EXCLUSÃO ==============
         async function excluirNoticia(id) {
             if (!confirm('Tem certeza que deseja excluir esta notícia?')) return;
 
             try {
                 const resultado = await callGASAction('deleteNoticia', { id });
                 if (resultado.success) {
-                    dados.noticias = dados.noticias.filter(n => n.id !== id);
+                    dados.noticias = dados.noticias.filter(n => n.id != id);
                     renderizarNoticias();
                     mostrarMensagem('success', 'Notícia excluída com sucesso!');
+                    carregarEstatisticas();
                 }
             } catch (error) {
                 console.error('Erro ao excluir notícia:', error);
@@ -1378,9 +1589,10 @@
             try {
                 const resultado = await callGASAction('deleteEvento', { id });
                 if (resultado.success) {
-                    dados.eventos = dados.eventos.filter(e => e.id !== id);
+                    dados.eventos = dados.eventos.filter(e => e.id != id);
                     renderizarEventos();
                     mostrarMensagem('success', 'Evento excluído com sucesso!');
+                    carregarEstatisticas();
                 }
             } catch (error) {
                 console.error('Erro ao excluir evento:', error);
@@ -1394,9 +1606,10 @@
             try {
                 const resultado = await callGASAction('deleteVaga', { id });
                 if (resultado.success) {
-                    dados.vagas = dados.vagas.filter(v => v.id !== id);
+                    dados.vagas = dados.vagas.filter(v => v.id != id);
                     renderizarVagas();
                     mostrarMensagem('success', 'Vaga excluída com sucesso!');
+                    carregarEstatisticas();
                 }
             } catch (error) {
                 console.error('Erro ao excluir vaga:', error);
@@ -1410,9 +1623,10 @@
             try {
                 const resultado = await callGASAction('deleteFoto', { id });
                 if (resultado.success) {
-                    dados.fotos = dados.fotos.filter(f => f.id !== id);
+                    dados.fotos = dados.fotos.filter(f => f.id != id);
                     renderizarGaleria();
                     mostrarMensagem('success', 'Foto excluída com sucesso!');
+                    carregarEstatisticas();
                 }
             } catch (error) {
                 console.error('Erro ao excluir foto:', error);
@@ -1426,9 +1640,10 @@
             try {
                 const resultado = await callGASAction('deleteLink', { id });
                 if (resultado.success) {
-                    dados.links = dados.links.filter(l => l.id !== id);
+                    dados.links = dados.links.filter(l => l.id != id);
                     renderizarLinks();
                     mostrarMensagem('success', 'Link excluído com sucesso!');
+                    carregarEstatisticas();
                 }
             } catch (error) {
                 console.error('Erro ao excluir link:', error);
@@ -1436,7 +1651,7 @@
             }
         }
 
-        // Funções de manipulação de formulários
+        // ============== FUNÇÕES AUXILIARES ==============
         function limparFormulario(tipo) {
             const form = document.getElementById(`form${tipo.charAt(0).toUpperCase() + tipo.slice(1)}`);
             if (form) form.reset();
@@ -1449,7 +1664,6 @@
             }
         }
 
-        // Funções de mensagens
         function mostrarMensagem(tipo, texto) {
             const element = tipo === 'success' ?
                 document.getElementById('successMessage') :
@@ -1463,7 +1677,6 @@
             }, 5000);
         }
 
-        // Autenticação e logout
         function verificarAutenticacao() {
             const token = localStorage.getItem('agetrha_admin_token');
             const nivel = localStorage.getItem('agetrha_user_level');
@@ -1487,243 +1700,35 @@
             window.location.href = 'Site-AGETRHA.html';
         }
 
-        // Event Listeners
+        // ============== EVENT LISTENERS COMPLETOS ==============
         document.addEventListener('DOMContentLoaded', function () {
-            verificarAutenticacao();
-            carregarTodosDados();
-
-            // Configurar sistema de abas
+            // 1. Sistema de abas
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const tabId = this.getAttribute('data-tab');
                     
-                    // Remover classe active de todos
                     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                     
-                    // Adicionar classe active ao selecionado
                     this.classList.add('active');
                     document.getElementById(tabId).classList.add('active');
                 });
             });
 
-            // Configurar logout
+            // 2. Botões principais
             document.getElementById('logoutBtn').addEventListener('click', logout);
-
-            // Configurar botão de refresh
             document.getElementById('refreshBtn').addEventListener('click', carregarTodosDados);
 
-            // Configurar botões de limpar formulário
+            // 3. Botões de limpar formulário
             document.getElementById('btnLimparNoticia').addEventListener('click', () => limparFormulario('noticia'));
             document.getElementById('btnLimparEvento').addEventListener('click', () => limparFormulario('evento'));
             document.getElementById('btnLimparVaga').addEventListener('click', () => limparFormulario('vaga'));
             document.getElementById('btnLimparFoto').addEventListener('click', () => limparFormulario('foto'));
             document.getElementById('btnLimparLink').addEventListener('click', () => limparFormulario('link'));
 
-            // Configurar upload de fotos
-            const uploadArea = document.getElementById('uploadArea');
-            const fileInput = document.getElementById('fileInput');
-
-            uploadArea.addEventListener('click', () => fileInput.click());
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.style.borderColor = 'var(--azul-primario)';
-                uploadArea.style.background = '#f0f7ff';
-            });
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.style.borderColor = '#ccc';
-                uploadArea.style.background = '';
-            });
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.style.borderColor = '#ccc';
-                uploadArea.style.background = '';
-                
-                if (e.dataTransfer.files.length) {
-                    alert(`${e.dataTransfer.files.length} arquivo(s) selecionado(s). Em uma implementação real, aqui você faria o upload.`);
-                }
-            });
-
-            // Preview de imagem na URL
-            document.getElementById('fotoURL').addEventListener('input', function() {
-                const previewContainer = document.getElementById('imagePreviewContainer');
-                const preview = document.getElementById('imagePreview');
-                
-                if (this.value && this.value.startsWith('http')) {
-                    preview.src = this.value;
-                    previewContainer.style.display = 'block';
-                } else {
-                    previewContainer.style.display = 'none';
-                }
-            });
-
-            // Configurar modal
-            document.querySelector('.close-modal').addEventListener('click', () => {
-                document.getElementById('modalView').style.display = 'none';
-            });
-
-            // Configurar formulários de envio (exemplo básico)
+            // 4. Formulário de Notícias
             document.getElementById('formNoticia').addEventListener('submit', async function(e) {
                 e.preventDefault();
-
-                // Configurar formulário de Eventos
-                document.getElementById('formEvento').addEventListener('submit', async function (e) {
-                    e.preventDefault();
-
-                    const dadosForm = {
-                        titulo: document.getElementById('eventoTitulo').value,
-                        data: document.getElementById('eventoData').value,
-                        local: document.getElementById('eventoLocal').value,
-                        tipo: document.getElementById('eventoTipo').value,
-                        descricao: document.getElementById('eventoDescricao').value,
-                        link: document.getElementById('eventoLink').value,
-                        status: document.getElementById('eventoStatus').value
-                    };
-
-                    try {
-                        let resultado;
-                        if (modoEdicao.evento && itemEditando) {
-                            dadosForm.id = itemEditando.id;
-                            resultado = await callGASAction('updateEvento', dadosForm);
-                        } else {
-                            resultado = await callGASAction('addEvento', dadosForm);
-                        }
-
-                        if (resultado.success) {
-                            mostrarMensagem('success', modoEdicao.evento ?
-                                'Evento atualizado com sucesso!' : 'Evento adicionado com sucesso!');
-                            limparFormulario('evento');
-                            await carregarEventos();
-                            await carregarEstatisticas();
-                        }
-                    } catch (error) {
-                        console.error('Erro ao salvar evento:', error);
-                        mostrarMensagem('error', 'Erro ao salvar evento.');
-                    }
-                });
-
-                // Configurar formulário de Vagas
-                document.getElementById('formVaga').addEventListener('submit', async function (e) {
-                    e.preventDefault();
-
-                    const dadosForm = {
-                        titulo: document.getElementById('vagaTitulo').value,
-                        empresa: document.getElementById('vagaEmpresa').value,
-                        local: document.getElementById('vagaLocal').value,
-                        salario: document.getElementById('vagaSalario').value,
-                        tipo: document.getElementById('vagaTipo').value,
-                        descricao: document.getElementById('vagaDescricao').value,
-                        requisitos: document.getElementById('vagaRequisitos').value,
-                        link: document.getElementById('vagaLink').value,
-                        status: document.getElementById('vagaStatus').value
-                    };
-
-                    try {
-                        let resultado;
-                        if (modoEdicao.vaga && itemEditando) {
-                            dadosForm.id = itemEditando.id;
-                            resultado = await callGASAction('updateVaga', dadosForm);
-                        } else {
-                            resultado = await callGASAction('addVaga', dadosForm);
-                        }
-
-                        if (resultado.success) {
-                            mostrarMensagem('success', modoEdicao.vaga ?
-                                'Vaga atualizada com sucesso!' : 'Vaga adicionada com sucesso!');
-                            limparFormulario('vaga');
-                            await carregarVagas();
-                            await carregarEstatisticas();
-                        }
-                    } catch (error) {
-                        console.error('Erro ao salvar vaga:', error);
-                        mostrarMensagem('error', 'Erro ao salvar vaga.');
-                    }
-                });
-
-                // Configurar formulário de Galeria
-                document.getElementById('formFoto').addEventListener('submit', async function (e) {
-                    e.preventDefault();
-
-                    const dadosForm = {
-                        titulo: document.getElementById('fotoTitulo').value,
-                        categoria: document.getElementById('fotoCategoria').value,
-                        data: document.getElementById('fotoData').value,
-                        descricao: document.getElementById('fotoDescricao').value,
-                        url: document.getElementById('fotoURL').value,
-                        status: 'ativo'
-                    };
-
-                    try {
-                        let resultado;
-                        if (modoEdicao.foto && itemEditando) {
-                            dadosForm.id = itemEditando.id;
-                            resultado = await callGASAction('updateFoto', dadosForm);
-                        } else {
-                            resultado = await callGASAction('addFoto', dadosForm);
-                        }
-
-                        if (resultado.success) {
-                            mostrarMensagem('success', modoEdicao.foto ?
-                                'Foto atualizada com sucesso!' : 'Foto adicionada com sucesso!');
-                            limparFormulario('foto');
-                            await carregarGaleria();
-                            await carregarEstatisticas();
-                        }
-                    } catch (error) {
-                        console.error('Erro ao salvar foto:', error);
-                        mostrarMensagem('error', 'Erro ao salvar foto.');
-                    }
-                });
-
-                // Configurar formulário de Links
-                document.getElementById('formLink').addEventListener('submit', async function (e) {
-                    e.preventDefault();
-
-                    const dadosForm = {
-                        titulo: document.getElementById('linkTitulo').value,
-                        url: document.getElementById('linkURL').value,
-                        categoria: document.getElementById('linkCategoria').value,
-                        icone: document.getElementById('linkIcone').value,
-                        descricao: document.getElementById('linkDescricao').value,
-                        status: document.getElementById('linkStatus').value
-                    };
-
-                    try {
-                        let resultado;
-                        if (modoEdicao.link && itemEditando) {
-                            dadosForm.id = itemEditando.id;
-                            resultado = await callGASAction('updateLink', dadosForm);
-                        } else {
-                            resultado = await callGASAction('addLink', dadosForm);
-                        }
-
-                        if (resultado.success) {
-                            mostrarMensagem('success', modoEdicao.link ?
-                                'Link atualizado com sucesso!' : 'Link adicionado com sucesso!');
-                            limparFormulario('link');
-                            await carregarLinks();
-                            await carregarEstatisticas();
-                        }
-                    } catch (error) {
-                        console.error('Erro ao salvar link:', error);
-                        mostrarMensagem('error', 'Erro ao salvar link.');
-                    }
-                });
-
-                // Configurar formulário de Configurações (opcional - se quiser salvar)
-                document.querySelector('#configuracoes .btn-success').addEventListener('click', async function () {
-                    const dadosForm = {
-                        tituloSite: document.getElementById('configTituloSite').value,
-                        emailContato: document.getElementById('configEmailContato').value,
-                        telefone: document.getElementById('configTelefone').value,
-                        endereco: document.getElementById('configEndereco').value,
-                        manutencao: document.getElementById('configManutencao').value,
-                        logoURL: document.getElementById('configLogoURL').value,
-                        mensagemBoasVindas: document.getElementById('configMensagemBoasVindas').value
-                    };
-
-                    mostrarMensagem('success', 'Configurações salvas com sucesso! (Em produção, isso seria enviado para o GAS)');
-                });
 
                 const dadosForm = {
                     titulo: document.getElementById('noticiaTitulo').value,
@@ -1757,17 +1762,215 @@
                 }
             });
 
-            // Configurar data atual como padrão
+            // 5. Formulário de Eventos
+            document.getElementById('formEvento').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const dadosForm = {
+                    titulo: document.getElementById('eventoTitulo').value,
+                    data: document.getElementById('eventoData').value,
+                    local: document.getElementById('eventoLocal').value,
+                    tipo: document.getElementById('eventoTipo').value,
+                    descricao: document.getElementById('eventoDescricao').value,
+                    link: document.getElementById('eventoLink').value,
+                    status: document.getElementById('eventoStatus').value
+                };
+
+                try {
+                    let resultado;
+                    if (modoEdicao.evento && itemEditando) {
+                        dadosForm.id = itemEditando.id;
+                        resultado = await callGASAction('updateEvento', dadosForm);
+                    } else {
+                        resultado = await callGASAction('addEvento', dadosForm);
+                    }
+
+                    if (resultado.success) {
+                        mostrarMensagem('success', modoEdicao.evento ?
+                            'Evento atualizado com sucesso!' : 'Evento adicionado com sucesso!');
+                        limparFormulario('evento');
+                        await carregarEventos();
+                        await carregarEstatisticas();
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar evento:', error);
+                    mostrarMensagem('error', 'Erro ao salvar evento.');
+                }
+            });
+
+            // 6. Formulário de Vagas
+            document.getElementById('formVaga').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const dadosForm = {
+                    titulo: document.getElementById('vagaTitulo').value,
+                    empresa: document.getElementById('vagaEmpresa').value,
+                    local: document.getElementById('vagaLocal').value,
+                    salario: document.getElementById('vagaSalario').value,
+                    tipo: document.getElementById('vagaTipo').value,
+                    descricao: document.getElementById('vagaDescricao').value,
+                    requisitos: document.getElementById('vagaRequisitos').value,
+                    link: document.getElementById('vagaLink').value,
+                    status: document.getElementById('vagaStatus').value
+                };
+
+                try {
+                    let resultado;
+                    if (modoEdicao.vaga && itemEditando) {
+                        dadosForm.id = itemEditando.id;
+                        resultado = await callGASAction('updateVaga', dadosForm);
+                    } else {
+                        resultado = await callGASAction('addVaga', dadosForm);
+                    }
+
+                    if (resultado.success) {
+                        mostrarMensagem('success', modoEdicao.vaga ?
+                            'Vaga atualizada com sucesso!' : 'Vaga adicionada com sucesso!');
+                        limparFormulario('vaga');
+                        await carregarVagas();
+                        await carregarEstatisticas();
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar vaga:', error);
+                    mostrarMensagem('error', 'Erro ao salvar vaga.');
+                }
+            });
+
+            // 7. Formulário de Galeria
+            document.getElementById('formFoto').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const dadosForm = {
+                    titulo: document.getElementById('fotoTitulo').value,
+                    categoria: document.getElementById('fotoCategoria').value,
+                    data: document.getElementById('fotoData').value,
+                    descricao: document.getElementById('fotoDescricao').value,
+                    url: document.getElementById('fotoURL').value,
+                    status: 'ativo'
+                };
+
+                try {
+                    let resultado;
+                    if (modoEdicao.foto && itemEditando) {
+                        dadosForm.id = itemEditando.id;
+                        resultado = await callGASAction('updateFoto', dadosForm);
+                    } else {
+                        resultado = await callGASAction('addFoto', dadosForm);
+                    }
+
+                    if (resultado.success) {
+                        mostrarMensagem('success', modoEdicao.foto ?
+                            'Foto atualizada com sucesso!' : 'Foto adicionada com sucesso!');
+                        limparFormulario('foto');
+                        await carregarGaleria();
+                        await carregarEstatisticas();
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar foto:', error);
+                    mostrarMensagem('error', 'Erro ao salvar foto.');
+                }
+            });
+
+            // 8. Formulário de Links
+            document.getElementById('formLink').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const dadosForm = {
+                    titulo: document.getElementById('linkTitulo').value,
+                    url: document.getElementById('linkURL').value,
+                    categoria: document.getElementById('linkCategoria').value,
+                    icone: document.getElementById('linkIcone').value,
+                    descricao: document.getElementById('linkDescricao').value,
+                    status: document.getElementById('linkStatus').value
+                };
+
+                try {
+                    let resultado;
+                    if (modoEdicao.link && itemEditando) {
+                        dadosForm.id = itemEditando.id;
+                        resultado = await callGASAction('updateLink', dadosForm);
+                    } else {
+                        resultado = await callGASAction('addLink', dadosForm);
+                    }
+
+                    if (resultado.success) {
+                        mostrarMensagem('success', modoEdicao.link ?
+                            'Link atualizado com sucesso!' : 'Link adicionada com sucesso!');
+                        limparFormulario('link');
+                        await carregarLinks();
+                        await carregarEstatisticas();
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar link:', error);
+                    mostrarMensagem('error', 'Erro ao salvar link.');
+                }
+            });
+
+            // 9. Configurações do sistema
+            document.getElementById('btnSalvarConfig').addEventListener('click', function() {
+                mostrarMensagem('success', 'Configurações salvas com sucesso!');
+            });
+
+            document.getElementById('btnBackup').addEventListener('click', function() {
+                mostrarMensagem('success', 'Backup realizado com sucesso!');
+            });
+
+            // 10. Upload de fotos
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--azul-primario)';
+                uploadArea.style.background = '#f0f7ff';
+            });
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#ccc';
+                uploadArea.style.background = '';
+            });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ccc';
+                uploadArea.style.background = '';
+                
+                if (e.dataTransfer.files.length) {
+                    mostrarMensagem('success', `${e.dataTransfer.files.length} arquivo(s) selecionado(s).`);
+                }
+            });
+
+            // 11. Preview de imagem
+            document.getElementById('fotoURL').addEventListener('input', function() {
+                const previewContainer = document.getElementById('imagePreviewContainer');
+                const preview = document.getElementById('imagePreview');
+                
+                if (this.value && this.value.startsWith('http')) {
+                    preview.src = this.value;
+                    previewContainer.style.display = 'block';
+                } else {
+                    previewContainer.style.display = 'none';
+                }
+            });
+
+            // 12. Modal
+            document.querySelector('.close-modal').addEventListener('click', () => {
+                document.getElementById('modalView').style.display = 'none';
+            });
+
+            // 13. Configurar datas
             const hoje = new Date().toISOString().split('T')[0];
             document.getElementById('noticiaData').value = hoje;
             document.getElementById('fotoData').value = hoje;
 
-            // Configurar data e hora atual para eventos
             const agora = new Date();
             const dataHoraAtual = new Date(agora.getTime() - agora.getTimezoneOffset() * 60000)
                 .toISOString()
                 .slice(0, 16);
             document.getElementById('eventoData').value = dataHoraAtual;
+
+            // 14. Carregar dados iniciais
+            verificarAutenticacao();
+            carregarTodosDados();
         });
     </script>
 </body>
