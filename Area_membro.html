@@ -1,0 +1,3078 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área de Membro - AGETRHA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --azul-primario: #1a4e8e;
+            --azul-secundario: #2a6cba;
+            --branco: #ffffff;
+            --cinza-claro: #f5f7fa;
+            --verde: #28a745;
+            --dourado: #d4af37;
+            --cinza-escuro: #333;
+            --laranja: #ff6b35;
+            --roxo: #6a11cb;
+        }
+
+        body {
+            background-color: var(--cinza-claro);
+            overflow-x: hidden;
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            display: block;
+            opacity: 1;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--azul-primario) 0%, #0d3c6a 100%);
+            color: var(--branco);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--dourado);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--branco);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Sistema de Abas */
+        .tabs-container {
+            background: var(--branco);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .tabs-header {
+            display: flex;
+            flex-wrap: wrap;
+            background: linear-gradient(to right, var(--azul-primario), var(--roxo));
+            padding: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 18px 20px;
+            background: transparent;
+            border: none;
+            color: var(--branco);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+            .tab-btn:hover {
+                background: rgba(255,255,255,0.1);
+            }
+
+            .tab-btn.active {
+                background: rgba(255,255,255,0.2);
+                border-bottom: 3px solid var(--dourado);
+            }
+
+        .tabs-content {
+            padding: 0;
+        }
+
+        .tab-pane {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Estilos Específicos para Cada Seção */
+        .section-title {
+            color: var(--azul-primario);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        /* Galeria - Estilo para grid de imagens */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+            .gallery-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            }
+
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 15px;
+            background: white;
+        }
+
+            .gallery-caption h4 {
+                color: var(--azul-primario);
+                margin-bottom: 5px;
+            }
+
+        /* Notícias */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .news-card {
+            background: var(--branco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+            .news-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            }
+
+        .news-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Atividades/Eventos */
+        .activities-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            background: var(--branco);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 4px solid var(--verde);
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--cinza-claro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--azul-primario);
+        }
+
+        /* Resumo */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--branco);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--azul-primario);
+            margin-bottom: 10px;
+        }
+
+        /* Vagas de Emprego */
+        .jobs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .job-item {
+            background: var(--branco);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--laranja);
+            transition: transform 0.3s;
+        }
+
+            .job-item:hover {
+                transform: translateX(5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+
+        .job-title {
+            color: var(--azul-primario);
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .job-company {
+            color: var(--cinza-escuro);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .job-details {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .job-detail {
+            background: var(--cinza-claro);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .job-link {
+            display: inline-block;
+            background: var(--verde);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+            .job-link:hover {
+                background: #218838;
+            }
+
+        /* Agenda e Calendário */
+        .calendar-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        #calendar {
+            background: var(--branco);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .events-list {
+            background: var(--branco);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .event-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: var(--cinza-claro);
+            border-radius: 8px;
+            border-left: 4px solid var(--laranja);
+            transition: transform 0.2s;
+        }
+
+            .event-item:hover {
+                transform: translateX(5px);
+            }
+
+        /* Links Úteis */
+        .links-table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .links-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+            .links-table th {
+                background-color: var(--cinza-claro);
+                padding: 15px;
+                text-align: left;
+                border-bottom: 2px solid #ddd;
+                color: var(--azul-primario);
+                font-weight: 600;
+            }
+
+            .links-table td {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+                vertical-align: top;
+            }
+
+            .links-table tr:hover {
+                background-color: #f9f9f9;
+            }
+
+        .link-category {
+            background-color: #e8f4ff;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .link-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .status-active {
+            background-color: var(--verde);
+            color: white;
+        }
+
+        .status-inactive {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .descricao-btn {
+            background-color: var(--azul-primario);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+            .descricao-btn:hover {
+                background-color: var(--azul-secundario);
+            }
+
+        .descricao-content {
+            display: none;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid var(--dourado);
+        }
+
+        /* Modal para imagens */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .close:hover {
+                color: #bbb;
+            }
+
+
+        /* Modal de Notícias */
+        #newsModal .modal-content {
+            max-width: 800px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .news-modal-title {
+            color: var(--azul-primario);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .news-modal-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+            .news-modal-meta span {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+        .news-modal-content {
+            line-height: 1.8;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .news-modal-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .news-read-more-btn {
+            background-color: var(--azul-primario);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+            .news-read-more-btn:hover {
+                background-color: var(--azul-secundario);
+            }
+
+        /* Modal de Vagas */
+        #vagaModal .modal-content {
+            max-width: 800px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .vaga-modal-title {
+            color: var(--azul-primario);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .vaga-modal-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .vaga-modal-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+        }
+
+            .vaga-modal-meta-item i {
+                color: var(--azul-primario);
+                width: 20px;
+            }
+
+        .vaga-modal-content {
+            line-height: 1.8;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .vaga-modal-section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .vaga-modal-section-title {
+            color: var(--azul-primario);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .apply-button {
+            background-color: var(--verde);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+            .apply-button:hover {
+                background-color: #218838;
+                color: white;
+            }
+
+        .requirements-list {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+            .requirements-list li {
+                margin-bottom: 8px;
+                line-height: 1.6;
+            }
+
+        /* ========== ESTILOS PARA MODAL DE VAGAS ========== */
+        #vagaModal .modal-content {
+            max-width: 850px;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .vaga-modal-title {
+            color: var(--azul-primario);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #eee;
+            font-size: 28px;
+        }
+
+        .vaga-modal-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .vaga-modal-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #333;
+        }
+
+            .vaga-modal-meta-item i {
+                color: var(--azul-primario);
+                width: 25px;
+                font-size: 18px;
+                text-align: center;
+            }
+
+            .vaga-modal-meta-item strong {
+                display: block;
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 5px;
+                font-weight: 600;
+            }
+
+            .vaga-modal-meta-item p {
+                margin: 0;
+                font-size: 16px;
+                font-weight: 500;
+                color: #333;
+            }
+
+        .vaga-modal-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+            .vaga-modal-section:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+        .vaga-modal-section-title {
+            color: var(--azul-primario);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+            .vaga-modal-section-title i {
+                color: var(--azul-primario);
+                font-size: 18px;
+            }
+
+        .vaga-modal-content {
+            line-height: 1.8;
+            color: #333;
+            font-size: 16px;
+        }
+
+            .vaga-modal-content p {
+                margin-bottom: 15px;
+                line-height: 1.7;
+            }
+
+        /* Estilos para lista de requisitos */
+        .requirements-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 15px 0;
+        }
+
+            .requirements-list li {
+                position: relative;
+                padding-left: 30px;
+                margin-bottom: 12px;
+                line-height: 1.6;
+                color: #333;
+                font-size: 16px;
+            }
+
+                .requirements-list li:before {
+                    content: "✓";
+                    position: absolute;
+                    left: 0;
+                    color: var(--verde);
+                    font-weight: bold;
+                    font-size: 16px;
+                    width: 20px;
+                    height: 20px;
+                    background: rgba(40, 167, 69, 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+        /* Botão de candidatura */
+        .apply-button {
+            background: linear-gradient(135deg, var(--verde) 0%, #1e7e34 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+            .apply-button:hover {
+                background: linear-gradient(135deg, #218838 0%, #1c7430 100%);
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+                color: white;
+                text-decoration: none;
+            }
+
+            .apply-button:active {
+                transform: translateY(-1px);
+                box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+            }
+
+        /* Ações do modal */
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+            .btn-secondary:hover {
+                background: #5a6268;
+                color: white;
+                transform: translateY(-2px);
+            }
+
+        /* Responsividade do modal */
+        @media (max-width: 768px) {
+            #vagaModal .modal-content {
+                padding: 25px 20px;
+                margin: 10px;
+            }
+
+            .vaga-modal-meta {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .vaga-modal-title {
+                font-size: 24px;
+            }
+
+            .apply-button {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn-secondary, .apply-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--azul-primario);
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--azul-primario);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Botões de ação */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--azul-primario);
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: var(--azul-secundario);
+            }
+
+        .btn-success {
+            background-color: var(--verde);
+            color: white;
+        }
+
+            .btn-success:hover {
+                background-color: #218838;
+            }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+            }
+
+        .btn-refresh {
+            background-color: var(--dourado);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 10px;
+        }
+
+            .btn-refresh:hover {
+                background-color: #b8941a;
+            }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .calendar-container {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-header {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            .tab-btn {
+                min-width: 140px;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .calendar-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .tab-btn {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .job-details {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== ESTILOS DO MODAL DE LOGIN ========== */
+        #loginModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            #loginModal .modal-content {
+                background: white;
+                padding: 40px;
+                border-radius: 12px;
+                max-width: 450px;
+                width: 90%;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+                animation: modalFadeIn 0.5s;
+            }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+            .login-logo i {
+                font-size: 48px;
+                color: var(--azul-primario);
+                margin-bottom: 15px;
+            }
+
+            .login-logo h2 {
+                color: var(--azul-primario);
+                margin-bottom: 10px;
+            }
+
+            .login-logo p {
+                color: #666;
+                font-size: 16px;
+            }
+
+        .login-form {
+            margin-top: 20px;
+        }
+
+            .login-form .form-group {
+                margin-bottom: 20px;
+            }
+
+            .login-form label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .login-form .form-control {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+                transition: border 0.3s;
+            }
+
+                .login-form .form-control:focus {
+                    border-color: var(--azul-primario);
+                    outline: none;
+                    box-shadow: 0 0 0 3px rgba(26, 78, 142, 0.1);
+                }
+
+        .password-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .login-instructions {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            border-left: 4px solid var(--azul-primario);
+        }
+
+            .login-instructions strong {
+                color: var(--azul-primario);
+            }
+
+        /* Botão de login */
+        .login-form .btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--azul-primario) 0%, #0a2c4e 100%);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .login-form .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(26, 78, 142, 0.3);
+            }
+
+        /* Classe para controlar visibilidade */
+        body:not(.logged-in) #mainContent {
+            display: none;
+        }
+
+        body:not(.logged-in) #loginModal {
+            display: flex;
+        }
+
+        body.logged-in #loginModal {
+            display: none;
+        }
+
+        body.logged-in #mainContent {
+            display: block;
+        }
+        
+    </style>
+
+    
+</head>
+<body>
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="login-logo">
+                <i class="fas fa-user-shield"></i>
+                <h2>Acesso de Membro</h2>
+                <p>Área do Membro AGETRHA</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="loginNome">Nome de Usuário</label>
+                    <input type="text" id="loginNome" class="form-control" placeholder="Seu nome ou usuário" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="loginSenha">Senha</label>
+                    <input type="password" id="loginSenha" class="form-control" placeholder="Sua senha" required>
+                    <span class="password-hint">Se esqueceu a sua senha, contacte a administração</span>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Entrar na Área do Membro
+                </button>
+            </form>
+
+            <div class="login-instructions">
+                <p><i class="fas fa-info-circle"></i> <strong>Acesso restrito:</strong> Esta área é exclusiva para membros da AGETRHA.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div id="mainContent" class="main-content"></div>
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div>
+                        <h1><i class="fas fa-users"></i> Área do Membro AGETRHA</h1>
+                        <p>Conectando e fortalecendo nossa comunidade</p>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h3>Membro AGETRHA</h3>
+                            <p>Nível: Associado Ativo</p>
+                            <button id="logoutBtn" style="
+                                background: #dc3545;
+                                color: white;
+                                border: none;
+                                padding: 5px 15px;
+                                border-radius: 4px;
+                                font-size: 12px;
+                                cursor: pointer;
+                                margin-top: 5px;
+                                display: none;
+                            ">
+                                <i class="fas fa-sign-out-alt"></i> Sair
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="resumo">
+                        <i class="fas fa-chart-line"></i> Resumo
+                    </button>
+                    <button class="tab-btn" data-tab="noticias">
+                        <i class="far fa-newspaper"></i> Notícias
+                    </button>
+                    <button class="tab-btn" data-tab="galeria">
+                        <i class="far fa-images"></i> Galeria
+                    </button>
+                    <button class="tab-btn" data-tab="atividades">
+                        <i class="fas fa-tasks"></i> Actividades
+                    </button>
+                    <button class="tab-btn" data-tab="vagas">
+                        <i class="fas fa-briefcase"></i> Vagas
+                    </button>
+                    <button class="tab-btn" data-tab="linksuteis">
+                        <i class="fas fa-external-link-alt"></i> Links Úteis
+                    </button>
+                    <button class="tab-btn" data-tab="agenda">
+                        <i class="far fa-calendar-alt"></i> Agenda
+                    </button>
+                </div>
+
+                <div class="tabs-content">
+
+                    <!-- Resumo -->
+                    <div id="resumo" class="tab-pane active">
+                        <div class="section-title">
+                            <span>Resumo da Área do Membro</span>
+                            <button class="btn-refresh" onclick="loadResumo()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card" onclick="loadNoticias()">
+                                <div id="total-noticias" class="stat-number">0</div>
+                                <p>Notícias Recentes</p>
+                                <i class="fas fa-newspaper fa-2x" style="color: #ddd; margin-top: 10px;"></i>
+                            </div>
+                            <div class="stat-card" onclick="loadAtividades()">
+                                <div id="total-eventos" class="stat-number">0</div>
+                                <p>Eventos Agendados</p>
+                                <i class="fas fa-calendar-check fa-2x" style="color: #ddd; margin-top: 10px;"></i>
+                            </div>
+                            <div class="stat-card" onclick="loadVagas()">
+                                <div id="total-vagas" class="stat-number">0</div>
+                                <p>Vagas Ativas</p>
+                                <i class="fas fa-briefcase fa-2x" style="color: #ddd; margin-top: 10px;"></i>
+                            </div>
+                            <div class="stat-card" onclick="loadLinksUteis()">
+                                <div id="total-links" class="stat-number">0</div>
+                                <p>Links Úteis</p>
+                                <i class="fas fa-link fa-2x" style="color: #ddd; margin-top: 10px;"></i>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
+                            <div>
+                                <h3 style="color: var(--azul-primario); margin-bottom: 15px;">
+                                    Próximos Eventos
+                                    <button class="btn-refresh" onclick="loadProximosEventos()">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </h3>
+                                <div id="proximos-eventos" class="activities-list">
+                                    <div class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando eventos...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style="color: var(--azul-primario); margin-bottom: 15px;">
+                                    Vagas em Destaque
+                                    <button class="btn-refresh" onclick="loadVagasDestaque()">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </h3>
+                                <div id="vagas-destaque" class="jobs-list">
+                                    <div class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando vagas...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal para Notícias -->
+                    <div id="newsModal" class="modal">
+                        <span class="close" onclick="closeNewsModal()">&times;</span>
+                        <div class="modal-content" style="max-width: 800px; background: white; padding: 30px; border-radius: 10px;">
+                            <div id="newsModalContent">
+                                <!-- Conteúdo será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal para Vagas -->
+                    <div id="vagaModal" class="modal">
+                        <span class="close" onclick="closeVagaModal()">&times;</span>
+                        <div class="modal-content">
+                            <div id="vagaModalContent">
+                                <!-- Conteúdo será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal para imagens da galeria -->
+                    <div id="imageModal" class="modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-content" id="modalImage">
+                        <div id="modalCaption" style="text-align: center; color: white; padding: 20px;"></div>
+                    </div>
+
+                    <!-- Notícias -->
+                    <div id="noticias" class="tab-pane">
+                        <div class="section-title">
+                            <span>Últimas Notícias</span>
+                            <button class="btn-refresh" onclick="loadNoticias()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                        <div id="noticias-container">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                <p>Carregando notícias...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Galeria -->
+                    <div id="galeria" class="tab-pane">
+                        <div class="section-title">
+                            <span>Galeria de Fotos</span>
+                            <button class="btn-refresh" onclick="loadGaleria()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                        <div id="galeria-container">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                <p>Carregando galeria...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Atividades -->
+                    <div id="atividades" class="tab-pane">
+                        <div class="section-title">
+                            <span>Actividades e Eventos</span>
+                            <button class="btn-refresh" onclick="loadAtividades()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                        <div id="atividades-container">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                <p>Carregando actividades...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vagas -->
+                    <div id="vagas" class="tab-pane">
+                        <div class="section-title">
+                            <span>Vagas de Emprego</span>
+                            <button class="btn-refresh" onclick="loadVagas()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                        <div id="vagas-container">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                <p>Carregando vagas...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Links Úteis -->
+                    <div id="linksuteis" class="tab-pane">
+                        <div class="section-title">
+                            <span>Links Úteis</span>
+                            <button class="btn-refresh" onclick="loadLinksUteis()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                        <div class="links-table-container">
+                            <table class="links-table">
+                                <thead>
+                                    <tr>
+                                        <th>Título</th>
+                                        <th>Categoria</th>
+                                        <th>URL</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="links-container">
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; padding: 40px;">
+                                            <div class="loading">
+                                                <div class="loading-spinner"></div>
+                                                <p>Carregando links...</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Agenda -->
+                    <div id="agenda" class="tab-pane">
+                        <div class="section-title">
+                            <span>Agenda e Calendário</span>
+                            <button class="btn-refresh" onclick="loadAgenda()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
+                        <div class="calendar-container">
+                            <div>
+                                <h3 style="color: var(--azul-primario); margin-bottom: 15px;">Calendário</h3>
+                                <div id="calendar"></div>
+                            </div>
+                            <div>
+                                <h3 style="color: var(--azul-primario); margin-bottom: 15px;">Próximos Eventos</h3>
+                                <div id="agenda-eventos" class="events-list">
+                                    <div class="loading">
+                                        <div class="loading-spinner"></div>
+                                        <p>Carregando eventos da agenda...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script>
+            // Configuração
+            const GAS_URL = 'https://script.google.com/macros/s/AKfycbx-KJdZk7z3Qwo79kbvVVXngOqphapGUuSTNKoqU3LXENMNDlS8-Ro16WUmXPu2z4U/exec';
+            const GAS_URL_ADMIN = 'https://script.google.com/macros/s/AKfycbwgdVpnKCLAhNQpmKJ1ofTw_FT6tYLunltzN9zCJ4_eJET54gZKQ0bmeBI4YUUjIsaKWg/exec';
+
+            // Função para mostrar mensagens
+            function mostrarMensagem(tipo, texto) {
+                // Criar elemento de mensagem se não existir
+                let mensagemDiv = document.getElementById('loginMessage');
+                if (!mensagemDiv) {
+                    mensagemDiv = document.createElement('div');
+                    mensagemDiv.id = 'loginMessage';
+                    mensagemDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            animation: slideIn 0.3s;
+        `;
+                    document.body.appendChild(mensagemDiv);
+                }
+
+                // Configurar estilo baseado no tipo
+                if (tipo === 'success') {
+                    mensagemDiv.style.background = 'linear-gradient(135deg, #28a745 0%, #1e7e34 100%)';
+                    mensagemDiv.style.boxShadow = '0 5px 15px rgba(40, 167, 69, 0.3)';
+                } else {
+                    mensagemDiv.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
+                    mensagemDiv.style.boxShadow = '0 5px 15px rgba(220, 53, 69, 0.3)';
+                }
+
+                mensagemDiv.innerHTML = `
+        <i class="fas fa-${tipo === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+        ${texto}
+    `;
+
+                // Remover após 5 segundos
+                setTimeout(() => {
+                    mensagemDiv.style.animation = 'slideOut 0.3s forwards';
+                    setTimeout(() => mensagemDiv.remove(), 300);
+                }, 5000);
+            }
+
+            // Adicionar animação para remover mensagem
+            if (!document.querySelector('#messageStyles')) {
+                const style = document.createElement('style');
+                style.id = 'messageStyles';
+                style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+                document.head.appendChild(style);
+            }
+
+            // Verificar se usuário já está logado
+            function verificarLogin() {
+                const logado = localStorage.getItem('agetrha_membro_logado');
+
+                if (logado === 'true') {
+                    document.body.classList.add('logged-in');
+
+                    // Atualizar informações do usuário
+                    const nome = localStorage.getItem('agetrha_membro_nome') || 'Membro AGETRHA';
+                    const nivel = localStorage.getItem('agetrha_membro_nivel') || 'Associado Ativo';
+
+                    document.querySelector('.user-info h3').textContent = nome;
+                    document.querySelector('.user-info p').textContent = `Nível: ${nivel}`;
+
+                    configurarLogout(); // Adicionar botão de logout
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            function limparCamposLogin() {
+                const loginNome = document.getElementById('loginNome');
+                const loginSenha = document.getElementById('loginSenha');
+
+                if (loginNome && loginSenha) {
+                    // Só limpar se o usuário não estiver logado
+                    const logado = localStorage.getItem('agetrha_membro_logado');
+                    if (logado !== 'true') {
+                        loginNome.value = '';
+                        loginSenha.value = '';
+                    }
+                }
+            }
+
+            // Chamar esta função sempre que a página carregar
+            document.addEventListener('DOMContentLoaded', function () {
+                // ... seu código existente ...
+
+                // Adicionar esta linha
+                limparCamposLogin();
+            });
+
+            // Função de logout
+            function logout() {
+                // Remover dados do localStorage
+                localStorage.removeItem('agetrha_membro_logado');
+                localStorage.removeItem('agetrha_membro_nome');
+                localStorage.removeItem('agetrha_membro_nivel');
+
+                // Limpar campos do formulário de login
+                const loginNome = document.getElementById('loginNome');
+                const loginSenha = document.getElementById('loginSenha');
+
+                if (loginNome) loginNome.value = '';
+                if (loginSenha) loginSenha.value = '';
+
+                // Remover classe logged-in do body
+                document.body.classList.remove('logged-in');
+
+                // Focar no campo de nome para próxima entrada
+                setTimeout(() => {
+                    if (loginNome) loginNome.focus();
+                }, 100);
+
+                mostrarMensagem('success', 'Logout realizado com sucesso! Seus dados foram removidos com segurança.');
+
+                // Resetar informações do usuário
+                document.querySelector('.user-avatar').innerHTML = `<i class="fas fa-user"></i>`;
+                document.querySelector('.user-info h3').textContent = 'Membro AGETRHA';
+                document.querySelector('.user-info p').textContent = 'Nível: Associado Ativo';
+
+                // Esconder botão de logout
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.style.display = 'none';
+                }
+            }
+
+
+            // Configurar timeout automático após 30 minutos de inatividade
+            let inactivityTimer;
+
+            function resetInactivityTimer() {
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(() => {
+                    const logado = localStorage.getItem('agetrha_membro_logado');
+                    if (logado === 'true') {
+                        if (confirm('Sua sessão expirou por inatividade. Deseja permanecer logado?')) {
+                            resetInactivityTimer();
+                        } else {
+                            logout();
+                        }
+                    }
+                }, 30 * 60 * 1000); // 30 minutos
+            }
+
+            // Adicionar event listeners para atividade do usuário
+            ['click', 'mousemove', 'keypress', 'scroll'].forEach(event => {
+                document.addEventListener(event, resetInactivityTimer);
+            });
+
+            // Iniciar timer quando logado
+            if (localStorage.getItem('agetrha_membro_logado') === 'true') {
+                resetInactivityTimer();
+            }
+
+
+            // Configurar botão de logout quando usuário estiver logado
+            function configurarLogout() {
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.style.display = 'block';
+                    logoutBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        if (confirm('Tem certeza que deseja sair?')) {
+                            logout();
+                        }
+                    });
+                }
+            }
+
+            // Função para chamar o GAS (para dados - notícias, vagas, etc.)
+            // Função para chamar o GAS 1 (para dados - notícias, vagas, etc.) - SEM JSONP!
+            async function callGAS(action, params = {}) {
+                try {
+                    const url = new URL(GAS_URL);
+                    url.searchParams.append('action', action);
+
+                    // Adicionar parâmetros
+                    Object.keys(params).forEach(key => {
+                        url.searchParams.append(key, params[key]);
+                    });
+
+                    console.log(`🔗 Chamando GAS 1: ${url.toString()}`);
+
+                    const response = await fetch(url);
+
+                    // O GAS 1 retorna JSON PURO, não JSONP
+                    const data = await response.json();
+
+                    console.log(`📊 Resposta do GAS 1 para ${action}:`, data);
+
+                    if (!data.success) {
+                        throw new Error(data.error || data.message || 'Erro desconhecido');
+                    }
+
+                    return data.data || data;
+
+                } catch (error) {
+                    console.error(`❌ Erro na ação ${action}:`, error);
+                    throw error;
+                }
+            }
+
+            // Função para chamar o GAS 2 (para login de membro)
+            async function callGAS2(action, params = {}) {
+                try {
+                    const url = new URL(GAS_URL_ADMIN);
+                    url.searchParams.append('action', action);
+
+                    // Adicionar parâmetros
+                    Object.keys(params).forEach(key => {
+                        url.searchParams.append(key, params[key]);
+                    });
+
+                    // Adicionar callback para JSONP
+                    url.searchParams.append('callback', 'callback');
+
+                    const response = await fetch(url);
+                    const text = await response.text();
+
+                    // Remover o wrapper JSONP e parsear JSON
+                    const jsonString = text.replace(/^callback\(/, '').replace(/\);$/, '');
+                    const data = JSON.parse(jsonString);
+
+                    if (!data.success) {
+                        throw new Error(data.message || data.error || 'Erro desconhecido');
+                    }
+
+                    return data;
+                } catch (error) {
+                    console.error(`Erro na ação ${action} (GAS 2):`, error);
+                    throw error;
+                }
+            }
+
+            // Sistema de Login
+            async function realizarLogin(nome, senha) {
+                try {
+                    console.log('🔐 Tentando login...');
+
+                    // Enviar dados para o GAS 2 usando callGAS2
+                    const resultado = await callGAS2('loginUsuario', {
+                        nome: nome,
+                        senha: senha
+                    });
+
+                    console.log('📊 Resultado do login:', resultado);
+
+                    if (resultado.success) {
+                        // Login bem-sucedido
+                        localStorage.setItem('agetrha_membro_logado', 'true');
+                        localStorage.setItem('agetrha_membro_nome', resultado.nome || nome);
+                        localStorage.setItem('agetrha_membro_nivel', resultado.nivel || 'membro');
+
+                        // Atualizar interface do usuário
+                        document.querySelector('.user-avatar').innerHTML = `<i class="fas fa-user-check"></i>`;
+                        document.querySelector('.user-info h3').textContent = resultado.nome || nome;
+                        document.querySelector('.user-info p').textContent = `Nível: ${resultado.nivel || 'Membro'}`;
+
+                        // Mostrar conteúdo principal
+                        document.body.classList.add('logged-in');
+
+                        mostrarMensagem('success', `Bem-vindo(a), ${resultado.nome || nome}!`);
+
+                        // Configurar botão de logout
+                        configurarLogout();
+
+                        return true;
+                    } else {
+                        throw new Error(resultado.message || 'Login falhou');
+                    }
+
+                } catch (error) {
+                    console.error('❌ Erro no login:', error);
+                    mostrarMensagem('error', 'Erro no login: ' + error.message);
+                    return false;
+                }
+            }
+
+            // Formatar data
+            function formatDate(dateString) {
+                if (!dateString) return 'Data não informada';
+
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return dateString;
+
+                return date.toLocaleDateString('pt-PT', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+            }
+
+            // Formatar data completa
+            function formatDateTime(dateString) {
+                if (!dateString) return 'Data não informada';
+
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return dateString;
+
+                return date.toLocaleDateString('pt-PT', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            // Inicializar quando a página carregar
+            document.addEventListener('DOMContentLoaded', function () {
+                // Configurar sistema de login
+                const loginForm = document.getElementById('loginForm');
+
+                if (loginForm) {
+                    loginForm.addEventListener('submit', async function (e) {
+                        e.preventDefault();
+
+                        const nome = document.getElementById('loginNome').value;
+                        const senha = document.getElementById('loginSenha').value;
+
+                        if (!nome || !senha) {
+                            mostrarMensagem('error', 'Por favor, preencha nome e senha');
+                            return;
+                        }
+
+                        // Mostrar loading
+                        const submitBtn = this.querySelector('button[type="submit"]');
+                        const originalText = submitBtn.innerHTML;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+                        submitBtn.disabled = true;
+
+                        try {
+                            const loginSucesso = await realizarLogin(nome, senha);
+
+                            if (loginSucesso) {
+                                // Carregar conteúdo da área do membro
+                                carregarConteudoMembro();
+                            }
+                        } catch (error) {
+                            console.error('Erro no login:', error);
+                        } finally {
+                            // Restaurar botão
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        }
+                    });
+                }
+
+                // Verificar se já está logado
+                const jaLogado = verificarLogin();
+
+                if (jaLogado) {
+                    // Usuário já logado - carregar conteúdo
+                    carregarConteudoMembro();
+                }
+
+                // Focar no campo de nome ao carregar o modal
+                setTimeout(() => {
+                    const loginNomeInput = document.getElementById('loginNome');
+                    if (loginNomeInput) {
+                        loginNomeInput.focus();
+                    }
+                }, 500);
+            });
+
+            // Sistema de abas corrigido
+            function setupTabs() {
+                console.log('⚙️ Configurando sistema de abas...');
+
+                document.querySelectorAll('.tab-btn').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const tabId = this.getAttribute('data-tab');
+
+                        console.log(`🔄 Alternando para aba: ${tabId}`);
+
+                        // Remover classe active de todos
+                        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+                        // Adicionar classe active ao clicado
+                        this.classList.add('active');
+                        document.getElementById(tabId).classList.add('active');
+
+                        // Chamar loadTabData se a função existir
+                        if (typeof loadTabData === 'function') {
+                            loadTabData(tabId);
+                        }
+                    });
+                });
+
+                console.log(`✅ ${document.querySelectorAll('.tab-btn').length} abas configuradas`);
+            }
+
+            // Função para carregar o conteúdo da área do membro após login
+            async function carregarConteudoMembro() {
+                try {
+                    console.log('📂 Carregando conteúdo da área do membro...');
+
+                    
+                    // Inicializar sistema de abas
+                    if (typeof setupTabs === 'function') {
+                        setupTabs();
+                    }
+
+                    // Marcar que o resumo foi carregado
+                    loadedTabs.resumo = true;
+
+                    // Mostrar mensagem de sucesso
+                    mostrarMensagem('success', 'Área do membro carregada com sucesso!');
+
+                } catch (error) {
+                    console.error('❌ Erro ao carregar conteúdo:', error);
+                }
+            }
+
+            // ==============================================
+            // VARIÁVEIS E FUNÇÕES QUE O SEU SISTEMA DE ABAS PRECISA
+            // (Adicione apenas isso para resolver os erros)
+            // ==============================================
+
+            // Objeto para controlar quais abas já foram carregadas
+            const loadedTabs = {
+                resumo: false,
+                noticias: false,
+                galeria: false,
+                atividades: false,
+                vagas: false,
+                linksuteis: false,
+                agenda: false
+            };
+
+            // Função básica para carregar dados de uma aba
+            function loadTabData(tabId) {
+                console.log(`📂 Tentando carregar aba: ${tabId}`);
+
+                if (!loadedTabs[tabId]) {
+                    switch (tabId) {
+                        case 'noticias':
+                            console.log('📰 Carregando notícias...');
+                            // Aqui deve estar a função loadNoticias() que já existe
+                            if (typeof loadNoticias === 'function') {
+                                loadNoticias();
+                            }
+                            break;
+                        case 'galeria':
+                            console.log('🖼️ Carregando galeria...');
+                            if (typeof loadGaleria === 'function') {
+                                loadGaleria();
+                            }
+                            break;
+                        case 'atividades':
+                            console.log('📅 Carregando atividades...');
+                            if (typeof loadAtividades === 'function') {
+                                loadAtividades();
+                            }
+                            break;
+                        case 'vagas':
+                            console.log('💼 Carregando vagas...');
+                            if (typeof loadVagas === 'function') {
+                                loadVagas();
+                            }
+                            break;
+                        case 'linksuteis':
+                            console.log('🔗 Carregando links...');
+                            if (typeof loadLinksUteis === 'function') {
+                                loadLinksUteis();
+                            }
+                            break;
+                        case 'agenda':
+                            console.log('📆 Carregando agenda...');
+                            if (typeof loadAgenda === 'function') {
+                                loadAgenda();
+                            }
+                            break;
+                        default:
+                            console.log(`ℹ️ Aba ${tabId} não requer carregamento especial`);
+                    }
+                    loadedTabs[tabId] = true;
+                } else {
+                    console.log(`ℹ️ Aba ${tabId} já foi carregada anteriormente`);
+                }
+            }
+
+            // Função para testar conexão (atualizada)
+            async function testConnection() {
+                try {
+                    // Usar uma ação que realmente existe no GAS 1
+                    const resultado = await callGAS('getEstatisticas');
+                    console.log('✅ Conexão com GAS 1 estabelecida com sucesso!');
+                    return true;
+                } catch (error) {
+                    console.error('❌ Erro na conexão com GAS 1:', error);
+                    return false;
+                }
+            }
+                
+
+                // Formatar data
+                function formatDate(dateString) {
+                    if (!dateString) return 'Data não informada';
+
+                    const date = new Date(dateString);
+                    if (isNaN(date.getTime())) return dateString;
+
+                    return date.toLocaleDateString('pt-PT', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    });
+                }
+
+                // Formatar data completa
+                function formatDateTime(dateString) {
+                    if (!dateString) return 'Data não informada';
+
+                    const date = new Date(dateString);
+                    if (isNaN(date.getTime())) return dateString;
+
+                    return date.toLocaleDateString('pt-PT', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                }
+
+                // Carregar Resumo
+                async function loadResumo() {
+                    try {
+                        const estatisticas = await callGAS('getEstatisticas');
+                        const eventos = await callGAS('getEventos');
+                        const vagas = await callGAS('getVagas');
+
+                        // Atualizar totais
+                        document.getElementById('total-noticias').textContent = estatisticas.noticias || 0;
+                        document.getElementById('total-eventos').textContent = estatisticas.eventos || 0;
+                        document.getElementById('total-vagas').textContent = estatisticas.vagas || 0;
+                        document.getElementById('total-links').textContent = estatisticas.links || 0;
+
+                        // Carregar próximos eventos e vagas em destaque
+                        await loadProximosEventos();
+                        await loadVagasDestaque();
+
+                    } catch (error) {
+                        console.error('Erro ao carregar resumo:', error);
+                        showError('resumo', 'Erro ao carregar dados do resumo');
+                    }
+                }
+
+                // Carregar Próximos Eventos
+                async function loadProximosEventos() {
+                    try {
+                        const eventos = await callGAS('getEventos');
+                        const container = document.getElementById('proximos-eventos');
+
+                        // Filtrar eventos futuros e ordenar por data
+                        const hoje = new Date();
+                        const eventosFuturos = eventos
+                            .filter(evento => {
+                                const dataEvento = new Date(evento.data || evento.datacriacao);
+                                return dataEvento >= hoje && evento.status === 'agendado';
+                            })
+                            .sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao))
+                            .slice(0, 3); // Limitar a 3 eventos
+
+                        if (eventosFuturos.length === 0) {
+                            container.innerHTML = '<div class="activity-item"><p>Não há eventos futuros agendados.</p></div>';
+                            return;
+                        }
+
+                        container.innerHTML = eventosFuturos.map(evento => `
+                                    <div class="activity-item">
+                                        <div class="activity-icon">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                        <div>
+                                            <strong>${evento.titulo || 'Evento sem título'}</strong>
+                                            <p><i class="far fa-clock"></i> ${formatDateTime(evento.data || evento.datacriacao)}</p>
+                                            <p><i class="fas fa-map-marker-alt"></i> ${evento.local || 'Local não informado'}</p>
+                                        </div>
+                                    </div>
+                                `).join('');
+
+                    } catch (error) {
+                        console.error('Erro ao carregar próximos eventos:', error);
+                        document.getElementById('proximos-eventos').innerHTML =
+                            '<div class="activity-item"><p>Erro ao carregar eventos.</p></div>';
+                    }
+                }
+
+                // Carregar Vagas em Destaque (para o resumo)
+                async function loadVagasDestaque() {
+                    try {
+                        const vagas = await callGAS('getVagas');
+                        const container = document.getElementById('vagas-destaque');
+
+                        // Filtrar vagas ativas e limitar a 3
+                        const vagasAtivas = vagas
+                            .filter(vaga => vaga.status === 'ativa')
+                            .slice(0, 3);
+
+                        // Armazenar vagas globalmente para acesso no modal (para o resumo)
+                        window.vagasDestaqueData = vagasAtivas;
+
+                        if (vagasAtivas.length === 0) {
+                            container.innerHTML = '<div class="job-item"><p>Não há vagas em destaque no momento.</p></div>';
+                            return;
+                        }
+
+                        container.innerHTML = vagasAtivas.map(vaga => `
+                            <div class="job-item">
+                                <div class="job-title">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>${vaga.titulo || 'Vaga sem título'}</span>
+                                </div>
+                                <div class="job-company">${vaga.empresa || 'Empresa não informada'}</div>
+                                <div class="job-details">
+                                    <span class="job-detail"><i class="fas fa-map-marker-alt"></i> ${vaga.local || 'Local não informado'}</span>
+                                    <span class="job-detail"><i class="fas fa-money-bill-wave"></i> ${vaga.salario || 'A combinar'}</span>
+                                </div>
+                                <p style="margin: 10px 0; color: #555;">${vaga.descricao ? vaga.descricao.substring(0, 100) + '...' : 'Descrição não disponível'}</p>
+                                ${vaga.requisitos ? `<p style="color: #555; font-size: 14px;"><strong>Requisitos:</strong> ${vaga.requisitos.substring(0, 80)}...</p>` : ''}
+                                <button class="job-link" onclick="viewVaga('${vaga.id}')">Ver Detalhes</button>
+                            </div>
+                        `).join('');
+
+                    } catch (error) {
+                        console.error('Erro ao carregar vagas em destaque:', error);
+                        document.getElementById('vagas-destaque').innerHTML =
+                            '<div class="job-item"><p>Erro ao carregar vagas.</p></div>';
+                    }
+                }
+
+
+
+                // Abrir modal da notícia
+                function openNewsModal(index) {
+                    console.log('📖 Abrindo notícia, índice:', index);
+                    console.log('📊 Dados disponíveis:', window.noticiasData ? window.noticiasData.length : 0);
+
+                    if (!window.noticiasData || !window.noticiasData[index]) {
+                        console.error('❌ Notícia não encontrada no índice:', index);
+                        alert('Erro ao carregar a notícia. Por favor, recarregue a página.');
+                        return;
+                    }
+
+                    const noticia = window.noticiasData[index];
+                    console.log('📰 Notícia encontrada:', noticia.titulo);
+
+                    const modal = document.getElementById('newsModal');
+                    const modalContent = document.getElementById('newsModalContent');
+
+                    modalContent.innerHTML = `
+                        <h2 class="news-modal-title">${noticia.titulo || 'Notícia sem título'}</h2>
+
+                        <div class="news-modal-meta">
+                            <span><i class="far fa-calendar"></i> Publicado em: ${formatDate(noticia.data || noticia.datacriacao)}</span>
+                            ${noticia.dataatualizacao ? `<span><i class="far fa-clock"></i> Atualizado em: ${formatDate(noticia.dataatualizacao)}</span>` : ''}
+                            ${noticia.categoria ? `<span><i class="fas fa-tag"></i> ${noticia.categoria}</span>` : ''}
+                        </div>
+
+                        ${noticia.imagem ? `
+                            <img src="${noticia.imagem}" class="news-modal-image" alt="${noticia.titulo}"
+                                 onerror="this.style.display='none'">
+                        ` : ''}
+
+                        <div class="news-modal-content">
+                            <p style="white-space: pre-line; line-height: 1.8;">${noticia.descricao || 'Descrição não disponível.'}</p>
+                        </div>
+
+                        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+                            <button onclick="closeNewsModal()" style="background: var(--azul-primario); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                                <i class="fas fa-times"></i> Fechar
+                            </button>
+                        </div>
+                    `;
+
+                    modal.style.display = "block";
+                }
+
+                // Fechar modal da notícia
+                function closeNewsModal() {
+                    document.getElementById('newsModal').style.display = "none";
+                }
+
+                // Fechar modal ao clicar fora
+                window.onclick = function (event) {
+                    const modal = document.getElementById('newsModal');
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+
+                // Abrir modal da vaga
+                function openVagaModal(vagaId) {
+                    console.log('🔍 Buscando vaga com ID:', vagaId);
+
+                    // Primeiro, tentar encontrar a vaga em todas as vagas carregadas
+                    let vaga = null;
+
+                    // 1. Tentar nas vagas em destaque (resumo)
+                    if (window.vagasDestaqueData) {
+                        vaga = window.vagasDestaqueData.find(v => v.id === vagaId);
+                    }
+
+                    // 2. Se não encontrou, tentar em todas as vagas (aba vagas)
+                    if (!vaga && window.todasVagasData) {
+                        vaga = window.todasVagasData.find(v => v.id === vagaId);
+                    }
+
+                    // 3. Se ainda não encontrou, usar dados temporários
+                    if (!vaga && window.vagaDetalheTemp) {
+                        vaga = window.vagaDetalheTemp.find(v => v.id === vagaId);
+                    }
+
+                    if (!vaga) {
+                        console.error('❌ Vaga não encontrada com ID:', vagaId);
+                        alert('Vaga não encontrada. Tente recarregar a página.');
+                        return;
+                    }
+
+                    console.log('✅ Vaga encontrada:', vaga.titulo);
+                    console.log('📋 Requisitos disponíveis:', vaga.requisitos ? 'Sim' : 'Não');
+
+                    const modal = document.getElementById('vagaModal');
+                    const modalContent = document.getElementById('vagaModalContent');
+
+                    // Processar requisitos (se for string, converter para lista)
+                    let requisitosHTML = '';
+                    if (vaga.requisitos) {
+                        console.log('📝 Processando requisitos:', vaga.requisitos.substring(0, 100));
+
+                        if (typeof vaga.requisitos === 'string') {
+                            // Limpar a string de requisitos
+                            const requisitosStr = vaga.requisitos.trim();
+
+                            // Verificar se já está formatado com marcadores
+                            if (requisitosStr.includes('•') || requisitosStr.includes('-') || requisitosStr.includes('*') || requisitosStr.includes('\n')) {
+                                // Dividir por quebras de linha ou marcadores
+                                const linhas = requisitosStr.split(/\n|•|-|\*/).filter(linha => linha.trim() !== '');
+                                requisitosHTML = `
+                                    <ul class="requirements-list">
+                                        ${linhas.map(linha => `<li>${linha.trim()}</li>`).join('')}
+                                    </ul>
+                                `;
+                            } else {
+                                // Se não tiver marcadores, mostrar como parágrafo
+                                requisitosHTML = `<p style="white-space: pre-line; padding: 10px; background: #f8f9fa; border-radius: 5px;">${requisitosStr}</p>`;
+                            }
+                        } else {
+                            // Se não for string, converter
+                            requisitosHTML = `<p>${String(vaga.requisitos)}</p>`;
+                        }
+                    }
+
+                    // Construir o HTML do modal
+                    modalContent.innerHTML = `
+                        <h2 class="vaga-modal-title">${vaga.titulo || 'Vaga sem título'}</h2>
+
+                        <div class="vaga-modal-meta">
+                            <div class="vaga-modal-meta-item">
+                                <i class="fas fa-building"></i>
+                                <div>
+                                    <strong>Empresa</strong>
+                                    <p>${vaga.empresa || 'Não informada'}</p>
+                                </div>
+                            </div>
+
+                            <div class="vaga-modal-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <strong>Localidade</strong>
+                                    <p>${vaga.local || 'Não informado'}</p>
+                                </div>
+                            </div>
+
+                            <div class="vaga-modal-meta-item">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <div>
+                                    <strong>Salário</strong>
+                                    <p>${vaga.salario || 'A combinar'}</p>
+                                </div>
+                            </div>
+
+                            <div class="vaga-modal-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <strong>Tipo de Vaga</strong>
+                                    <p>${vaga.tipo === 'integral' ? 'Período Integral' :
+                            vaga.tipo === 'meio-periodo' ? 'Meio Período' :
+                                vaga.tipo === 'freelance' ? 'Freelance' :
+                                    vaga.tipo || 'Período Integral'}</p>
+                                </div>
+                            </div>
+
+                            <div class="vaga-modal-meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <div>
+                                    <strong>Data de Publicação</strong>
+                                    <p>${formatDate(vaga.datacriacao)}</p>
+                                </div>
+                            </div>
+
+                            <div class="vaga-modal-meta-item">
+                                <i class="fas fa-badge-check"></i>
+                                <div>
+                                    <strong>Status</strong>
+                                    <p><span style="background: ${vaga.status === 'ativa' ? '#28a745' : '#dc3545'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">
+                                        ${vaga.status === 'ativa' ? 'Ativa' : 'Inativa'}
+                                    </span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="vaga-modal-section">
+                            <h3 class="vaga-modal-section-title">
+                                <i class="fas fa-file-alt"></i> Descrição da Vaga
+                            </h3>
+                            <div class="vaga-modal-content">
+                                <p style="white-space: pre-line;">${vaga.descricao || 'Descrição não disponível.'}</p>
+                            </div>
+                        </div>
+
+                        ${vaga.requisitos ? `
+                        <div class="vaga-modal-section">
+                            <h3 class="vaga-modal-section-title">
+                                <i class="fas fa-list-check"></i> Requisitos
+                            </h3>
+                            <div class="vaga-modal-content">
+                                ${requisitosHTML}
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center;">
+                            ${vaga.link ? `
+                                <a href="${vaga.link}" target="_blank" class="apply-button">
+                                    <i class="fas fa-paper-plane"></i> Candidatar-me
+                                </a>
+                                <p style="margin-top: 10px; font-size: 14px; color: #666;">
+                                    <i class="fas fa-external-link-alt"></i> Você será redirecionado para o site da empresa
+                                </p>
+                            ` : `
+                                <p style="color: #dc3545; margin-bottom: 20px;">
+                                    <i class="fas fa-exclamation-triangle"></i> Link de candidatura não disponível.
+                                </p>
+                            `}
+
+                            <button onclick="closeVagaModal()" style="background: #666; color: white; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-size: 14px; margin-left: 15px;">
+                                <i class="fas fa-times"></i> Fechar
+                            </button>
+                        </div>
+                    `;
+
+                    modal.style.display = "block";
+                }
+
+
+                // Fechar modal da vaga
+                function closeVagaModal() {
+                    document.getElementById('vagaModal').style.display = "none";
+                }
+
+                // Carregar Notícias
+                async function loadNoticias() {
+                    try {
+                        const container = document.getElementById('noticias-container');
+                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando notícias...</p></div>';
+
+                        const noticias = await callGAS('getNoticias');
+                        loadedTabs.noticias = true;
+
+                        if (!noticias || noticias.length === 0) {
+                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma notícia disponível.</p>';
+                            return;
+                        }
+
+                        // Ordenar por data mais recente
+                        noticias.sort((a, b) => new Date(b.data || b.datacriacao) - new Date(a.data || a.datacriacao));
+
+                        container.innerHTML = `
+                    <div class="news-grid">
+                        ${noticias.map((noticia, index) => `
+                            <div class="news-card" onclick="openNewsModal(${index})" style="cursor: pointer;">
+                                ${noticia.imagem ? `
+                                    <img src="${noticia.imagem}" class="news-img" alt="${noticia.titulo}"
+                                         onerror="this.src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                                ` : `
+                                    <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                         class="news-img" alt="Imagem padrão">
+                                `}
+                                <div class="news-content">
+                                    <h3>${noticia.titulo || 'Notícia sem título'}</h3>
+                                    <p>${noticia.descricao ? noticia.descricao.substring(0, 150) + '...' : 'Descrição não disponível'}</p>
+                                    <p class="news-date">
+                                        <i class="far fa-clock"></i> ${formatDate(noticia.data || noticia.datacriacao)}
+                                        ${noticia.categoria ? `<span style="margin-left: 10px; background: #e8f4ff; padding: 3px 8px; border-radius: 12px; font-size: 12px;">${noticia.categoria}</span>` : ''}
+                                    </p>
+                                    <button class="news-read-more-btn" onclick="event.stopPropagation(); openNewsModal(${index})">
+                                        <i class="fas fa-book-open"></i> Ler notícia completa
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+`;
+
+                        // Guardar as notícias em uma variável global para acesso no modal
+                        window.noticiasData = noticias;
+
+                    } catch (error) {
+                        console.error('Erro ao carregar notícias:', error);
+                        document.getElementById('noticias-container').innerHTML =
+                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar notícias.</p>';
+                    }
+                }
+
+                console.log('✅ Notícias carregadas do GAS:', noticias.length);
+                console.log('📋 Primeira notícia:', noticias[0] ? noticias[0].titulo : 'Nenhuma');
+
+
+                // Carregar Galeria
+                async function loadGaleria() {
+                    try {
+                        const container = document.getElementById('galeria-container');
+                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando galeria...</p></div>';
+
+                        const fotos = await callGAS('getGaleria');
+                        loadedTabs.galeria = true;
+
+                        if (!fotos || fotos.length === 0) {
+                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma foto na galeria.</p>';
+                            return;
+                        }
+
+                        // Ordenar por data mais recente
+                        fotos.sort((a, b) => new Date(b.data || b.datacriacao) - new Date(a.data || a.datacriacao));
+
+                        container.innerHTML = `
+                                    <div class="gallery-grid">
+                                        ${fotos.filter(foto => foto.status === 'ativo').map(foto => `
+                                            <div class="gallery-item" onclick="openImageModal('${foto.url}', '${foto.titulo || ''}')">
+                                                <img src="${foto.thumbnail || foto.url || 'https://via.placeholder.com/300x200'}"
+                                                     class="gallery-img" alt="${foto.titulo || 'Foto'}"
+                                                     onerror="this.src='https://via.placeholder.com/300x200'">
+                                                <div class="gallery-caption">
+                                                    <h4>${foto.titulo || 'Foto sem título'}</h4>
+                                                    <p style="color: #666; font-size: 14px;">${formatDate(foto.data || foto.datacriacao)}</p>
+                                                    ${foto.descricao ? `<p style="margin-top: 5px; font-size: 14px;">${foto.descricao.substring(0, 50)}...</p>` : ''}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                `;
+
+                    } catch (error) {
+                        console.error('Erro ao carregar galeria:', error);
+                        document.getElementById('galeria-container').innerHTML =
+                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar galeria.</p>';
+                    }
+                }
+
+                // Modal para imagens
+            function openImageModal(imageSrc, caption) {
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('modalImage');
+                const modalCaption = document.getElementById('modalCaption');
+                const closeBtn = modal.querySelector('.close'); // Mudança importante aqui
+
+                modal.style.display = "block";
+                modalImg.src = imageSrc;
+                modalCaption.innerHTML = caption || '';
+
+                // Fechar modal ao clicar no X - USAR stopPropagation
+                closeBtn.onclick = function (e) {
+                    e.stopPropagation(); // Impede que o clique propague para o modal
+                    modal.style.display = "none";
+                }
+
+                // Fechar modal ao clicar fora da imagem
+                modal.onclick = function (event) {
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                    }
+                }
+
+                // Prevenir fechamento ao clicar na imagem
+                modalImg.onclick = function (e) {
+                    e.stopPropagation();
+                }
+            }
+
+                // Carregar Atividades (Eventos)
+                async function loadAtividades() {
+                    try {
+                        const container = document.getElementById('atividades-container');
+                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando actividades...</p></div>';
+
+                        const eventos = await callGAS('getEventos');
+                        loadedTabs.atividades = true;
+
+                        if (!eventos || eventos.length === 0) {
+                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma atividade disponível.</p>';
+                            return;
+                        }
+
+                        // Ordenar por data mais próxima
+                        eventos.sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao));
+
+                        container.innerHTML = `
+                                    <div class="activities-list">
+                                        ${eventos.map(evento => `
+                                            <div class="activity-item">
+                                                <div class="activity-icon">
+                                                    <i class="fas fa-${evento.tipo === 'workshop' ? 'chalkboard-teacher' : 'calendar-alt'}"></i>
+                                                </div>
+                                                <div style="flex: 1;">
+                                                    <h4>${evento.titulo || 'Evento sem título'}</h4>
+                                                    <p><strong><i class="far fa-clock"></i> Data:</strong> ${formatDateTime(evento.data || evento.datacriacao)}</p>
+                                                    <p><strong><i class="fas fa-map-marker-alt"></i> Local:</strong> ${evento.local || 'Local não informado'}</p>
+                                                    <p><strong>Tipo:</strong> ${evento.tipo || 'Evento'}</p>
+                                                    <p>${evento.descricao || 'Descrição não disponível'}</p>
+                                                    ${evento.link ? `<p><strong>Link:</strong> <a href="${evento.link}" target="_blank">${evento.link}</a></p>` : ''}
+                                                    <p><strong>Status:</strong> <span style="background: ${evento.status === 'agendado' ? '#28a745' : '#ffc107'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">${evento.status || 'agendado'}</span></p>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                `;
+
+                    } catch (error) {
+                        console.error('Erro ao carregar atividades:', error);
+                        document.getElementById('atividades-container').innerHTML =
+                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar atividades.</p>';
+                    }
+                }
+
+                // Carregar Vagas
+                async function loadVagas() {
+                    try {
+                        const container = document.getElementById('vagas-container');
+                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando vagas...</p></div>';
+
+                        const vagas = await callGAS('getVagas');
+                        loadedTabs.vagas = true;
+
+                        if (!vagas || vagas.length === 0) {
+                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma vaga disponível.</p>';
+                            return;
+                        }
+
+                        // Ordenar por data mais recente
+                        vagas.sort((a, b) => new Date(b.datacriacao) - new Date(a.datacriacao));
+
+                        // Armazenar vagas globalmente para acesso no modal
+                        window.todasVagasData = vagas;
+
+                        container.innerHTML = `
+                            <div class="jobs-list">
+                                ${vagas.map(vaga => `
+                                    <div class="job-item">
+                                        <div class="job-title">
+                                            <i class="fas fa-${vaga.tipo === 'integral' ? 'briefcase' : vaga.tipo === 'meio-periodo' ? 'clock' : 'user-tie'}"></i>
+                                            <span>${vaga.titulo || 'Vaga sem título'}</span>
+                                            ${vaga.status === 'ativa' ?
+                                '<span style="background: #28a745; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; margin-left: auto;">Ativa</span>' :
+                                '<span style="background: #dc3545; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; margin-left: auto;">Inativa</span>'}
+                                        </div>
+                                        <div class="job-company">
+                                            <i class="fas fa-building"></i> ${vaga.empresa || 'Empresa não informada'}
+                                        </div>
+                                        <div class="job-details">
+                                            <span class="job-detail"><i class="fas fa-map-marker-alt"></i> ${vaga.local || 'Local não informado'}</span>
+                                            <span class="job-detail"><i class="fas fa-clock"></i> ${vaga.tipo === 'integral' ? 'Período Integral' : vaga.tipo === 'meio-periodo' ? 'Meio Período' : vaga.tipo || 'Período Integral'}</span>
+                                            <span class="job-detail"><i class="fas fa-money-bill-wave"></i> ${vaga.salario || 'A combinar'}</span>
+                                        </div>
+
+                                        ${vaga.descricao ? `
+                                            <div style="margin: 15px 0;">
+                                                <strong><i class="fas fa-file-alt"></i> Descrição:</strong>
+                                                <p style="color: #555; margin-top: 5px; line-height: 1.5;">${vaga.descricao.substring(0, 150)}${vaga.descricao.length > 150 ? '...' : ''}</p>
+                                            </div>
+                                        ` : ''}
+
+                                        ${vaga.requisitos ? `
+                                            <div style="margin: 15px 0;">
+                                                <strong><i class="fas fa-list-check"></i> Requisitos:</strong>
+                                                <p style="color: #555; margin-top: 5px; line-height: 1.5;">${vaga.requisitos.substring(0, 100)}${vaga.requisitos.length > 100 ? '...' : ''}</p>
+                                            </div>
+                                        ` : ''}
+
+                                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                            <button class="job-link" onclick="viewVagaDetalhes('${vaga.id}')">
+                                                <i class="fas fa-eye"></i> Ver Detalhes Completos
+                                            </button>
+                                            ${vaga.link ? `
+                                                <a href="${vaga.link}" target="_blank" class="job-link" style="background: var(--verde);">
+                                                    <i class="fas fa-paper-plane"></i> Candidatar-me
+                                                </a>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+
+                    } catch (error) {
+                        console.error('Erro ao carregar vagas:', error);
+                        document.getElementById('vagas-container').innerHTML =
+                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar vagas.</p>';
+                    }
+                }
+
+
+                // Visualizar detalhes da vaga (para vagas em destaque no resumo)
+                async function viewVaga(vagaId) {
+                    try {
+                        // Se já tivermos os dados das vagas em destaque, usar eles
+                        if (window.vagasDestaqueData) {
+                            const vaga = window.vagasDestaqueData.find(v => v.id === vagaId);
+                            if (vaga) {
+                                openVagaModal(vagaId);
+                                return;
+                            }
+                        }
+
+                        // Caso contrário, buscar do GAS
+                        const vagas = await callGAS('getVagas');
+                        const vaga = vagas.find(v => v.id === vagaId);
+
+                        if (!vaga) {
+                            alert('Vaga não encontrada!');
+                            return;
+                        }
+
+                        openVagaModal(vagaId);
+
+                    } catch (error) {
+                        console.error('Erro ao carregar detalhes da vaga:', error);
+                        alert('Erro ao carregar detalhes da vaga.');
+                    }
+                }
+
+
+                // Visualizar detalhes da vaga da aba de vagas
+                async function viewVagaDetalhes(vagaId) {
+                    try {
+                        console.log('🔍 Buscando detalhes da vaga:', vagaId);
+
+                        // Se já tivermos os dados carregados, usar eles
+                        if (window.todasVagasData) {
+                            const vaga = window.todasVagasData.find(v => v.id === vagaId);
+                            if (vaga) {
+                                console.log('✅ Vaga encontrada nos dados locais');
+                                // Usar uma cópia temporária para o modal
+                                window.vagaDetalheTemp = [vaga];
+                                openVagaModal(vagaId);
+                                return;
+                            }
+                        }
+
+                        console.log('📡 Vaga não encontrada localmente, buscando do GAS...');
+
+                        // Caso contrário, buscar do GAS
+                        const vagas = await callGAS('getVagas');
+                        const vaga = vagas.find(v => v.id === vagaId);
+
+                        if (!vaga) {
+                            alert('Vaga não encontrada!');
+                            return;
+                        }
+
+                        // Usar uma cópia temporária para o modal
+                        window.vagaDetalheTemp = [vaga];
+                        openVagaModal(vagaId);
+
+                    } catch (error) {
+                        console.error('Erro ao carregar detalhes da vaga:', error);
+                        alert('Erro ao carregar detalhes da vaga.');
+                    }
+                }
+
+
+                // Carregar Links Úteis
+                async function loadLinksUteis() {
+                    try {
+                        const container = document.getElementById('links-container');
+                        container.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><div class="loading"><div class="loading-spinner"></div><p>Carregando links...</p></div></td></tr>';
+
+                        const links = await callGAS('getLinks');
+                        loadedTabs.linksuteis = true;
+
+                        if (!links || links.length === 0) {
+                            container.innerHTML = `
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 40px; color: #666;">
+                                        Nenhum link útil disponível.
+                                    </td>
+                                </tr>
+                            `;
+                            return;
+                        }
+
+                        container.innerHTML = links.map((link, index) => {
+                            // Criar um ID único baseado no índice
+                            const descricaoId = `desc-${index}`;
+
+                            return `
+                                <tr>
+                                    <td>
+                                        <strong>${link.titulo || 'Link sem título'}</strong>
+                                        ${link.icone ? `<br><small><i class="${link.icone}"></i> ${link.icone.replace('fas fa-', '')}</small>` : ''}
+                                    </td>
+                                    <td>
+                                        <span class="link-category">${link.categoria || 'outros'}</span>
+                                    </td>
+                                    <td>
+                                        <a href="${link.url || '#'}" target="_blank" style="color: var(--azul-primario); text-decoration: none;">
+                                            ${link.url ? (link.url.length > 40 ? link.url.substring(0, 40) + '...' : link.url) : 'URL não informada'}
+                                            <i class="fas fa-external-link-alt" style="font-size: 12px; margin-left: 5px;"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="link-status ${link.status === 'ativo' ? 'status-active' : 'status-inactive'}">
+                                            ${link.status || 'ativo'}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="descricao-btn" data-id="${descricaoId}" style="cursor: pointer;">
+                                            <i class="fas fa-info-circle"></i> Descrição
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr id="${descricaoId}" style="display: none; background-color: #f9f9f9;">
+                                    <td colspan="5" style="padding: 20px; border-bottom: 1px solid #ddd;">
+                                        <h4 style="color: var(--azul-primario); margin-bottom: 10px;">
+                                            <i class="fas fa-info-circle"></i> Descrição: ${link.titulo || 'Link sem título'}
+                                        </h4>
+                                        <p style="margin-bottom: 10px; line-height: 1.6;">
+                                            ${link.descricao || 'Nenhuma descrição disponível.'}
+                                        </p>
+                                        <p style="color: #666; font-size: 0.9em;">
+                                            <i class="far fa-clock"></i> Criado em: ${formatDateTime(link.datacriacao)}
+                                            ${link.dataatualizacao ? `<br><i class="fas fa-history"></i> Atualizado em: ${formatDateTime(link.dataatualizacao)}` : ''}
+                                        </p>
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('');
+
+                        // Adicionar event listeners aos botões após carregar os links
+                        setupDescricaoButtons();
+
+                    } catch (error) {
+                        console.error('Erro ao carregar links úteis:', error);
+                        document.getElementById('links-container').innerHTML = `
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 40px; color: #dc3545;">
+                                    Erro ao carregar links úteis.
+                                </td>
+                            </tr>
+                        `;
+                    }
+                }
+
+                // Configurar botões de descrição dos links úteis
+                function setupDescricaoButtons() {
+                    const buttons = document.querySelectorAll('.descricao-btn');
+
+                    buttons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const descricaoId = this.getAttribute('data-id');
+                            const descricaoRow = document.getElementById(descricaoId);
+
+                            if (descricaoRow.style.display === 'none' || descricaoRow.style.display === '') {
+                                descricaoRow.style.display = 'table-row';
+                                this.innerHTML = '<i class="fas fa-times-circle"></i> Fechar';
+                                this.style.backgroundColor = 'var(--laranja)';
+                            } else {
+                                descricaoRow.style.display = 'none';
+                                this.innerHTML = '<i class="fas fa-info-circle"></i> Descrição';
+                                this.style.backgroundColor = 'var(--azul-primario)';
+                            }
+                        });
+                    });
+                }
+
+
+
+                // Carregar Agenda
+                async function loadAgenda() {
+                    try {
+                        const container = document.getElementById('agenda-eventos');
+                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando eventos da agenda...</p></div>';
+
+                        const eventos = await callGAS('getEventos');
+                        loadedTabs.agenda = true;
+
+                        // Atualizar calendário
+                        initCalendar(eventos);
+
+                        // Filtrar eventos futuros para a lista
+                        const hoje = new Date();
+                        const eventosFuturos = eventos
+                            .filter(evento => {
+                                const dataEvento = new Date(evento.data || evento.datacriacao);
+                                return dataEvento >= hoje;
+                            })
+                            .sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao))
+                            .slice(0, 10); // Limitar a 10 eventos
+
+                        if (eventosFuturos.length === 0) {
+                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhum evento futuro agendado.</p>';
+                            return;
+                        }
+
+                        container.innerHTML = eventosFuturos.map(evento => `
+                                    <div class="event-item">
+                                        <h4>${evento.titulo || 'Evento sem título'}</h4>
+                                        <p><i class="far fa-clock"></i> ${formatDateTime(evento.data || evento.datacriacao)}</p>
+                                        <p><i class="fas fa-map-marker-alt"></i> ${evento.local || 'Local não informado'}</p>
+                                        <p style="margin-top: 10px;">${evento.descricao ? evento.descricao.substring(0, 100) + '...' : ''}</p>
+                                        <p><small>Tipo: ${evento.tipo || 'Evento'} | Status: ${evento.status || 'agendado'}</small></p>
+                                    </div>
+                                `).join('');
+
+                    } catch (error) {
+                        console.error('Erro ao carregar agenda:', error);
+                        document.getElementById('agenda-eventos').innerHTML =
+                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar agenda.</p>';
+                    }
+                }
+
+                // Inicializar Calendário
+                function initCalendar(eventos) {
+                    const calendar = document.getElementById('calendar');
+                    const hoje = new Date();
+                    const currentMonth = hoje.getMonth();
+                    const currentYear = hoje.getFullYear();
+
+                    // Filtrar eventos deste mês
+                    const eventosDoMes = eventos ? eventos.filter(evento => {
+                        const dataEvento = new Date(evento.data || evento.datacriacao);
+                        return dataEvento.getMonth() === currentMonth && dataEvento.getFullYear() === currentYear;
+                    }) : [];
+
+                    // Dias com eventos
+                    const diasComEventos = eventosDoMes.map(evento => {
+                        const data = new Date(evento.data || evento.datacriacao);
+                        return data.getDate();
+                    });
+
+                    // Criar estrutura do calendário
+                    calendar.innerHTML = `
+                                <div style="text-align: center; margin-bottom: 15px;">
+                                    <h4 style="color: var(--azul-primario);">${getMonthName(currentMonth)} ${currentYear}</h4>
+                                </div>
+                                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center;">
+                                    <div style="font-weight: bold; padding: 8px; color: #666;">Dom</div>
+                                    <div style="font-weight: bold; padding: 8px; color: #666;">Seg</div>
+                                    <div style="font-weight: bold; padding: 8px; color: #666;">Ter</div>
+                                    <div style="font-weight: bold; padding: 8px; color: #666;">Qua</div>
+                                    <div style="font-weight: bold; padding: 8px; color: #666;">Qui</div>
+                                    <div style="font-weight: bold; padding: 8px; color: #666;">Sex</div>
+                                    <div style="font-weight: bold; padding: 8px; color: #666;">Sáb</div>
+
+                                    ${generateCalendarDays(currentYear, currentMonth, diasComEventos, hoje.getDate())}
+                                </div>
+                            `;
+                }
+
+                function getMonthName(monthIndex) {
+                    const months = [
+                        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+                    ];
+                    return months[monthIndex];
+                }
+
+                function generateCalendarDays(year, month, diasComEventos = [], diaAtual = 0) {
+                    let days = '';
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                    // Dias vazios do início
+                    for (let i = 0; i < firstDay; i++) {
+                        days += `<div style="padding: 10px; color: #ccc;"></div>`;
+                    }
+
+                    // Dias do mês
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const isToday = (day === diaAtual);
+                        const hasEvent = diasComEventos.includes(day);
+
+                        let dayStyle = 'padding: 10px; border-radius: 5px; cursor: pointer; transition: background 0.2s;';
+
+                        if (isToday) {
+                            dayStyle += 'background: var(--azul-primario); color: white; font-weight: bold;';
+                        } else if (hasEvent) {
+                            dayStyle += 'background: #e8f4ff; border: 1px solid var(--azul-primario);';
+                        }
+
+                        days += `<div style="${dayStyle}" data-day="${day}" onclick="showEventsForDay(${day}, ${month + 1}, ${year})">
+                                    ${day}
+                                    ${hasEvent ? '<div style="width: 5px; height: 5px; background: var(--verde); border-radius: 50%; margin: 2px auto;"></div>' : ''}
+                                </div>`;
+                    }
+
+                    return days;
+                }
+
+                function showEventsForDay(day, month, year) {
+                    alert(`Eventos do dia ${day}/${month}/${year}\n\nOs dias com um ponto verde abaixo do número, possuem um evento marcado. Consulte a aba das Actividades para mais detalhes.`);
+                }
+
+                // Função para mostrar erro
+                function showError(containerId, message) {
+                    const container = document.getElementById(containerId);
+                    if (container) {
+                        container.innerHTML = `<div style="text-align: center; padding: 20px; color: #dc3545;">
+                                    <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i>
+                                    <p>${message}</p>
+                                </div>`;
+                    }
+                }
+
+                // Testar conexão com GAS
+                async function testConnection() {
+                    try {
+                        await callGAS('getEstatisticas');
+                        console.log('✅ Conexão com GAS estabelecida com sucesso!');
+                        return true;
+                    } catch (error) {
+                        console.error('❌ Erro na conexão com GAS:', error);
+                        alert('Erro na conexão com o servidor. Verifique a URL do GAS.');
+                        return false;
+                    }
+                }
+
+                // Inicializar quando a página carregar
+                document.addEventListener('DOMContentLoaded', async function () {
+                    // Configurar sistema de login
+                    const loginForm = document.getElementById('loginForm');
+
+                    if (loginForm) {
+                        loginForm.addEventListener('submit', async function (e) {
+                            e.preventDefault();
+
+                            const nome = document.getElementById('loginNome').value;
+                            const senha = document.getElementById('loginSenha').value;
+
+                            if (!nome || !senha) {
+                                mostrarMensagem('error', 'Por favor, preencha nome e senha');
+                                return;
+                            }
+
+                            // Mostrar loading
+                            const submitBtn = this.querySelector('button[type="submit"]');
+                            const originalText = submitBtn.innerHTML;
+                            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+                            submitBtn.disabled = true;
+
+                            try {
+                                const loginSucesso = await realizarLogin(nome, senha);
+
+                                if (loginSucesso) {
+                                    // Login bem-sucedido - inicializar o resto da aplicação
+                                    setupTabs();
+
+                                    // Testar conexão
+                                    const connected = await testConnection();
+
+                                    if (connected) {
+                                        // Carregar resumo inicial
+                                        await loadResumo();
+
+                                        // Carregar dados da aba ativa
+                                        const activeTab = document.querySelector('.tab-pane.active').id;
+                                        loadTabData(activeTab);
+                                    } else {
+                                        // Mostrar erro de conexão
+                                        mostrarMensagem('error', 'Não foi possível conectar ao servidor. Verifique a conexão com a internet.');
+                                    }
+                                }
+                            } catch (error) {
+                                console.error('Erro no login:', error);
+                            } finally {
+                                // Restaurar botão
+                                submitBtn.innerHTML = originalText;
+                                submitBtn.disabled = false;
+                            }
+                        });
+                    }
+
+                    // Verificar se já está logado
+                    const jaLogado = verificarLogin();
+
+                    if (jaLogado) {
+                        // Usuário já logado - inicializar normalmente
+                        setupTabs();
+
+                        // Testar conexão
+                        const connected = await testConnection();
+
+                        if (connected) {
+                            // Carregar resumo inicial
+                            await loadResumo();
+
+                            // Carregar dados da aba ativa
+                            const activeTab = document.querySelector('.tab-pane.active').id;
+                            loadTabData(activeTab);
+                        } else {
+                            // Mostrar erro de conexão
+                            mostrarMensagem('error', 'Não foi possível conectar ao servidor. Verifique a conexão com a internet.');
+                        }
+                    }
+
+                    
+
+                    // Fechar modais ao clicar fora
+                    window.onclick = function (event) {
+                        const imageModal = document.getElementById('imageModal');
+                        const newsModal = document.getElementById('newsModal');
+                        const vagaModal = document.getElementById('vagaModal');
+
+                        if (event.target === imageModal) {
+                            imageModal.style.display = "none";
+                        }
+
+                        if (event.target === newsModal) {
+                            newsModal.style.display = "none";
+                        }
+
+                        if (event.target === vagaModal) {
+                            vagaModal.style.display = "none";
+                        }
+                    }
+                });
+            
+        </script>
+</body>
+</html>

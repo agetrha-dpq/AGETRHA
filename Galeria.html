@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Fotos - AGETRHA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* CSS base mantido igual da área do membro */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        :root {
+            --azul-primario: #1a4e8e; --azul-secundario: #2a6cba; --branco: #ffffff;
+            --cinza-claro: #f5f7fa; --verde: #28a745; --dourado: #d4af37;
+            --cinza-escuro: #333; --laranja: #ff6b35; --roxo: #6a11cb;
+        }
+        
+        body { 
+            background-color: var(--cinza-claro);
+            overflow-x: hidden;
+        }
+        
+        /* Conteúdo Principal */
+        .main-content {
+            display: block;
+            opacity: 1;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--azul-primario) 0%, #0d3c6a 100%);
+            color: var(--branco);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--dourado);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--branco);
+        }
+        
+        .container { 
+            width: 100%; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+        }
+        
+        /* Navegação entre páginas */
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .back-button {
+            background: var(--azul-primario);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            background: var(--azul-secundario);
+            transform: translateY(-2px);
+        }
+        
+        .page-title {
+            color: var(--azul-primario);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .page-subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Container de estatísticas e filtros */
+        .stats-filters-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+        }
+        
+        /* Cartão de estatísticas */
+        .stats-card {
+            background: linear-gradient(135deg, var(--azul-primario) 0%, var(--roxo) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 250px;
+            box-shadow: 0 8px 20px rgba(26, 78, 142, 0.2);
+        }
+        
+        .stats-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .stats-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* Filtros da galeria */
+        .gallery-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--azul-primario);
+            color: white;
+            border-color: var(--azul-primario);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(26, 78, 142, 0.2);
+        }
+        
+        /* Grid da galeria */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+            min-height: 200px;
+        }
+        
+        .gallery-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-img-container {
+            height: 250px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-img.loading {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        
+        .gallery-img.loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-info {
+            padding: 20px;
+        }
+        
+        .gallery-title {
+            color: var(--azul-primario);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .gallery-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .gallery-description {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .gallery-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--verde);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* Álbuns em destaque */
+        .featured-albums {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: var(--azul-primario);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .album-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+        
+        .album-cover {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .album-cover-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .album-photo-count {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .album-info {
+            padding: 20px;
+        }
+        
+        .album-title {
+            color: var(--azul-primario);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        /* Modal para visualização da imagem */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 5px;
+            animation: zoomIn 0.3s;
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-info {
+            color: white;
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--dourado);
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Carregamento */
+        .loading-indicator {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: var(--azul-primario);
+            font-size: 1.2rem;
+        }
+        
+        .loading-indicator.active {
+            display: block;
+        }
+        
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--azul-primario);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .stats-filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .stats-card {
+                align-self: center;
+            }
+            
+            .gallery-filters {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .albums-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .modal-nav {
+                padding: 0 10px;
+            }
+            
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .albums-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-filters {
+                justify-content: center;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                justify-content: flex-start;
+            }
+            
+            .page-navigation {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .stats-card {
+                min-width: 100%;
+            }
+        }
+        
+        /* Footer styles from Code 2 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background-color: var(--azul-primario);
+            color: var(--branco);
+            border-radius: 10px;
+        }
+
+        /* Footer buttons from Code 3 */
+        .footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-buttons .btn {
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .footer-buttons .btn:hover {
+            background-color: #fff;
+            color: var(--azul-primario);
+        }
+    </style>
+</head>
+<body>
+    <!-- Conteúdo Principal -->
+    <div id="mainContent" class="main-content">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div>
+                        <h1><i class="fas fa-images"></i> Galeria de Fotos AGETRHA</h1>
+                        <p>Memórias e momentos especiais da nossa comunidade</p>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h3>Acesso EXTERNO</h3>
+                            <p><a href="area-membro.html" style="color: white; text-decoration: none;">← Voltar à Página Principal</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="container">
+            <!-- Navegação e título -->
+            <div class="page-navigation">
+                <button class="back-button" onclick="window.location.href='area-membro.html'">
+                    <i class="fas fa-arrow-left"></i> Voltar à Página Principal
+                </button>
+                
+                <div>
+                    <h1 class="page-title">Galeria de Fotos</h1>
+                    <p class="page-subtitle">Explore os melhores momentos dos eventos, encontros e atividades da AGETRHA. Fotos de reuniões, workshops, encontros e muito mais.</p>
+                </div>
+                
+                <div></div> <!-- Espaçador para alinhamento -->
+            </div>
+            
+            <!-- Estatísticas e Filtros -->
+            <div class="stats-filters-container">
+                <div class="stats-card">
+                    <div class="stats-number" id="totalPhotos">0</div>
+                    <div class="stats-label">Fotos na Galeria</div>
+                </div>
+                
+                <div class="gallery-filters">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-th"></i> Todas
+                    </button>
+                    <button class="filter-btn" data-filter="eventos">
+                        <i class="fas fa-calendar-alt"></i> Eventos
+                    </button>
+                    <button class="filter-btn" data-filter="reunioes">
+                        <i class="fas fa-users"></i> Reuniões
+                    </button>
+                    <button class="filter-btn" data-filter="workshops">
+                        <i class="fas fa-chalkboard-teacher"></i> Workshops
+                    </button>
+                    <button class="filter-btn" data-filter="encontros">
+                        <i class="fas fa-glass-cheers"></i> Encontros
+                    </button>
+                    <button class="filter-btn" data-filter="formaturas">
+                        <i class="fas fa-graduation-cap"></i> Formatura
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Indicador de carregamento -->
+            <div class="loading-indicator" id="loadingIndicator">
+                <div class="loader"></div>
+                <p>Carregando galeria de fotos...</p>
+            </div>
+            
+            <!-- Grid de fotos -->
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- As fotos serão carregadas aqui via JavaScript -->
+            </div>
+            
+            <!-- Álbuns em destaque -->
+            <div class="featured-albums" id="featuredAlbumsSection" style="display: none;">
+                <h2 class="section-title">Álbuns em Destaque</h2>
+                <div class="albums-grid" id="albumsGrid">
+                    <!-- Os álbuns serão carregados aqui via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para visualização da imagem -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <div class="modal-nav">
+            <button class="nav-btn" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="nav-btn" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-info" id="modalInfo">
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <p id="modalDate"></p>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+    
+    <!-- Footer from Code 2 (without "Enviar Fotos" button) with buttons from Code 3 -->
+    <footer>
+        <h3>Compartilhe seus momentos!</h3>
+        <p>Envie suas fotos dos eventos da AGETRHA para serem publicadas nesta galeria.</p>
+        
+        <!-- Footer buttons from Code 3 -->
+        <div class="footer-buttons">
+            <button class="btn" id="openMemberAreaBtn">
+                <i class="fas fa-user-lock"></i> Área de Membro
+            </button>
+            <button class="btn" id="openSiteManagementBtn">
+                <i class="fas fa-cogs"></i> Gestão do Site
+            </button>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 14px;">
+            &copy; 2026 AGETRHA - Galeria de Fotos. Todas as fotos são propriedade da associação.
+        </p>
+    </footer>
+    
+    <script>
+        // Configurações do GAS
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbx-KJdZk7z3Qwo79kbvVVXngOqphapGUuSTNKoqU3LXENMNDlS8-Ro16WUmXPu2z4U/exec';
+        
+        // Dados da galeria
+        let galleryItems = [];
+        let currentImageIndex = 0;
+        let filteredItems = [];
+        
+        // Inicialização quando a página carregar
+        document.addEventListener('DOMContentLoaded', function () {
+            // Configurar botões do footer
+            setupFooterButtons();
+            
+            // Carregar galeria do GAS
+            loadGalleryFromGAS();
+            
+            // Configurar filtros
+            setupFilters();
+            
+            // Configurar modal
+            setupModal();
+        });
+        
+        // Função para carregar a galeria do Google Apps Script
+        async function loadGalleryFromGAS() {
+            try {
+                // Mostrar indicador de carregamento
+                document.getElementById('loadingIndicator').classList.add('active');
+                document.getElementById('galleryGrid').innerHTML = '';
+                
+                // Chamar o GAS para obter as fotos
+                const response = await callAPI('getGaleria');
+                
+                if (response.success && response.data) {
+                    // Processar os dados recebidos
+                    galleryItems = response.data.map(item => ({
+                        id: item.id || '',
+                        title: item.titulo || 'Sem título',
+                        date: formatDate(item.data) || formatDate(item.datacriacao) || 'Data não disponível',
+                        description: item.descricao || 'Sem descrição',
+                        image: getImageUrl(item),
+                        category: item.categoria ? item.categoria.toLowerCase().replace(/[^a-z]/g, '') : 'geral',
+                        originalData: item
+                    }));
+                    
+                    // Atualizar estatísticas
+                    updateStatistics();
+                    
+                    // Renderizar as fotos
+                    renderGalleryItems();
+                    
+                    // Gerar álbuns por categoria
+                    generateCategoryAlbums();
+                    
+                    // Mostrar seção de álbuns
+                    document.getElementById('featuredAlbumsSection').style.display = 'block';
+                } else {
+                    throw new Error(response.error || 'Erro ao carregar galeria');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar galeria:', error);
+                showErrorMessage('Não foi possível carregar a galeria. Usando dados de exemplo.');
+                
+                // Carregar dados de exemplo como fallback
+                loadFallbackData();
+            } finally {
+                // Esconder indicador de carregamento
+                document.getElementById('loadingIndicator').classList.remove('active');
+            }
+        }
+        
+        // Função para chamar a API do GAS
+        async function callAPI(action, params = {}) {
+            try {
+                const url = new URL(GAS_URL);
+                url.searchParams.append('action', action);
+                
+                // Adicionar parâmetros
+                Object.keys(params).forEach(key => {
+                    url.searchParams.append(key, params[key]);
+                });
+                
+                // Adicionar timestamp para evitar cache
+                url.searchParams.append('_t', Date.now());
+                
+                const response = await fetch(url.toString(), {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const text = await response.text();
+                
+                // Tentar parsear como JSON
+                try {
+                    return JSON.parse(text);
+                } catch (error) {
+                    // Se não for JSON, pode ser JSONP
+                    const jsonpMatch = text.match(/^\w+\((.*)\)$/);
+                    if (jsonpMatch) {
+                        return JSON.parse(jsonpMatch[1]);
+                    }
+                    throw new Error('Resposta não é JSON válido');
+                }
+            } catch (error) {
+                console.error('Erro na chamada API:', error);
+                throw error;
+            }
+        }
+        
+        // Função para obter a URL da imagem
+        function getImageUrl(item) {
+            // Prioridade: thumbnail, depois url, depois gerar do fileId
+            if (item.thumbnail && item.thumbnail.trim() !== '') {
+                return item.thumbnail;
+            } else if (item.url && item.url.trim() !== '') {
+                return item.url;
+            } else if (item.fileid && item.fileid.trim() !== '') {
+                return `https://drive.google.com/thumbnail?id=${item.fileid}&sz=w800`;
+            }
+            
+            // Fallback para imagem padrão
+            return getDefaultImageByCategory(item.categoria);
+        }
+        
+        // Função para obter imagem padrão por categoria
+        function getDefaultImageByCategory(category) {
+            const defaultImages = {
+                'eventos': 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'reunioes': 'https://images.unsplash.com/photo-1573164713714-d95e436ab994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'workshops': 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'encontros': 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'formaturas': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'default': 'https://images.unsplash.com/photo-1492684223066-e9e4aab4d25e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            };
+            
+            const cat = category ? category.toLowerCase().replace(/[^a-z]/g, '') : 'default';
+            return defaultImages[cat] || defaultImages.default;
+        }
+        
+        // Função para formatar data
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    // Tentar parsear formatos diferentes
+                    const parts = dateString.split(/[/-]/);
+                    if (parts.length === 3) {
+                        const newDate = new Date(parts[0], parts[1] - 1, parts[2]);
+                        if (!isNaN(newDate.getTime())) {
+                            return newDate.toLocaleDateString('pt-PT');
+                        }
+                    }
+                    return dateString;
+                }
+                return date.toLocaleDateString('pt-PT');
+            } catch (error) {
+                return dateString;
+            }
+        }
+        
+        // Função para renderizar os itens da galeria
+        function renderGalleryItems() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.innerHTML = '';
+            
+            if (galleryItems.length === 0) {
+                galleryGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: #666;">
+                        <i class="fas fa-images" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                        <h3>Nenhuma foto disponível</h3>
+                        <p>Não há fotos na galeria no momento.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            galleryItems.forEach((item, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.setAttribute('data-category', item.category);
+                galleryItem.setAttribute('data-index', index);
+                
+                galleryItem.innerHTML = `
+                    <div class="gallery-img-container">
+                        <img src="${item.image}" 
+                             alt="${item.title}" 
+                             class="gallery-img loading"
+                             loading="lazy"
+                             onload="this.classList.remove('loading'); this.classList.add('loaded');"
+                             onerror="this.onerror=null; this.src='${getDefaultImageByCategory(item.category)}'; this.classList.remove('loading'); this.classList.add('loaded');">
+                    </div>
+                    <div class="gallery-info">
+                        <h3 class="gallery-title">${item.title}</h3>
+                        <div class="gallery-date">
+                            <i class="far fa-calendar"></i> ${item.date}
+                        </div>
+                        <p class="gallery-description">${item.description}</p>
+                    </div>
+                    <div class="gallery-category">${formatCategoryName(item.category)}</div>
+                `;
+                
+                galleryGrid.appendChild(galleryItem);
+            });
+            
+            // Reconfigurar eventos de clique
+            setupGalleryItemEvents();
+        }
+        
+        // Função para formatar nome da categoria
+        function formatCategoryName(category) {
+            const categoryNames = {
+                'eventos': 'Eventos',
+                'reunioes': 'Reuniões',
+                'workshops': 'Workshops',
+                'encontros': 'Encontros',
+                'formaturas': 'Formaturas',
+                'geral': 'Geral'
+            };
+            return categoryNames[category] || category.charAt(0).toUpperCase() + category.slice(1);
+        }
+        
+        // Função para configurar eventos dos itens da galeria
+        function setupGalleryItemEvents() {
+            document.querySelectorAll('.gallery-item').forEach((item, index) => {
+                item.addEventListener('click', function() {
+                    currentImageIndex = parseInt(this.getAttribute('data-index'));
+                    openModal(currentImageIndex);
+                });
+            });
+        }
+        
+        // Função para atualizar estatísticas
+        function updateStatistics() {
+            document.getElementById('totalPhotos').textContent = galleryItems.length;
+            filteredItems = [...galleryItems];
+        }
+        
+        // Função para gerar álbuns por categoria
+        function generateCategoryAlbums() {
+            const albumsGrid = document.getElementById('albumsGrid');
+            albumsGrid.innerHTML = '';
+            
+            // Agrupar fotos por categoria
+            const categories = {};
+            galleryItems.forEach(item => {
+                if (!categories[item.category]) {
+                    categories[item.category] = [];
+                }
+                categories[item.category].push(item);
+            });
+            
+            // Criar álbum para cada categoria com fotos
+            Object.entries(categories).forEach(([category, photos]) => {
+                if (photos.length > 0) {
+                    const albumCard = document.createElement('div');
+                    albumCard.className = 'album-card';
+                    albumCard.addEventListener('click', () => {
+                        // Filtrar por esta categoria
+                        document.querySelectorAll('.filter-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                            if (btn.getAttribute('data-filter') === category) {
+                                btn.classList.add('active');
+                            }
+                        });
+                        filterGalleryItems(category);
+                    });
+                    
+                    // Usar a primeira foto como capa
+                    const coverImage = photos[0].image;
+                    
+                    albumCard.innerHTML = `
+                        <div class="album-cover">
+                            <img src="${coverImage}" 
+                                 alt="${formatCategoryName(category)}" 
+                                 class="album-cover-img"
+                                 loading="lazy">
+                            <div class="album-photo-count">${photos.length} foto${photos.length !== 1 ? 's' : ''}</div>
+                        </div>
+                        <div class="album-info">
+                            <h3 class="album-title">${formatCategoryName(category)}</h3>
+                            <p class="gallery-date">${photos.length} foto${photos.length !== 1 ? 's' : ''}</p>
+                        </div>
+                    `;
+                    
+                    albumsGrid.appendChild(albumCard);
+                }
+            });
+        }
+        
+        // Função para mostrar mensagem de erro
+        function showErrorMessage(message) {
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: #666;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px; color: #ff6b35;"></i>
+                    <h3>Erro ao carregar galeria</h3>
+                    <p>${message}</p>
+                    <button onclick="loadGalleryFromGAS()" style="margin-top: 20px; padding: 10px 20px; background: var(--azul-primario); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        <i class="fas fa-redo"></i> Tentar novamente
+                    </button>
+                </div>
+            `;
+        }
+        
+        // Dados de fallback em caso de erro
+        function loadFallbackData() {
+            galleryItems = [
+                {
+                    id: 1,
+                    title: "Reunião Geral Ordinária 2024",
+                    date: "15 de Março de 2024",
+                    description: "Momento importante da reunião geral com todos os membros presentes para discussão do planejamento anual.",
+                    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    category: "reunioes"
+                },
+                {
+                    id: 2,
+                    title: "Workshop de Inovação Tecnológica",
+                    date: "22 de Março de 2024",
+                    description: "Workshop sobre as últimas tendências em tecnologia com participação ativa dos membros.",
+                    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    category: "workshops"
+                },
+                {
+                    id: 3,
+                    title: "Encontro de Fim de Ano",
+                    date: "15 de Dezembro de 2023",
+                    description: "Celebração de fim de ano com membros e suas famílias em um evento descontraído e alegre.",
+                    image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    category: "encontros"
+                }
+            ];
+            
+            updateStatistics();
+            renderGalleryItems();
+            generateCategoryAlbums();
+            document.getElementById('featuredAlbumsSection').style.display = 'block';
+        }
+        
+        // Configurar filtros da galeria
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remover classe active de todos os botões
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Adicionar classe active ao botão clicado
+                    this.classList.add('active');
+                    
+                    // Obter o filtro selecionado
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Filtrar os itens da galeria
+                    filterGalleryItems(filter);
+                });
+            });
+        }
+        
+        // Filtrar itens da galeria
+        function filterGalleryItems(filter) {
+            const galleryItemsElements = document.querySelectorAll('.gallery-item');
+            
+            if (filter === 'all') {
+                // Mostrar todos os itens
+                galleryItemsElements.forEach(item => {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 10);
+                });
+                filteredItems = [...galleryItems];
+            } else {
+                // Filtrar por categoria
+                galleryItemsElements.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    
+                    if (category === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+                
+                // Atualizar lista filtrada para navegação no modal
+                filteredItems = galleryItems.filter(item => item.category === filter);
+            }
+        }
+        
+        // Configurar modal de visualização
+        function setupModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDate = document.getElementById('modalDate');
+            const modalDescription = document.getElementById('modalDescription');
+            const closeModal = document.getElementById('closeModal');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Fechar modal
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Navegação anterior
+            prevBtn.addEventListener('click', function() {
+                currentImageIndex = (currentImageIndex - 1 + filteredItems.length) % filteredItems.length;
+                updateModalContent(currentImageIndex);
+            });
+            
+            // Navegação próxima
+            nextBtn.addEventListener('click', function() {
+                currentImageIndex = (currentImageIndex + 1) % filteredItems.length;
+                updateModalContent(currentImageIndex);
+            });
+            
+            // Fechar modal ao clicar fora da imagem
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Navegação por teclado
+            document.addEventListener('keydown', function(event) {
+                if (modal.style.display === 'block') {
+                    if (event.key === 'Escape') {
+                        modal.style.display = 'none';
+                    } else if (event.key === 'ArrowLeft') {
+                        currentImageIndex = (currentImageIndex - 1 + filteredItems.length) % filteredItems.length;
+                        updateModalContent(currentImageIndex);
+                    } else if (event.key === 'ArrowRight') {
+                        currentImageIndex = (currentImageIndex + 1) % filteredItems.length;
+                        updateModalContent(currentImageIndex);
+                    }
+                }
+            });
+        }
+        
+        // Abrir modal com imagem específica
+        function openModal(index) {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'block';
+            updateModalContent(index);
+        }
+        
+        // Atualizar conteúdo do modal
+        function updateModalContent(index) {
+            const modalImg = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDate = document.getElementById('modalDate');
+            const modalDescription = document.getElementById('modalDescription');
+            
+            if (filteredItems.length > 0 && index < filteredItems.length) {
+                const item = filteredItems[index];
+                modalImg.src = item.image;
+                modalTitle.textContent = item.title;
+                modalDate.innerHTML = `<i class="far fa-calendar"></i> ${item.date}`;
+                modalDescription.textContent = item.description;
+            }
+        }
+        
+        // Configurar botões do footer
+        function setupFooterButtons() {
+            // Botão Área de Membro
+            document.getElementById('openMemberAreaBtn').addEventListener('click', function() {
+                alert('Funcionalidade "Área de Membro" em desenvolvimento.');
+                // Em um cenário real, isso redirecionaria para a área de membros
+                // window.location.href = 'area-membro.html';
+            });
+            
+            // Botão Gestão do Site
+            document.getElementById('openSiteManagementBtn').addEventListener('click', function() {
+                alert('Funcionalidade "Gestão do Site" em desenvolvimento.');
+                // Em um cenário real, isso abriria o painel de gestão do site
+                // window.open('gestao-site.html', '_blank');
+            });
+        }
+    </script>
+</body>
+</html>
