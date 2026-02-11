@@ -688,9 +688,7 @@
         
         // Inicialização quando a página carregar
         document.addEventListener('DOMContentLoaded', function () {
-            // Configurar botões do footer
-            setupFooterButtons();
-            
+                        
             // Carregar galeria do GAS
             loadGalleryFromGAS();
             
@@ -1157,22 +1155,7 @@
             }
         }
         
-        // Configurar botões do footer
-        function setupFooterButtons() {
-            // Botão Área de Membro
-            document.getElementById('openMemberAreaBtn').addEventListener('click', function() {
-                alert('Funcionalidade "Área de Membro" em desenvolvimento.');
-                // Em um cenário real, isso redirecionaria para a área de membros
-                // window.location.href = 'area-membro.html';
-            });
-            
-            // Botão Gestão do Site
-            document.getElementById('openSiteManagementBtn').addEventListener('click', function() {
-                alert('Funcionalidade "Gestão do Site" em desenvolvimento.');
-                // Em um cenário real, isso abriria o painel de gestão do site
-                // window.open('gestao-site.html', '_blank');
-            });
-        }
+        
     </script>
 </body>
 </html>
