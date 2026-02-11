@@ -534,15 +534,17 @@
             flex-wrap: wrap;
         }
 
-        .footer-buttons .btn {
-            background-color: transparent;
-            border: 2px solid #fff;
-            color: #fff;
-            padding: 10px 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-weight: 600;
-        }
+            .footer-buttons .btn {
+                background-color: transparent;
+                border: 2px solid #fff;
+                color: #fff;
+                padding: 10px 20px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                font-weight: 600;
+                text-decoration: none;
+                
+            }
 
         .footer-buttons .btn:hover {
             background-color: #fff;
@@ -664,13 +666,16 @@
         
         <!-- Footer buttons from Code 3 -->
         <div class="footer-buttons">
-    <a href="https://agetrha-dpq.github.io/AGETRHA/Site-AGETRHA" class="btn" id="openMemberAreaBtn">
-        <i class="fas fa-user-lock"></i> Área de Membro
-    </a>
-    <a href="https://agetrha-dpq.github.io/AGETRHA/painel-admin" class="btn" id="openSiteManagementBtn">
-        <i class="fas fa-cogs"></i> Gestão do Site
-    </a>
-</div>
+            <button class="btn" id="openPortfolioBtn">
+                <i class="fas fa-briefcase"></i> Abrir Portfólio
+            </button>
+            <button class="btn" id="openMemberAreaBtn">
+                <i class="fas fa-user-lock"></i> Área de Membro
+            </button>
+            <button class="btn" id="openSiteManagementBtn">
+                <i class="fas fa-cogs"></i> Gestão do Site
+            </button>
+        </div>
         
         <p style="margin-top: 20px; font-size: 14px;">
             &copy; 2026 AGETRHA - Galeria de Fotos. Todas as fotos são propriedade da associação.
@@ -688,7 +693,11 @@
         
         // Inicialização quando a página carregar
         document.addEventListener('DOMContentLoaded', function () {
-                        
+
+            // Botões do rodapé – NOVOS (sem alert)
+            document.getElementById('openPortfolioBtn')?.addEventListener('click', abrirPortfolio);
+            document.getElementById('openMemberAreaBtn')?.addEventListener('click', abrirAreaMembro);
+            document.getElementById('openSiteManagementBtn')?.addEventListener('click', abrirGestaoSite);   
             // Carregar galeria do GAS
             loadGalleryFromGAS();
             
@@ -1155,7 +1164,18 @@
             }
         }
         
+        // ===== NOVAS FUNÇÕES DOS BOTÕES DO RODAPÉ =====
+        function abrirPortfolio() {
+            window.open('https://drive.google.com/file/d/1O6RjsTqL-CM8iLIDghcShokxl3GOu9Ch/view', '_self', 'width=1200,height=800,scrollbars=yes');
+        }
         
+        function abrirAreaMembro() {
+            window.open('https://agetrha-dpq.github.io/AGETRHA/Area_membro', '_self', 'width=1200,height=800,scrollbars=yes');
+        }
+        function abrirGestaoSite() {
+            window.open('https://agetrha-dpq.github.io/AGETRHA/painel-admin', '_self', 'width=1200,height=800,scrollbars=yes');
+        }
+
     </script>
 </body>
 </html>
