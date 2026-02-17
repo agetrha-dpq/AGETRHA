@@ -182,6 +182,7 @@
         }
 
         .logo-text h1 {
+            display: none;
             font-size: 22px;
             margin-bottom: 2px;
             color: var(--white);
@@ -767,7 +768,7 @@
         }
 
         .footer-logo img {
-            height: 120px;
+            height: 105px;
             margin-bottom: 20px;
             filter: drop-shadow(0 0 8px rgba(201,169,89,0.3));
         }
@@ -950,7 +951,11 @@
                 transition: left 0.3s ease;
                 box-shadow: 5px 0 30px rgba(0,0,0,0.7);
                 border-right: 1px solid var(--accent-gold);
-display: none;
+                display: none;
+            }
+
+            .nav-buttons .btn-dourado {
+                display: none; /* esconde o botão Inscrever-se apenas em mobile */
             }
 
             .nav-menu.active {
@@ -1216,7 +1221,7 @@ display: none;
             </div>
             <div class="sobre-image">
                 <!-- Imagem do Google Drive com fallback -->
-                <img src="https://drive.google.com/thumbnail?id=1WimCuH7rWEnYeefQe8NTpXjUOYneTbd4&sz=w1000" 
+                <img src="https://drive.google.com/thumbnail?id=1WimCuH7rWEnYeefQe8NTpXjUOYneTbd4&sz=w1000"
                      alt="Equipa AGETRHA"
                </div>
         </div>
