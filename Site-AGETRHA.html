@@ -1640,11 +1640,16 @@
         // Links de inscrição
         const inscricaoLinks = document.querySelectorAll('a[href*="formulario_candidatura"], .btn-dourado');
         inscricaoLinks.forEach(link => {
-            if (!link.getAttribute('href').includes('Dashboard')) {
+            // Não modifica links que são âncoras internas (começam com #)
+            if (link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
+                return; // mantém o href original
+            }
+            if (!link.getAttribute('href') || !link.getAttribute('href').includes('Dashboard')) {
                 link.setAttribute('href', 'https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura');
                 link.setAttribute('target', '_blank');
             }
         });
+
     </script>
 </body>
 </html>
