@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentos e Projetos - AGETRHA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #0f1a24;
+        color: #e6e9f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #c9a959;
+        margin-bottom: 50px;
+    }
+
+    .grid-docs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+
+    .doc-card {
+        background: #1e2c3a;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        border-top: 4px solid #c9a959;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease;
+    }
+
+    .doc-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+
+    .doc-card i {
+        font-size: 36px;
+        color: #c9a959;
+        margin-bottom: 15px;
+    }
+
+    .doc-card h3 {
+        color: #ffffff;
+        margin-bottom: 10px;
+    }
+
+    .doc-card p {
+        color: #b0b8c5;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .doc-card a {
+        display: inline-block;
+        padding: 8px 20px;
+        background: #c9a959;
+        color: #0a1a2b;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .doc-card a:hover {
+        background: #dbb87c;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Documentos e Projetos</h1>
+    <div class="grid-docs">
+        <div class="doc-card">
+            <i class="fas fa-file-pdf"></i>
+            <h3>Relatório Anual 2025</h3>
+            <p>Sumário das atividades e realizações do último ano.</p>
+            <a href="#">Ver Documento</a>
+        </div>
+        <div class="doc-card">
+            <i class="fas fa-file-alt"></i>
+            <h3>Projeto Formação RH</h3>
+            <p>Detalhes sobre o programa de formação e certificação.</p>
+            <a href="#">Ver Projeto</a>
+        </div>
+        <div class="doc-card">
+            <i class="fas fa-file-excel"></i>
+            <h3>Plano Financeiro</h3>
+            <p>Projeções e planejamento financeiro da associação.</p>
+            <a href="#">Ver Documento</a>
+        </div>
+        <div class="doc-card">
+            <i class="fas fa-file-powerpoint"></i>
+            <h3>Workshop RH 2026</h3>
+            <p>Apresentação e materiais do último workshop realizado.</p>
+            <a href="#">Ver Projeto</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
