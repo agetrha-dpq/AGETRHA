@@ -1423,7 +1423,7 @@
                 </div>
             </div>
 
-            <!-- Botões do Footer -->
+            <!-- Botões do Footer (agora com 6 botões) -->
             <div class="footer-buttons">
                 <button class="btn" id="openPortfolioBtn">
                     <i class="fas fa-briefcase"></i> Abrir Portfólio
@@ -1436,6 +1436,14 @@
                 </button>
                 <button class="btn" id="openSiteManagementBtn">
                     <i class="fas fa-cogs"></i> Gestão do Site
+                </button>
+                <!-- NOVO BOTÃO: Organograma -->
+                <button class="btn" id="openOrganogramaBtn">
+                    <i class="fas fa-sitemap"></i> Organograma
+                </button>
+                <!-- NOVO BOTÃO: Documentos -->
+                <button class="btn" id="openDocumentosBtn">
+                    <i class="fas fa-file-alt"></i> Documentos
                 </button>
             </div>
 
@@ -1532,7 +1540,7 @@
             });
         }
 
-        // ===== FUNÇÕES PRINCIPAIS =====
+        // ===== FUNÇÕES PRINCIPAIS (incluindo os novos botões) =====
         function abrirPortfolio() {
             window.open('https://drive.google.com/file/d/1O6RjsTqL-CM8iLIDghcShokxl3GOu9Ch/view', '_blank');
         }
@@ -1545,6 +1553,18 @@
         function abrirGestaoSite() {
             window.open('https://agetrha-dpq.github.io/AGETRHA/painel-admin', '_blank');
         }
+        // Funções para os novos botões (substitua as URLs pelos links reais quando disponíveis)
+        function abrirOrganograma() {
+            // Exemplo: redirecionar para a página do organograma
+            window.open('https://agetrha-dpq.github.io/AGETRHA/organograma', '_blank'); // URL fictícia
+            // Enquanto não há link, pode exibir um alerta:
+            // alert('Página do organograma em construção');
+        }
+        function abrirDocumentos() {
+            // Exemplo: redirecionar para a página de documentos
+            window.open('https://agetrha-dpq.github.io/AGETRHA/documentos', '_blank'); // URL fictícia
+            // alert('Área de documentos em construção');
+        }
 
         // ===== EVENT LISTENERS =====
         document.addEventListener('DOMContentLoaded', () => {
@@ -1552,9 +1572,12 @@
             document.getElementById('openGaleriaBtn')?.addEventListener('click', abrirGaleria);
             document.getElementById('openMemberAreaBtn')?.addEventListener('click', abrirAreaMembro);
             document.getElementById('openSiteManagementBtn')?.addEventListener('click', abrirGestaoSite);
+            // Listeners para os novos botões
+            document.getElementById('openOrganogramaBtn')?.addEventListener('click', abrirOrganograma);
+            document.getElementById('openDocumentosBtn')?.addEventListener('click', abrirDocumentos);
         });
 
-        // ===== CÓDIGO ORIGINAL DO SITE =====
+        // ===== CÓDIGO ORIGINAL DO SITE (MENU, SIDEBAR, MODAL, ETC.) =====
         // Menu mobile
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navMenu = document.getElementById('navMenu');
@@ -1649,7 +1672,6 @@
                 link.setAttribute('target', '_blank');
             }
         });
-
     </script>
 </body>
 </html>
