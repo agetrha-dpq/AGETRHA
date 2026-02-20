@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+    <title>Organograma - AGETRHA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f1a24;
+            color: #e6e9f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            text-align: center; /* centraliza o conteúdo inline */
+        }
+
+        h1 {
+            color: #c9a959;
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #b0b8c5;
+            margin-bottom: 60px;
+            font-style: italic;
+            font-size: 1.1rem;
+            border-bottom: 1px dashed #c9a959;
+            padding-bottom: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== ESTRUTURA GLOBAL ===== */
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        .level {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            width: 100%;
+            z-index: 5;
+        }
+
+        /* ===== CARDS (NODES) ===== */
+        .node {
+            background: #1e2c3a;
+            padding: 18px 15px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 170px;
+            max-width: 200px;
+            border-top: 4px solid #c9a959;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            color: #e6e9f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 10;
+            font-size: 0.95rem;
+        }
+
+        .node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(201, 169, 89, 0.3);
+            background: #2a3a4a;
+        }
+
+        .node i {
+            font-size: 28px;
+            color: #c9a959;
+            filter: drop-shadow(0 2px 4px #000);
+        }
+
+        .node p {
+            margin: 0;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .level:first-child .node {
+            min-width: 210px;
+            padding: 22px 20px;
+            border-top-width: 5px;
+        }
+        .level:first-child .node i { font-size: 34px; }
+        .level:first-child .node p { font-size: 1.2rem; }
+
+        /* ===== LINHAS (CONECTORES) ===== */
+        .line-color {
+            background: #c9a959;
+            box-shadow: 0 0 4px rgba(201, 169, 89, 0.5);
+        }
+
+        .connector-vertical {
+            width: 3px;
+            height: 40px;
+            margin: 0 auto;
+        }
+
+        /* ===== SEÇÃO DO MEIO (SECRETARIA E CONSELHOS) ===== */
+        .middle-level {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .middle-left {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 1;
+            padding-right: 40px;
+        }
+
+        .middle-trunk {
+            width: 3px;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .middle-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            gap: 40px;
+            flex: 1;
+            padding-left: 40px;
+        }
+
+        .side-node-wrapper { position: relative; }
+
+        /* Linhas horizontais pequenas (Secretaria e Conselhos) */
+        .side-node-wrapper.left-side::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -40px;
+            width: 40px;
+            height: 3px;
+            background: #c9a959;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .side-node-wrapper.right-side::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -40px;
+            width: 40px;
+            height: 3px;
+            background: #c9a959;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        /* ===== SEÇÃO DOS DEPARTAMENTOS (NÍVEIS 4a e 4b) ===== */
+        .dept-level {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dept-nodes {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Envolve cada card + linha vertical pequena */
+        .node-wrapper-drop {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        /* A LINHA HORIZONTAL PRINCIPAL gerada magicamente unindo os cards */
+        .node-wrapper-drop::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #c9a959;
+            z-index: 1;
+        }
+
+        /* A linha horizontal começa no meio do primeiro card e termina no meio do último */
+        .node-wrapper-drop:first-child::before { left: 50%; }
+        .node-wrapper-drop:last-child::before { right: 50%; }
+
+        /* A linha vertical pequena que desce para cada departamento */
+        .vertical-drop {
+            width: 3px;
+            height: 25px;
+            background: #c9a959;
+            z-index: 2;
+        }
+
+        /* ===== TRONCO PRINCIPAL ATRAVESSANDO O NÍVEL 4a ===== */
+        .trunk-passing {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 3px;
+            height: calc(100% + 60px);
+            background: #c9a959;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        /* ===== RESPONSIVIDADE PARA DISPOSITIVOS MÓVEIS ===== */
+        @media (max-width: 900px) {
+            body {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 40px 0; /* remove padding lateral para que o container possa expandir */
+                display: block;   /* altera o flex para permitir rolagem completa */
+            }
+
+            .container {
+                width: auto;
+                display: inline-block;
+                min-width: 100%;
+                padding: 0 20px;   /* mantém um respiro nas laterais */
+                text-align: center;
+                max-width: none;    /* remove a limitação de 1300px */
+            }
+
+            .org-chart {
+                min-width: 880px;   /* largura que acomoda todos os cards sem quebrar */
+                width: auto;
+                align-items: flex-start;
+                padding: 20px 5px;
+            }
+
+            /* Reduz tamanho dos cards para caber melhor */
+            .node {
+                min-width: 140px;
+                max-width: 160px;
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+
+            .node i {
+                font-size: 22px;
+            }
+
+            .level:first-child .node {
+                min-width: 170px;
+                padding: 16px 12px;
+            }
+            .level:first-child .node i { font-size: 28px; }
+            .level:first-child .node p { font-size: 1rem; }
+
+            /* Ajusta espaçamentos das linhas laterais */
+            .middle-left { padding-right: 20px; }
+            .middle-right { padding-left: 20px; }
+            .side-node-wrapper.left-side::after { right: -20px; width: 20px; }
+            .side-node-wrapper.right-side::before { left: -20px; width: 20px; }
+
+            /* Mantém todas as linhas e estrutura original */
+            .connector-vertical,
+            .middle-trunk,
+            .trunk-passing,
+            .vertical-drop,
+            .node-wrapper-drop::before {
+                display: block;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Ajuste para telas muito pequenas (ex: 400px) */
+        @media (max-width: 500px) {
+            .node {
+                min-width: 120px;
+                max-width: 140px;
+                padding: 10px 5px;
+                font-size: 0.7rem;
+            }
+            .level:first-child .node {
+                min-width: 150px;
+            }
+            .org-chart {
+                min-width: 800px;
+            }
+        }
+
+        /* Botão voltar */
+        .btn-voltar {
+            display: inline-block;
+            margin-top: 60px;
+            padding: 12px 35px;
+            background: transparent;
+            color: #c9a959;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: bold;
+            border: 2px solid #c9a959;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        .btn-voltar:hover {
+            background: #c9a959;
+            color: #0f1a24;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px #c9a95980;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Organograma da AGETRHA</h1>
+        <p class="subtitle">Clique em qualquer departamento para conhecer a sua actividade</p>
+
+        <div class="org-chart">
+            
+            <div class="level">
+                <a href="#" class="node" title="Assembleia Geral (em construção)">
+                    <i class="fas fa-users"></i>
+                    <p>Assembleia Geral</p>
+                </a>
+            </div>
+
+            <div class="connector-vertical line-color"></div>
+
+            <div class="level">
+                <a href="#" class="node" title="Direção Nacional (em construção)">
+                    <i class="fas fa-flag"></i>
+                    <p>Direção Nacional</p>
+                </a>
+            </div>
+
+            <div class="connector-vertical line-color"></div>
+
+            <div class="middle-level">
+                <div class="middle-left">
+                    <div class="side-node-wrapper left-side">
+                        <a href="#" class="node" title="Secretaria Geral (em construção)">
+                            <i class="fas fa-file-alt"></i>
+                            <p>Secretaria Geral</p>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="middle-trunk line-color"></div>
+                
+                <div class="middle-right">
+                    <div class="side-node-wrapper right-side">
+                        <a href="#" class="node" title="Conselho Consultivo (em construção)">
+                            <i class="fas fa-comments"></i>
+                            <p>Conselho Consultivo</p>
+                        </a>
+                    </div>
+                    <div class="side-node-wrapper right-side">
+                        <a href="#" class="node" title="Conselho Fiscal (em construção)">
+                            <i class="fas fa-gavel"></i>
+                            <p>Conselho Fiscal</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector-vertical line-color"></div>
+
+            <div class="dept-level">
+                <div class="trunk-passing"></div>
+                
+                <div class="dept-nodes">
+                    <div class="node-wrapper-drop">
+                        <div class="vertical-drop"></div>
+                        <a href="https://agetrha-dpq.github.io/Dashboard-DPF/Dashboard-DPF" class="node" target="_blank" title="Departamento de Planejamento e Finanças">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Departamento de Planejamento e Finanças</p>
+                        </a>
+                    </div>
+                    <div class="node-wrapper-drop">
+                        <div class="vertical-drop"></div>
+                        <a href="https://agetrha-dpq.github.io/Formulario-agetrha/Dashboard-DPQ.html" class="node" target="_blank" title="Departamento de Quadros e Pessoal">
+                            <i class="fas fa-user-tie"></i>
+                            <p>Departamento de Quadros e Pessoal</p>
+                        </a>
+                    </div>
+                    <div class="node-wrapper-drop">
+                        <div class="vertical-drop"></div>
+                        <a href="https://agetrha-dpq.github.io/AGETRHA/painel-admin" class="node" target="_blank" title="Departamento de Comunicação Institucional">
+                            <i class="fas fa-bullhorn"></i>
+                            <p>Departamento de Comunicação Institucional</p>
+                        </a>
+                    </div>
+                    <div class="node-wrapper-drop">
+                        <div class="vertical-drop"></div>
+                        <a href="#" class="node" title="Departamento de Cooperação e Intercâmbio (em construção)">
+                            <i class="fas fa-handshake"></i>
+                            <p>Departamento de Cooperação e Intercâmbio</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dept-level" style="margin-top: 60px;">
+                <div class="dept-nodes">
+                    <div class="node-wrapper-drop">
+                        <div class="vertical-drop"></div>
+                        <a href="#" class="node" title="Departamento de Formação e Estudos Científicos (em construção)">
+                            <i class="fas fa-graduation-cap"></i>
+                            <p>Departamento de Formação e Estudos Científicos</p>
+                        </a>
+                    </div>
+                    <div class="node-wrapper-drop">
+                        <div class="vertical-drop"></div>
+                        <a href="#" class="node" title="Departamento Regional ou Provincial (em construção)">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <p>Departamento Regional ou Provincial</p>
+                        </a>
+                    </div>
+                    <div class="node-wrapper-drop">
+                        <div class="vertical-drop"></div>
+                        <a href="#" class="node" title="Departamento de Conduta e Disciplina (em construção)">
+                            <i class="fas fa-user-shield"></i>
+                            <p>Departamento de Conduta e Disciplina</p>
+                        </a>
+                    </div>
+                    <div class="node-wrapper-drop">
+                        <div class="vertical-drop"></div>
+                        <a href="#" class="node" title="Departamento Jurídico (em construção)">
+                            <i class="fas fa-balance-scale"></i>
+                            <p>Departamento Jurídico</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="text-align: center;">
+            <a href="https://agetrha-dpq.github.io/AGETRHA/Site-AGETRHA" class="btn-voltar">← Voltar para a página inicial</a>
+        </div>
+    </div>
+
+    <script>
+        // Aviso para links em construção
+        document.querySelectorAll('a.node[href="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('🔧 Página em construção. Em breve este departamento estará disponível.');
+            });
+        });
+    </script>
+</body>
+</html>
