@@ -501,6 +501,16 @@
             max-width: 700px;
         }
 
+        #imageModal .modal-content {
+            width: 90%;
+            max-width: 90%;
+        }
+
+        #imageModal img {
+            max-width: 100%;
+            height: auto;
+        }
+
         .close {
             position: absolute;
             top: 15px;
@@ -1200,8 +1210,6 @@
         }
         
     </style>
-
-    
 </head>
 <body>
     <!-- Modal de Login -->
@@ -1234,8 +1242,8 @@
         </div>
     </div>
 
-    <!-- Conteúdo Principal -->
-    <div id="mainContent" class="main-content"></div>
+    <!-- Conteúdo Principal - AGORA CORRETAMENTE ENVOLTO PELA DIV -->
+    <div id="mainContent" class="main-content">
         <header>
             <div class="container">
                 <div class="header-content">
@@ -1296,7 +1304,6 @@
                 </div>
 
                 <div class="tabs-content">
-
                     <!-- Resumo -->
                     <div id="resumo" class="tab-pane active">
                         <div class="section-title">
@@ -1511,1568 +1518,993 @@
                 </div>
             </div>
         </div>
+    </div> <!-- Fim do mainContent -->
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Configuração
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbx-KJdZk7z3Qwo79kbvVVXngOqphapGUuSTNKoqU3LXENMNDlS8-Ro16WUmXPu2z4U/exec';
+        const GAS_URL_ADMIN = 'https://script.google.com/macros/s/AKfycbwgdVpnKCLAhNQpmKJ1ofTw_FT6tYLunltzN9zCJ4_eJET54gZKQ0bmeBI4YUUjIsaKWg/exec';
 
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script>
-            // Configuração
-            const GAS_URL = 'https://script.google.com/macros/s/AKfycbx-KJdZk7z3Qwo79kbvVVXngOqphapGUuSTNKoqU3LXENMNDlS8-Ro16WUmXPu2z4U/exec';
-            const GAS_URL_ADMIN = 'https://script.google.com/macros/s/AKfycbwgdVpnKCLAhNQpmKJ1ofTw_FT6tYLunltzN9zCJ4_eJET54gZKQ0bmeBI4YUUjIsaKWg/exec';
-
-            // Função para mostrar mensagens
-            function mostrarMensagem(tipo, texto) {
-                // Criar elemento de mensagem se não existir
-                let mensagemDiv = document.getElementById('loginMessage');
-                if (!mensagemDiv) {
-                    mensagemDiv = document.createElement('div');
-                    mensagemDiv.id = 'loginMessage';
-                    mensagemDiv.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            z-index: 10000;
-            animation: slideIn 0.3s;
-        `;
-                    document.body.appendChild(mensagemDiv);
-                }
-
-                // Configurar estilo baseado no tipo
-                if (tipo === 'success') {
-                    mensagemDiv.style.background = 'linear-gradient(135deg, #28a745 0%, #1e7e34 100%)';
-                    mensagemDiv.style.boxShadow = '0 5px 15px rgba(40, 167, 69, 0.3)';
-                } else {
-                    mensagemDiv.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
-                    mensagemDiv.style.boxShadow = '0 5px 15px rgba(220, 53, 69, 0.3)';
-                }
-
-                mensagemDiv.innerHTML = `
-        <i class="fas fa-${tipo === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
-        ${texto}
-    `;
-
-                // Remover após 5 segundos
-                setTimeout(() => {
-                    mensagemDiv.style.animation = 'slideOut 0.3s forwards';
-                    setTimeout(() => mensagemDiv.remove(), 300);
-                }, 5000);
+        // Função para mostrar mensagens
+        function mostrarMensagem(tipo, texto) {
+            let mensagemDiv = document.getElementById('loginMessage');
+            if (!mensagemDiv) {
+                mensagemDiv = document.createElement('div');
+                mensagemDiv.id = 'loginMessage';
+                mensagemDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 25px;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: 600;
+                    z-index: 10000;
+                    animation: slideIn 0.3s;
+                `;
+                document.body.appendChild(mensagemDiv);
             }
 
-            // Adicionar animação para remover mensagem
-            if (!document.querySelector('#messageStyles')) {
-                const style = document.createElement('style');
-                style.id = 'messageStyles';
-                style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-    `;
-                document.head.appendChild(style);
+            if (tipo === 'success') {
+                mensagemDiv.style.background = 'linear-gradient(135deg, #28a745 0%, #1e7e34 100%)';
+                mensagemDiv.style.boxShadow = '0 5px 15px rgba(40, 167, 69, 0.3)';
+            } else {
+                mensagemDiv.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
+                mensagemDiv.style.boxShadow = '0 5px 15px rgba(220, 53, 69, 0.3)';
             }
 
-            // Verificar se usuário já está logado
-            function verificarLogin() {
+            mensagemDiv.innerHTML = `
+                <i class="fas fa-${tipo === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+                ${texto}
+            `;
+
+            setTimeout(() => {
+                mensagemDiv.style.animation = 'slideOut 0.3s forwards';
+                setTimeout(() => mensagemDiv.remove(), 300);
+            }, 5000);
+        }
+
+        if (!document.querySelector('#messageStyles')) {
+            const style = document.createElement('style');
+            style.id = 'messageStyles';
+            style.textContent = `
+                @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+                @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function verificarLogin() {
+            const logado = localStorage.getItem('agetrha_membro_logado');
+            if (logado === 'true') {
+                document.body.classList.add('logged-in');
+                const nome = localStorage.getItem('agetrha_membro_nome') || 'Membro AGETRHA';
+                const nivel = localStorage.getItem('agetrha_membro_nivel') || 'Associado Ativo';
+                document.querySelector('.user-info h3').textContent = nome;
+                document.querySelector('.user-info p').textContent = `Nível: ${nivel}`;
+                configurarLogout();
+                return true;
+            }
+            return false;
+        }
+
+        function limparCamposLogin() {
+            const loginNome = document.getElementById('loginNome');
+            const loginSenha = document.getElementById('loginSenha');
+            if (loginNome && loginSenha) {
                 const logado = localStorage.getItem('agetrha_membro_logado');
-
-                if (logado === 'true') {
-                    document.body.classList.add('logged-in');
-
-                    // Atualizar informações do usuário
-                    const nome = localStorage.getItem('agetrha_membro_nome') || 'Membro AGETRHA';
-                    const nivel = localStorage.getItem('agetrha_membro_nivel') || 'Associado Ativo';
-
-                    document.querySelector('.user-info h3').textContent = nome;
-                    document.querySelector('.user-info p').textContent = `Nível: ${nivel}`;
-
-                    configurarLogout(); // Adicionar botão de logout
-
-                    return true;
+                if (logado !== 'true') {
+                    loginNome.value = '';
+                    loginSenha.value = '';
                 }
+            }
+        }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            limparCamposLogin();
+        });
+
+        function logout() {
+            localStorage.removeItem('agetrha_membro_logado');
+            localStorage.removeItem('agetrha_membro_nome');
+            localStorage.removeItem('agetrha_membro_nivel');
+            const loginNome = document.getElementById('loginNome');
+            const loginSenha = document.getElementById('loginSenha');
+            if (loginNome) loginNome.value = '';
+            if (loginSenha) loginSenha.value = '';
+            document.body.classList.remove('logged-in');
+            setTimeout(() => {
+                if (loginNome) loginNome.focus();
+            }, 100);
+            mostrarMensagem('success', 'Logout realizado com sucesso! Seus dados foram removidos com segurança.');
+            document.querySelector('.user-avatar').innerHTML = `<i class="fas fa-user"></i>`;
+            document.querySelector('.user-info h3').textContent = 'Membro AGETRHA';
+            document.querySelector('.user-info p').textContent = 'Nível: Associado Ativo';
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) logoutBtn.style.display = 'none';
+        }
+
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                const logado = localStorage.getItem('agetrha_membro_logado');
+                if (logado === 'true') {
+                    if (confirm('Sua sessão expirou por inatividade. Deseja permanecer logado?')) {
+                        resetInactivityTimer();
+                    } else {
+                        logout();
+                    }
+                }
+            }, 30 * 60 * 1000);
+        }
+        ['click', 'mousemove', 'keypress', 'scroll'].forEach(event => {
+            document.addEventListener(event, resetInactivityTimer);
+        });
+        if (localStorage.getItem('agetrha_membro_logado') === 'true') {
+            resetInactivityTimer();
+        }
+
+        function configurarLogout() {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.style.display = 'block';
+                logoutBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (confirm('Tem certeza que deseja sair?')) {
+                        logout();
+                    }
+                });
+            }
+        }
+
+        async function callGAS(action, params = {}) {
+            try {
+                const url = new URL(GAS_URL);
+                url.searchParams.append('action', action);
+                Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+                console.log(`🔗 Chamando GAS 1: ${url.toString()}`);
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log(`📊 Resposta do GAS 1 para ${action}:`, data);
+                if (!data.success) throw new Error(data.error || data.message || 'Erro desconhecido');
+                return data.data || data;
+            } catch (error) {
+                console.error(`❌ Erro na ação ${action}:`, error);
+                throw error;
+            }
+        }
+
+        async function callGAS2(action, params = {}) {
+            try {
+                const url = new URL(GAS_URL_ADMIN);
+                url.searchParams.append('action', action);
+                Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+                url.searchParams.append('callback', 'callback');
+                const response = await fetch(url);
+                const text = await response.text();
+                const jsonString = text.replace(/^callback\(/, '').replace(/\);$/, '');
+                const data = JSON.parse(jsonString);
+                if (!data.success) throw new Error(data.message || data.error || 'Erro desconhecido');
+                return data;
+            } catch (error) {
+                console.error(`Erro na ação ${action} (GAS 2):`, error);
+                throw error;
+            }
+        }
+
+        async function realizarLogin(nome, senha) {
+            try {
+                console.log('🔐 Tentando login...');
+                const resultado = await callGAS2('loginUsuario', { nome: nome, senha: senha });
+                console.log('📊 Resultado do login:', resultado);
+                if (resultado.success) {
+                    localStorage.setItem('agetrha_membro_logado', 'true');
+                    localStorage.setItem('agetrha_membro_nome', resultado.nome || nome);
+                    localStorage.setItem('agetrha_membro_nivel', resultado.nivel || 'membro');
+                    document.querySelector('.user-avatar').innerHTML = `<i class="fas fa-user-check"></i>`;
+                    document.querySelector('.user-info h3').textContent = resultado.nome || nome;
+                    document.querySelector('.user-info p').textContent = `Nível: ${resultado.nivel || 'Membro'}`;
+                    document.body.classList.add('logged-in');
+                    mostrarMensagem('success', `Bem-vindo(a), ${resultado.nome || nome}!`);
+                    configurarLogout();
+                    return true;
+                } else {
+                    throw new Error(resultado.message || 'Login falhou');
+                }
+            } catch (error) {
+                console.error('❌ Erro no login:', error);
+                mostrarMensagem('error', 'Erro no login: ' + error.message);
                 return false;
             }
+        }
 
-            function limparCamposLogin() {
-                const loginNome = document.getElementById('loginNome');
-                const loginSenha = document.getElementById('loginSenha');
+        function formatDate(dateString) {
+            if (!dateString) return 'Data não informada';
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            return date.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
 
-                if (loginNome && loginSenha) {
-                    // Só limpar se o usuário não estiver logado
-                    const logado = localStorage.getItem('agetrha_membro_logado');
-                    if (logado !== 'true') {
-                        loginNome.value = '';
-                        loginSenha.value = '';
+        function formatDateTime(dateString) {
+            if (!dateString) return 'Data não informada';
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            return date.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const nome = document.getElementById('loginNome').value;
+                    const senha = document.getElementById('loginSenha').value;
+                    if (!nome || !senha) {
+                        mostrarMensagem('error', 'Por favor, preencha nome e senha');
+                        return;
                     }
-                }
-            }
-
-            // Chamar esta função sempre que a página carregar
-            document.addEventListener('DOMContentLoaded', function () {
-                // ... seu código existente ...
-
-                // Adicionar esta linha
-                limparCamposLogin();
-            });
-
-            // Função de logout
-            function logout() {
-                // Remover dados do localStorage
-                localStorage.removeItem('agetrha_membro_logado');
-                localStorage.removeItem('agetrha_membro_nome');
-                localStorage.removeItem('agetrha_membro_nivel');
-
-                // Limpar campos do formulário de login
-                const loginNome = document.getElementById('loginNome');
-                const loginSenha = document.getElementById('loginSenha');
-
-                if (loginNome) loginNome.value = '';
-                if (loginSenha) loginSenha.value = '';
-
-                // Remover classe logged-in do body
-                document.body.classList.remove('logged-in');
-
-                // Focar no campo de nome para próxima entrada
-                setTimeout(() => {
-                    if (loginNome) loginNome.focus();
-                }, 100);
-
-                mostrarMensagem('success', 'Logout realizado com sucesso! Seus dados foram removidos com segurança.');
-
-                // Resetar informações do usuário
-                document.querySelector('.user-avatar').innerHTML = `<i class="fas fa-user"></i>`;
-                document.querySelector('.user-info h3').textContent = 'Membro AGETRHA';
-                document.querySelector('.user-info p').textContent = 'Nível: Associado Ativo';
-
-                // Esconder botão de logout
-                const logoutBtn = document.getElementById('logoutBtn');
-                if (logoutBtn) {
-                    logoutBtn.style.display = 'none';
-                }
-            }
-
-
-            // Configurar timeout automático após 30 minutos de inatividade
-            let inactivityTimer;
-
-            function resetInactivityTimer() {
-                clearTimeout(inactivityTimer);
-                inactivityTimer = setTimeout(() => {
-                    const logado = localStorage.getItem('agetrha_membro_logado');
-                    if (logado === 'true') {
-                        if (confirm('Sua sessão expirou por inatividade. Deseja permanecer logado?')) {
-                            resetInactivityTimer();
-                        } else {
-                            logout();
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+                    submitBtn.disabled = true;
+                    try {
+                        const loginSucesso = await realizarLogin(nome, senha);
+                        if (loginSucesso) {
+                            carregarConteudoMembro();
                         }
+                    } catch (error) {
+                        console.error('Erro no login:', error);
+                    } finally {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
                     }
-                }, 30 * 60 * 1000); // 30 minutos
+                });
             }
+            const jaLogado = verificarLogin();
+            if (jaLogado) {
+                carregarConteudoMembro();
+            }
+            setTimeout(() => {
+                const loginNomeInput = document.getElementById('loginNome');
+                if (loginNomeInput) loginNomeInput.focus();
+            }, 500);
+        });
 
-            // Adicionar event listeners para atividade do usuário
-            ['click', 'mousemove', 'keypress', 'scroll'].forEach(event => {
-                document.addEventListener(event, resetInactivityTimer);
+        function setupTabs() {
+            console.log('⚙️ Configurando sistema de abas...');
+            document.querySelectorAll('.tab-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const tabId = this.getAttribute('data-tab');
+                    console.log(`🔄 Alternando para aba: ${tabId}`);
+                    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                    if (typeof loadTabData === 'function') loadTabData(tabId);
+                });
             });
+            console.log(`✅ ${document.querySelectorAll('.tab-btn').length} abas configuradas`);
+        }
 
-            // Iniciar timer quando logado
-            if (localStorage.getItem('agetrha_membro_logado') === 'true') {
-                resetInactivityTimer();
+        async function carregarConteudoMembro() {
+            try {
+                console.log('📂 Carregando conteúdo da área do membro...');
+                if (typeof setupTabs === 'function') setupTabs();
+                loadedTabs.resumo = true;
+                mostrarMensagem('success', 'Área do membro carregada com sucesso!');
+            } catch (error) {
+                console.error('❌ Erro ao carregar conteúdo:', error);
             }
+        }
 
+        const loadedTabs = {
+            resumo: false,
+            noticias: false,
+            galeria: false,
+            atividades: false,
+            vagas: false,
+            linksuteis: false,
+            agenda: false
+        };
 
-            // Configurar botão de logout quando usuário estiver logado
-            function configurarLogout() {
-                const logoutBtn = document.getElementById('logoutBtn');
-                if (logoutBtn) {
-                    logoutBtn.style.display = 'block';
-                    logoutBtn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        if (confirm('Tem certeza que deseja sair?')) {
-                            logout();
-                        }
-                    });
+        function loadTabData(tabId) {
+            console.log(`📂 Tentando carregar aba: ${tabId}`);
+            if (!loadedTabs[tabId]) {
+                switch (tabId) {
+                    case 'noticias': if (typeof loadNoticias === 'function') loadNoticias(); break;
+                    case 'galeria': if (typeof loadGaleria === 'function') loadGaleria(); break;
+                    case 'atividades': if (typeof loadAtividades === 'function') loadAtividades(); break;
+                    case 'vagas': if (typeof loadVagas === 'function') loadVagas(); break;
+                    case 'linksuteis': if (typeof loadLinksUteis === 'function') loadLinksUteis(); break;
+                    case 'agenda': if (typeof loadAgenda === 'function') loadAgenda(); break;
+                    default: console.log(`ℹ️ Aba ${tabId} não requer carregamento especial`);
                 }
+                loadedTabs[tabId] = true;
+            } else {
+                console.log(`ℹ️ Aba ${tabId} já foi carregada anteriormente`);
             }
+        }
 
-            // Função para chamar o GAS (para dados - notícias, vagas, etc.)
-            // Função para chamar o GAS 1 (para dados - notícias, vagas, etc.) - SEM JSONP!
-            async function callGAS(action, params = {}) {
-                try {
-                    const url = new URL(GAS_URL);
-                    url.searchParams.append('action', action);
+        async function testConnection() {
+            try {
+                await callGAS('getEstatisticas');
+                console.log('✅ Conexão com GAS 1 estabelecida com sucesso!');
+                return true;
+            } catch (error) {
+                console.error('❌ Erro na conexão com GAS 1:', error);
+                return false;
+            }
+        }
 
-                    // Adicionar parâmetros
-                    Object.keys(params).forEach(key => {
-                        url.searchParams.append(key, params[key]);
-                    });
+        async function loadResumo() {
+            try {
+                const estatisticas = await callGAS('getEstatisticas');
+                const eventos = await callGAS('getEventos');
+                const vagas = await callGAS('getVagas');
+                document.getElementById('total-noticias').textContent = estatisticas.noticias || 0;
+                document.getElementById('total-eventos').textContent = estatisticas.eventos || 0;
+                document.getElementById('total-vagas').textContent = estatisticas.vagas || 0;
+                document.getElementById('total-links').textContent = estatisticas.links || 0;
+                await loadProximosEventos();
+                await loadVagasDestaque();
+            } catch (error) {
+                console.error('Erro ao carregar resumo:', error);
+                showError('resumo', 'Erro ao carregar dados do resumo');
+            }
+        }
 
-                    console.log(`🔗 Chamando GAS 1: ${url.toString()}`);
-
-                    const response = await fetch(url);
-
-                    // O GAS 1 retorna JSON PURO, não JSONP
-                    const data = await response.json();
-
-                    console.log(`📊 Resposta do GAS 1 para ${action}:`, data);
-
-                    if (!data.success) {
-                        throw new Error(data.error || data.message || 'Erro desconhecido');
-                    }
-
-                    return data.data || data;
-
-                } catch (error) {
-                    console.error(`❌ Erro na ação ${action}:`, error);
-                    throw error;
+        async function loadProximosEventos() {
+            try {
+                const eventos = await callGAS('getEventos');
+                const container = document.getElementById('proximos-eventos');
+                const hoje = new Date();
+                const eventosFuturos = eventos
+                    .filter(evento => {
+                        const dataEvento = new Date(evento.data || evento.datacriacao);
+                        return dataEvento >= hoje && evento.status === 'agendado';
+                    })
+                    .sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao))
+                    .slice(0, 3);
+                if (eventosFuturos.length === 0) {
+                    container.innerHTML = '<div class="activity-item"><p>Não há eventos futuros agendados.</p></div>';
+                    return;
                 }
+                container.innerHTML = eventosFuturos.map(evento => `
+                    <div class="activity-item">
+                        <div class="activity-icon"><i class="fas fa-calendar"></i></div>
+                        <div>
+                            <strong>${evento.titulo || 'Evento sem título'}</strong>
+                            <p><i class="far fa-clock"></i> ${formatDateTime(evento.data || evento.datacriacao)}</p>
+                            <p><i class="fas fa-map-marker-alt"></i> ${evento.local || 'Local não informado'}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Erro ao carregar próximos eventos:', error);
+                document.getElementById('proximos-eventos').innerHTML = '<div class="activity-item"><p>Erro ao carregar eventos.</p></div>';
             }
+        }
 
-            // Função para chamar o GAS 2 (para login de membro)
-            async function callGAS2(action, params = {}) {
-                try {
-                    const url = new URL(GAS_URL_ADMIN);
-                    url.searchParams.append('action', action);
-
-                    // Adicionar parâmetros
-                    Object.keys(params).forEach(key => {
-                        url.searchParams.append(key, params[key]);
-                    });
-
-                    // Adicionar callback para JSONP
-                    url.searchParams.append('callback', 'callback');
-
-                    const response = await fetch(url);
-                    const text = await response.text();
-
-                    // Remover o wrapper JSONP e parsear JSON
-                    const jsonString = text.replace(/^callback\(/, '').replace(/\);$/, '');
-                    const data = JSON.parse(jsonString);
-
-                    if (!data.success) {
-                        throw new Error(data.message || data.error || 'Erro desconhecido');
-                    }
-
-                    return data;
-                } catch (error) {
-                    console.error(`Erro na ação ${action} (GAS 2):`, error);
-                    throw error;
+        async function loadVagasDestaque() {
+            try {
+                const vagas = await callGAS('getVagas');
+                const container = document.getElementById('vagas-destaque');
+                const vagasAtivas = vagas.filter(vaga => vaga.status === 'ativa').slice(0, 3);
+                window.vagasDestaqueData = vagasAtivas;
+                if (vagasAtivas.length === 0) {
+                    container.innerHTML = '<div class="job-item"><p>Não há vagas em destaque no momento.</p></div>';
+                    return;
                 }
+                container.innerHTML = vagasAtivas.map(vaga => `
+                    <div class="job-item">
+                        <div class="job-title"><i class="fas fa-briefcase"></i><span>${vaga.titulo || 'Vaga sem título'}</span></div>
+                        <div class="job-company">${vaga.empresa || 'Empresa não informada'}</div>
+                        <div class="job-details">
+                            <span class="job-detail"><i class="fas fa-map-marker-alt"></i> ${vaga.local || 'Local não informado'}</span>
+                            <span class="job-detail"><i class="fas fa-money-bill-wave"></i> ${vaga.salario || 'A combinar'}</span>
+                        </div>
+                        <p style="margin: 10px 0; color: #555;">${vaga.descricao ? vaga.descricao.substring(0, 100) + '...' : 'Descrição não disponível'}</p>
+                        ${vaga.requisitos ? `<p style="color: #555; font-size: 14px;"><strong>Requisitos:</strong> ${vaga.requisitos.substring(0, 80)}...</p>` : ''}
+                        <button class="job-link" onclick="viewVaga('${vaga.id}')">Ver Detalhes</button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Erro ao carregar vagas em destaque:', error);
+                document.getElementById('vagas-destaque').innerHTML = '<div class="job-item"><p>Erro ao carregar vagas.</p></div>';
             }
+        }
 
-            // Sistema de Login
-            async function realizarLogin(nome, senha) {
-                try {
-                    console.log('🔐 Tentando login...');
+        function openNewsModal(index) {
+            console.log('📖 Abrindo notícia, índice:', index);
+            if (!window.noticiasData || !window.noticiasData[index]) {
+                console.error('❌ Notícia não encontrada no índice:', index);
+                alert('Erro ao carregar a notícia. Por favor, recarregue a página.');
+                return;
+            }
+            const noticia = window.noticiasData[index];
+            const modal = document.getElementById('newsModal');
+            const modalContent = document.getElementById('newsModalContent');
+            modalContent.innerHTML = `
+                <h2 class="news-modal-title">${noticia.titulo || 'Notícia sem título'}</h2>
+                <div class="news-modal-meta">
+                    <span><i class="far fa-calendar"></i> Publicado em: ${formatDate(noticia.data || noticia.datacriacao)}</span>
+                    ${noticia.dataatualizacao ? `<span><i class="far fa-clock"></i> Atualizado em: ${formatDate(noticia.dataatualizacao)}</span>` : ''}
+                    ${noticia.categoria ? `<span><i class="fas fa-tag"></i> ${noticia.categoria}</span>` : ''}
+                </div>
+                ${noticia.imagem ? `<img src="${noticia.imagem}" class="news-modal-image" alt="${noticia.titulo}" onerror="this.style.display='none'">` : ''}
+                <div class="news-modal-content"><p style="white-space: pre-line; line-height: 1.8;">${noticia.descricao || 'Descrição não disponível.'}</p></div>
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <button onclick="closeNewsModal()" style="background: var(--azul-primario); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                        <i class="fas fa-times"></i> Fechar
+                    </button>
+                </div>
+            `;
+            modal.style.display = "block";
+        }
 
-                    // Enviar dados para o GAS 2 usando callGAS2
-                    const resultado = await callGAS2('loginUsuario', {
-                        nome: nome,
-                        senha: senha
-                    });
+        function closeNewsModal() {
+            document.getElementById('newsModal').style.display = "none";
+        }
 
-                    console.log('📊 Resultado do login:', resultado);
+        window.onclick = function (event) {
+            const modal = document.getElementById('newsModal');
+            if (event.target === modal) modal.style.display = "none";
+        };
 
-                    if (resultado.success) {
-                        // Login bem-sucedido
-                        localStorage.setItem('agetrha_membro_logado', 'true');
-                        localStorage.setItem('agetrha_membro_nome', resultado.nome || nome);
-                        localStorage.setItem('agetrha_membro_nivel', resultado.nivel || 'membro');
+        function openVagaModal(vagaId) {
+            console.log('🔍 Buscando vaga com ID:', vagaId);
+            let vaga = null;
+            if (window.vagasDestaqueData) vaga = window.vagasDestaqueData.find(v => v.id === vagaId);
+            if (!vaga && window.todasVagasData) vaga = window.todasVagasData.find(v => v.id === vagaId);
+            if (!vaga && window.vagaDetalheTemp) vaga = window.vagaDetalheTemp.find(v => v.id === vagaId);
+            if (!vaga) {
+                console.error('❌ Vaga não encontrada com ID:', vagaId);
+                alert('Vaga não encontrada. Tente recarregar a página.');
+                return;
+            }
+            console.log('✅ Vaga encontrada:', vaga.titulo);
+            const modal = document.getElementById('vagaModal');
+            const modalContent = document.getElementById('vagaModalContent');
 
-                        // Atualizar interface do usuário
-                        document.querySelector('.user-avatar').innerHTML = `<i class="fas fa-user-check"></i>`;
-                        document.querySelector('.user-info h3').textContent = resultado.nome || nome;
-                        document.querySelector('.user-info p').textContent = `Nível: ${resultado.nivel || 'Membro'}`;
-
-                        // Mostrar conteúdo principal
-                        document.body.classList.add('logged-in');
-
-                        mostrarMensagem('success', `Bem-vindo(a), ${resultado.nome || nome}!`);
-
-                        // Configurar botão de logout
-                        configurarLogout();
-
-                        return true;
+            let requisitosHTML = '';
+            if (vaga.requisitos) {
+                if (typeof vaga.requisitos === 'string') {
+                    const requisitosStr = vaga.requisitos.trim();
+                    if (requisitosStr.includes('•') || requisitosStr.includes('-') || requisitosStr.includes('*') || requisitosStr.includes('\n')) {
+                        const linhas = requisitosStr.split(/\n|•|-|\*/).filter(linha => linha.trim() !== '');
+                        requisitosHTML = `<ul class="requirements-list">${linhas.map(linha => `<li>${linha.trim()}</li>`).join('')}</ul>`;
                     } else {
-                        throw new Error(resultado.message || 'Login falhou');
+                        requisitosHTML = `<p style="white-space: pre-line; padding: 10px; background: #f8f9fa; border-radius: 5px;">${requisitosStr}</p>`;
                     }
-
-                } catch (error) {
-                    console.error('❌ Erro no login:', error);
-                    mostrarMensagem('error', 'Erro no login: ' + error.message);
-                    return false;
-                }
-            }
-
-            // Formatar data
-            function formatDate(dateString) {
-                if (!dateString) return 'Data não informada';
-
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return dateString;
-
-                return date.toLocaleDateString('pt-PT', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                });
-            }
-
-            // Formatar data completa
-            function formatDateTime(dateString) {
-                if (!dateString) return 'Data não informada';
-
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return dateString;
-
-                return date.toLocaleDateString('pt-PT', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            }
-
-            // Inicializar quando a página carregar
-            document.addEventListener('DOMContentLoaded', function () {
-                // Configurar sistema de login
-                const loginForm = document.getElementById('loginForm');
-
-                if (loginForm) {
-                    loginForm.addEventListener('submit', async function (e) {
-                        e.preventDefault();
-
-                        const nome = document.getElementById('loginNome').value;
-                        const senha = document.getElementById('loginSenha').value;
-
-                        if (!nome || !senha) {
-                            mostrarMensagem('error', 'Por favor, preencha nome e senha');
-                            return;
-                        }
-
-                        // Mostrar loading
-                        const submitBtn = this.querySelector('button[type="submit"]');
-                        const originalText = submitBtn.innerHTML;
-                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
-                        submitBtn.disabled = true;
-
-                        try {
-                            const loginSucesso = await realizarLogin(nome, senha);
-
-                            if (loginSucesso) {
-                                // Carregar conteúdo da área do membro
-                                carregarConteudoMembro();
-                            }
-                        } catch (error) {
-                            console.error('Erro no login:', error);
-                        } finally {
-                            // Restaurar botão
-                            submitBtn.innerHTML = originalText;
-                            submitBtn.disabled = false;
-                        }
-                    });
-                }
-
-                // Verificar se já está logado
-                const jaLogado = verificarLogin();
-
-                if (jaLogado) {
-                    // Usuário já logado - carregar conteúdo
-                    carregarConteudoMembro();
-                }
-
-                // Focar no campo de nome ao carregar o modal
-                setTimeout(() => {
-                    const loginNomeInput = document.getElementById('loginNome');
-                    if (loginNomeInput) {
-                        loginNomeInput.focus();
-                    }
-                }, 500);
-            });
-
-            // Sistema de abas corrigido
-            function setupTabs() {
-                console.log('⚙️ Configurando sistema de abas...');
-
-                document.querySelectorAll('.tab-btn').forEach(button => {
-                    button.addEventListener('click', function () {
-                        const tabId = this.getAttribute('data-tab');
-
-                        console.log(`🔄 Alternando para aba: ${tabId}`);
-
-                        // Remover classe active de todos
-                        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-                        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-
-                        // Adicionar classe active ao clicado
-                        this.classList.add('active');
-                        document.getElementById(tabId).classList.add('active');
-
-                        // Chamar loadTabData se a função existir
-                        if (typeof loadTabData === 'function') {
-                            loadTabData(tabId);
-                        }
-                    });
-                });
-
-                console.log(`✅ ${document.querySelectorAll('.tab-btn').length} abas configuradas`);
-            }
-
-            // Função para carregar o conteúdo da área do membro após login
-            async function carregarConteudoMembro() {
-                try {
-                    console.log('📂 Carregando conteúdo da área do membro...');
-
-                    
-                    // Inicializar sistema de abas
-                    if (typeof setupTabs === 'function') {
-                        setupTabs();
-                    }
-
-                    // Marcar que o resumo foi carregado
-                    loadedTabs.resumo = true;
-
-                    // Mostrar mensagem de sucesso
-                    mostrarMensagem('success', 'Área do membro carregada com sucesso!');
-
-                } catch (error) {
-                    console.error('❌ Erro ao carregar conteúdo:', error);
-                }
-            }
-
-            // ==============================================
-            // VARIÁVEIS E FUNÇÕES QUE O SEU SISTEMA DE ABAS PRECISA
-            // (Adicione apenas isso para resolver os erros)
-            // ==============================================
-
-            // Objeto para controlar quais abas já foram carregadas
-            const loadedTabs = {
-                resumo: false,
-                noticias: false,
-                galeria: false,
-                atividades: false,
-                vagas: false,
-                linksuteis: false,
-                agenda: false
-            };
-
-            // Função básica para carregar dados de uma aba
-            function loadTabData(tabId) {
-                console.log(`📂 Tentando carregar aba: ${tabId}`);
-
-                if (!loadedTabs[tabId]) {
-                    switch (tabId) {
-                        case 'noticias':
-                            console.log('📰 Carregando notícias...');
-                            // Aqui deve estar a função loadNoticias() que já existe
-                            if (typeof loadNoticias === 'function') {
-                                loadNoticias();
-                            }
-                            break;
-                        case 'galeria':
-                            console.log('🖼️ Carregando galeria...');
-                            if (typeof loadGaleria === 'function') {
-                                loadGaleria();
-                            }
-                            break;
-                        case 'atividades':
-                            console.log('📅 Carregando atividades...');
-                            if (typeof loadAtividades === 'function') {
-                                loadAtividades();
-                            }
-                            break;
-                        case 'vagas':
-                            console.log('💼 Carregando vagas...');
-                            if (typeof loadVagas === 'function') {
-                                loadVagas();
-                            }
-                            break;
-                        case 'linksuteis':
-                            console.log('🔗 Carregando links...');
-                            if (typeof loadLinksUteis === 'function') {
-                                loadLinksUteis();
-                            }
-                            break;
-                        case 'agenda':
-                            console.log('📆 Carregando agenda...');
-                            if (typeof loadAgenda === 'function') {
-                                loadAgenda();
-                            }
-                            break;
-                        default:
-                            console.log(`ℹ️ Aba ${tabId} não requer carregamento especial`);
-                    }
-                    loadedTabs[tabId] = true;
                 } else {
-                    console.log(`ℹ️ Aba ${tabId} já foi carregada anteriormente`);
+                    requisitosHTML = `<p>${String(vaga.requisitos)}</p>`;
                 }
             }
 
-            // Função para testar conexão (atualizada)
-            async function testConnection() {
-                try {
-                    // Usar uma ação que realmente existe no GAS 1
-                    const resultado = await callGAS('getEstatisticas');
-                    console.log('✅ Conexão com GAS 1 estabelecida com sucesso!');
-                    return true;
-                } catch (error) {
-                    console.error('❌ Erro na conexão com GAS 1:', error);
-                    return false;
+            modalContent.innerHTML = `
+                <h2 class="vaga-modal-title">${vaga.titulo || 'Vaga sem título'}</h2>
+                <div class="vaga-modal-meta">
+                    <div class="vaga-modal-meta-item"><i class="fas fa-building"></i><div><strong>Empresa</strong><p>${vaga.empresa || 'Não informada'}</p></div></div>
+                    <div class="vaga-modal-meta-item"><i class="fas fa-map-marker-alt"></i><div><strong>Localidade</strong><p>${vaga.local || 'Não informado'}</p></div></div>
+                    <div class="vaga-modal-meta-item"><i class="fas fa-money-bill-wave"></i><div><strong>Salário</strong><p>${vaga.salario || 'A combinar'}</p></div></div>
+                    <div class="vaga-modal-meta-item"><i class="fas fa-clock"></i><div><strong>Tipo de Vaga</strong><p>${vaga.tipo === 'integral' ? 'Período Integral' : vaga.tipo === 'meio-periodo' ? 'Meio Período' : vaga.tipo === 'freelance' ? 'Freelance' : vaga.tipo || 'Período Integral'}</p></div></div>
+                    <div class="vaga-modal-meta-item"><i class="fas fa-calendar"></i><div><strong>Data de Publicação</strong><p>${formatDate(vaga.datacriacao)}</p></div></div>
+                    <div class="vaga-modal-meta-item"><i class="fas fa-badge-check"></i><div><strong>Status</strong><p><span style="background: ${vaga.status === 'ativa' ? '#28a745' : '#dc3545'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">${vaga.status === 'ativa' ? 'Ativa' : 'Inativa'}</span></p></div></div>
+                </div>
+                <div class="vaga-modal-section">
+                    <h3 class="vaga-modal-section-title"><i class="fas fa-file-alt"></i> Descrição da Vaga</h3>
+                    <div class="vaga-modal-content"><p style="white-space: pre-line;">${vaga.descricao || 'Descrição não disponível.'}</p></div>
+                </div>
+                ${vaga.requisitos ? `
+                <div class="vaga-modal-section">
+                    <h3 class="vaga-modal-section-title"><i class="fas fa-list-check"></i> Requisitos</h3>
+                    <div class="vaga-modal-content">${requisitosHTML}</div>
+                </div>` : ''}
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center;">
+                    ${vaga.link ? `
+                        <a href="${vaga.link}" target="_blank" class="apply-button"><i class="fas fa-paper-plane"></i> Candidatar-me</a>
+                        <p style="margin-top: 10px; font-size: 14px; color: #666;"><i class="fas fa-external-link-alt"></i> Você será redirecionado para o site da empresa</p>
+                    ` : `<p style="color: #dc3545; margin-bottom: 20px;"><i class="fas fa-exclamation-triangle"></i> Link de candidatura não disponível.</p>`}
+                    <button onclick="closeVagaModal()" style="background: #666; color: white; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-size: 14px; margin-left: 15px;"><i class="fas fa-times"></i> Fechar</button>
+                </div>
+            `;
+            modal.style.display = "block";
+        }
+
+        function closeVagaModal() {
+            document.getElementById('vagaModal').style.display = "none";
+        }
+
+        async function loadNoticias() {
+            try {
+                const container = document.getElementById('noticias-container');
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando notícias...</p></div>';
+                const noticias = await callGAS('getNoticias');
+                loadedTabs.noticias = true;
+                if (!noticias || noticias.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma notícia disponível.</p>';
+                    return;
                 }
-            }
-                
-
-                // Formatar data
-                function formatDate(dateString) {
-                    if (!dateString) return 'Data não informada';
-
-                    const date = new Date(dateString);
-                    if (isNaN(date.getTime())) return dateString;
-
-                    return date.toLocaleDateString('pt-PT', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    });
-                }
-
-                // Formatar data completa
-                function formatDateTime(dateString) {
-                    if (!dateString) return 'Data não informada';
-
-                    const date = new Date(dateString);
-                    if (isNaN(date.getTime())) return dateString;
-
-                    return date.toLocaleDateString('pt-PT', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                }
-
-                // Carregar Resumo
-                async function loadResumo() {
-                    try {
-                        const estatisticas = await callGAS('getEstatisticas');
-                        const eventos = await callGAS('getEventos');
-                        const vagas = await callGAS('getVagas');
-
-                        // Atualizar totais
-                        document.getElementById('total-noticias').textContent = estatisticas.noticias || 0;
-                        document.getElementById('total-eventos').textContent = estatisticas.eventos || 0;
-                        document.getElementById('total-vagas').textContent = estatisticas.vagas || 0;
-                        document.getElementById('total-links').textContent = estatisticas.links || 0;
-
-                        // Carregar próximos eventos e vagas em destaque
-                        await loadProximosEventos();
-                        await loadVagasDestaque();
-
-                    } catch (error) {
-                        console.error('Erro ao carregar resumo:', error);
-                        showError('resumo', 'Erro ao carregar dados do resumo');
-                    }
-                }
-
-                // Carregar Próximos Eventos
-                async function loadProximosEventos() {
-                    try {
-                        const eventos = await callGAS('getEventos');
-                        const container = document.getElementById('proximos-eventos');
-
-                        // Filtrar eventos futuros e ordenar por data
-                        const hoje = new Date();
-                        const eventosFuturos = eventos
-                            .filter(evento => {
-                                const dataEvento = new Date(evento.data || evento.datacriacao);
-                                return dataEvento >= hoje && evento.status === 'agendado';
-                            })
-                            .sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao))
-                            .slice(0, 3); // Limitar a 3 eventos
-
-                        if (eventosFuturos.length === 0) {
-                            container.innerHTML = '<div class="activity-item"><p>Não há eventos futuros agendados.</p></div>';
-                            return;
-                        }
-
-                        container.innerHTML = eventosFuturos.map(evento => `
-                                    <div class="activity-item">
-                                        <div class="activity-icon">
-                                            <i class="fas fa-calendar"></i>
-                                        </div>
-                                        <div>
-                                            <strong>${evento.titulo || 'Evento sem título'}</strong>
-                                            <p><i class="far fa-clock"></i> ${formatDateTime(evento.data || evento.datacriacao)}</p>
-                                            <p><i class="fas fa-map-marker-alt"></i> ${evento.local || 'Local não informado'}</p>
-                                        </div>
-                                    </div>
-                                `).join('');
-
-                    } catch (error) {
-                        console.error('Erro ao carregar próximos eventos:', error);
-                        document.getElementById('proximos-eventos').innerHTML =
-                            '<div class="activity-item"><p>Erro ao carregar eventos.</p></div>';
-                    }
-                }
-
-                // Carregar Vagas em Destaque (para o resumo)
-                async function loadVagasDestaque() {
-                    try {
-                        const vagas = await callGAS('getVagas');
-                        const container = document.getElementById('vagas-destaque');
-
-                        // Filtrar vagas ativas e limitar a 3
-                        const vagasAtivas = vagas
-                            .filter(vaga => vaga.status === 'ativa')
-                            .slice(0, 3);
-
-                        // Armazenar vagas globalmente para acesso no modal (para o resumo)
-                        window.vagasDestaqueData = vagasAtivas;
-
-                        if (vagasAtivas.length === 0) {
-                            container.innerHTML = '<div class="job-item"><p>Não há vagas em destaque no momento.</p></div>';
-                            return;
-                        }
-
-                        container.innerHTML = vagasAtivas.map(vaga => `
-                            <div class="job-item">
-                                <div class="job-title">
-                                    <i class="fas fa-briefcase"></i>
-                                    <span>${vaga.titulo || 'Vaga sem título'}</span>
-                                </div>
-                                <div class="job-company">${vaga.empresa || 'Empresa não informada'}</div>
-                                <div class="job-details">
-                                    <span class="job-detail"><i class="fas fa-map-marker-alt"></i> ${vaga.local || 'Local não informado'}</span>
-                                    <span class="job-detail"><i class="fas fa-money-bill-wave"></i> ${vaga.salario || 'A combinar'}</span>
-                                </div>
-                                <p style="margin: 10px 0; color: #555;">${vaga.descricao ? vaga.descricao.substring(0, 100) + '...' : 'Descrição não disponível'}</p>
-                                ${vaga.requisitos ? `<p style="color: #555; font-size: 14px;"><strong>Requisitos:</strong> ${vaga.requisitos.substring(0, 80)}...</p>` : ''}
-                                <button class="job-link" onclick="viewVaga('${vaga.id}')">Ver Detalhes</button>
-                            </div>
-                        `).join('');
-
-                    } catch (error) {
-                        console.error('Erro ao carregar vagas em destaque:', error);
-                        document.getElementById('vagas-destaque').innerHTML =
-                            '<div class="job-item"><p>Erro ao carregar vagas.</p></div>';
-                    }
-                }
-
-
-
-                // Abrir modal da notícia
-                function openNewsModal(index) {
-                    console.log('📖 Abrindo notícia, índice:', index);
-                    console.log('📊 Dados disponíveis:', window.noticiasData ? window.noticiasData.length : 0);
-
-                    if (!window.noticiasData || !window.noticiasData[index]) {
-                        console.error('❌ Notícia não encontrada no índice:', index);
-                        alert('Erro ao carregar a notícia. Por favor, recarregue a página.');
-                        return;
-                    }
-
-                    const noticia = window.noticiasData[index];
-                    console.log('📰 Notícia encontrada:', noticia.titulo);
-
-                    const modal = document.getElementById('newsModal');
-                    const modalContent = document.getElementById('newsModalContent');
-
-                    modalContent.innerHTML = `
-                        <h2 class="news-modal-title">${noticia.titulo || 'Notícia sem título'}</h2>
-
-                        <div class="news-modal-meta">
-                            <span><i class="far fa-calendar"></i> Publicado em: ${formatDate(noticia.data || noticia.datacriacao)}</span>
-                            ${noticia.dataatualizacao ? `<span><i class="far fa-clock"></i> Atualizado em: ${formatDate(noticia.dataatualizacao)}</span>` : ''}
-                            ${noticia.categoria ? `<span><i class="fas fa-tag"></i> ${noticia.categoria}</span>` : ''}
-                        </div>
-
-                        ${noticia.imagem ? `
-                            <img src="${noticia.imagem}" class="news-modal-image" alt="${noticia.titulo}"
-                                 onerror="this.style.display='none'">
-                        ` : ''}
-
-                        <div class="news-modal-content">
-                            <p style="white-space: pre-line; line-height: 1.8;">${noticia.descricao || 'Descrição não disponível.'}</p>
-                        </div>
-
-                        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-                            <button onclick="closeNewsModal()" style="background: var(--azul-primario); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
-                                <i class="fas fa-times"></i> Fechar
-                            </button>
-                        </div>
-                    `;
-
-                    modal.style.display = "block";
-                }
-
-                // Fechar modal da notícia
-                function closeNewsModal() {
-                    document.getElementById('newsModal').style.display = "none";
-                }
-
-                // Fechar modal ao clicar fora
-                window.onclick = function (event) {
-                    const modal = document.getElementById('newsModal');
-                    if (event.target === modal) {
-                        modal.style.display = "none";
-                    }
-                }
-
-
-                // Abrir modal da vaga
-                function openVagaModal(vagaId) {
-                    console.log('🔍 Buscando vaga com ID:', vagaId);
-
-                    // Primeiro, tentar encontrar a vaga em todas as vagas carregadas
-                    let vaga = null;
-
-                    // 1. Tentar nas vagas em destaque (resumo)
-                    if (window.vagasDestaqueData) {
-                        vaga = window.vagasDestaqueData.find(v => v.id === vagaId);
-                    }
-
-                    // 2. Se não encontrou, tentar em todas as vagas (aba vagas)
-                    if (!vaga && window.todasVagasData) {
-                        vaga = window.todasVagasData.find(v => v.id === vagaId);
-                    }
-
-                    // 3. Se ainda não encontrou, usar dados temporários
-                    if (!vaga && window.vagaDetalheTemp) {
-                        vaga = window.vagaDetalheTemp.find(v => v.id === vagaId);
-                    }
-
-                    if (!vaga) {
-                        console.error('❌ Vaga não encontrada com ID:', vagaId);
-                        alert('Vaga não encontrada. Tente recarregar a página.');
-                        return;
-                    }
-
-                    console.log('✅ Vaga encontrada:', vaga.titulo);
-                    console.log('📋 Requisitos disponíveis:', vaga.requisitos ? 'Sim' : 'Não');
-
-                    const modal = document.getElementById('vagaModal');
-                    const modalContent = document.getElementById('vagaModalContent');
-
-                    // Processar requisitos (se for string, converter para lista)
-                    let requisitosHTML = '';
-                    if (vaga.requisitos) {
-                        console.log('📝 Processando requisitos:', vaga.requisitos.substring(0, 100));
-
-                        if (typeof vaga.requisitos === 'string') {
-                            // Limpar a string de requisitos
-                            const requisitosStr = vaga.requisitos.trim();
-
-                            // Verificar se já está formatado com marcadores
-                            if (requisitosStr.includes('•') || requisitosStr.includes('-') || requisitosStr.includes('*') || requisitosStr.includes('\n')) {
-                                // Dividir por quebras de linha ou marcadores
-                                const linhas = requisitosStr.split(/\n|•|-|\*/).filter(linha => linha.trim() !== '');
-                                requisitosHTML = `
-                                    <ul class="requirements-list">
-                                        ${linhas.map(linha => `<li>${linha.trim()}</li>`).join('')}
-                                    </ul>
-                                `;
-                            } else {
-                                // Se não tiver marcadores, mostrar como parágrafo
-                                requisitosHTML = `<p style="white-space: pre-line; padding: 10px; background: #f8f9fa; border-radius: 5px;">${requisitosStr}</p>`;
-                            }
-                        } else {
-                            // Se não for string, converter
-                            requisitosHTML = `<p>${String(vaga.requisitos)}</p>`;
-                        }
-                    }
-
-                    // Construir o HTML do modal
-                    modalContent.innerHTML = `
-                        <h2 class="vaga-modal-title">${vaga.titulo || 'Vaga sem título'}</h2>
-
-                        <div class="vaga-modal-meta">
-                            <div class="vaga-modal-meta-item">
-                                <i class="fas fa-building"></i>
-                                <div>
-                                    <strong>Empresa</strong>
-                                    <p>${vaga.empresa || 'Não informada'}</p>
-                                </div>
-                            </div>
-
-                            <div class="vaga-modal-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <div>
-                                    <strong>Localidade</strong>
-                                    <p>${vaga.local || 'Não informado'}</p>
-                                </div>
-                            </div>
-
-                            <div class="vaga-modal-meta-item">
-                                <i class="fas fa-money-bill-wave"></i>
-                                <div>
-                                    <strong>Salário</strong>
-                                    <p>${vaga.salario || 'A combinar'}</p>
-                                </div>
-                            </div>
-
-                            <div class="vaga-modal-meta-item">
-                                <i class="fas fa-clock"></i>
-                                <div>
-                                    <strong>Tipo de Vaga</strong>
-                                    <p>${vaga.tipo === 'integral' ? 'Período Integral' :
-                            vaga.tipo === 'meio-periodo' ? 'Meio Período' :
-                                vaga.tipo === 'freelance' ? 'Freelance' :
-                                    vaga.tipo || 'Período Integral'}</p>
-                                </div>
-                            </div>
-
-                            <div class="vaga-modal-meta-item">
-                                <i class="fas fa-calendar"></i>
-                                <div>
-                                    <strong>Data de Publicação</strong>
-                                    <p>${formatDate(vaga.datacriacao)}</p>
-                                </div>
-                            </div>
-
-                            <div class="vaga-modal-meta-item">
-                                <i class="fas fa-badge-check"></i>
-                                <div>
-                                    <strong>Status</strong>
-                                    <p><span style="background: ${vaga.status === 'ativa' ? '#28a745' : '#dc3545'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">
-                                        ${vaga.status === 'ativa' ? 'Ativa' : 'Inativa'}
-                                    </span></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="vaga-modal-section">
-                            <h3 class="vaga-modal-section-title">
-                                <i class="fas fa-file-alt"></i> Descrição da Vaga
-                            </h3>
-                            <div class="vaga-modal-content">
-                                <p style="white-space: pre-line;">${vaga.descricao || 'Descrição não disponível.'}</p>
-                            </div>
-                        </div>
-
-                        ${vaga.requisitos ? `
-                        <div class="vaga-modal-section">
-                            <h3 class="vaga-modal-section-title">
-                                <i class="fas fa-list-check"></i> Requisitos
-                            </h3>
-                            <div class="vaga-modal-content">
-                                ${requisitosHTML}
-                            </div>
-                        </div>
-                        ` : ''}
-
-                        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center;">
-                            ${vaga.link ? `
-                                <a href="${vaga.link}" target="_blank" class="apply-button">
-                                    <i class="fas fa-paper-plane"></i> Candidatar-me
-                                </a>
-                                <p style="margin-top: 10px; font-size: 14px; color: #666;">
-                                    <i class="fas fa-external-link-alt"></i> Você será redirecionado para o site da empresa
-                                </p>
-                            ` : `
-                                <p style="color: #dc3545; margin-bottom: 20px;">
-                                    <i class="fas fa-exclamation-triangle"></i> Link de candidatura não disponível.
-                                </p>
-                            `}
-
-                            <button onclick="closeVagaModal()" style="background: #666; color: white; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-size: 14px; margin-left: 15px;">
-                                <i class="fas fa-times"></i> Fechar
-                            </button>
-                        </div>
-                    `;
-
-                    modal.style.display = "block";
-                }
-
-
-                // Fechar modal da vaga
-                function closeVagaModal() {
-                    document.getElementById('vagaModal').style.display = "none";
-                }
-
-                // Carregar Notícias
-                async function loadNoticias() {
-                    try {
-                        const container = document.getElementById('noticias-container');
-                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando notícias...</p></div>';
-
-                        const noticias = await callGAS('getNoticias');
-                        loadedTabs.noticias = true;
-
-                        if (!noticias || noticias.length === 0) {
-                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma notícia disponível.</p>';
-                            return;
-                        }
-
-                        // Ordenar por data mais recente
-                        noticias.sort((a, b) => new Date(b.data || b.datacriacao) - new Date(a.data || a.datacriacao));
-
-                        container.innerHTML = `
+                noticias.sort((a, b) => new Date(b.data || b.datacriacao) - new Date(a.data || a.datacriacao));
+                container.innerHTML = `
                     <div class="news-grid">
                         ${noticias.map((noticia, index) => `
                             <div class="news-card" onclick="openNewsModal(${index})" style="cursor: pointer;">
-                                ${noticia.imagem ? `
-                                    <img src="${noticia.imagem}" class="news-img" alt="${noticia.titulo}"
-                                         onerror="this.src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-                                ` : `
-                                    <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                                         class="news-img" alt="Imagem padrão">
-                                `}
+                                ${noticia.imagem ? `<img src="${noticia.imagem}" class="news-img" alt="${noticia.titulo}" onerror="this.src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">` : `<img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="news-img" alt="Imagem padrão">`}
                                 <div class="news-content">
                                     <h3>${noticia.titulo || 'Notícia sem título'}</h3>
                                     <p>${noticia.descricao ? noticia.descricao.substring(0, 150) + '...' : 'Descrição não disponível'}</p>
-                                    <p class="news-date">
-                                        <i class="far fa-clock"></i> ${formatDate(noticia.data || noticia.datacriacao)}
-                                        ${noticia.categoria ? `<span style="margin-left: 10px; background: #e8f4ff; padding: 3px 8px; border-radius: 12px; font-size: 12px;">${noticia.categoria}</span>` : ''}
-                                    </p>
-                                    <button class="news-read-more-btn" onclick="event.stopPropagation(); openNewsModal(${index})">
-                                        <i class="fas fa-book-open"></i> Ler notícia completa
-                                    </button>
+                                    <p class="news-date"><i class="far fa-clock"></i> ${formatDate(noticia.data || noticia.datacriacao)}${noticia.categoria ? `<span style="margin-left: 10px; background: #e8f4ff; padding: 3px 8px; border-radius: 12px; font-size: 12px;">${noticia.categoria}</span>` : ''}</p>
+                                    <button class="news-read-more-btn" onclick="event.stopPropagation(); openNewsModal(${index})"><i class="fas fa-book-open"></i> Ler notícia completa</button>
                                 </div>
                             </div>
                         `).join('')}
                     </div>
-`;
-
-                        // Guardar as notícias em uma variável global para acesso no modal
-                        window.noticiasData = noticias;
-
-                    } catch (error) {
-                        console.error('Erro ao carregar notícias:', error);
-                        document.getElementById('noticias-container').innerHTML =
-                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar notícias.</p>';
-                    }
-                }
-
-                console.log('✅ Notícias carregadas do GAS:', noticias.length);
-                console.log('📋 Primeira notícia:', noticias[0] ? noticias[0].titulo : 'Nenhuma');
-
-
-                // Carregar Galeria
-                async function loadGaleria() {
-                    try {
-                        const container = document.getElementById('galeria-container');
-                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando galeria...</p></div>';
-
-                        const fotos = await callGAS('getGaleria');
-                        loadedTabs.galeria = true;
-
-                        if (!fotos || fotos.length === 0) {
-                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma foto na galeria.</p>';
-                            return;
-                        }
-
-                        // Ordenar por data mais recente
-                        fotos.sort((a, b) => new Date(b.data || b.datacriacao) - new Date(a.data || a.datacriacao));
-
-                        container.innerHTML = `
-                                    <div class="gallery-grid">
-                                        ${fotos.filter(foto => foto.status === 'ativo').map(foto => `
-                                            <div class="gallery-item" onclick="openImageModal('${foto.url}', '${foto.titulo || ''}')">
-                                                <img src="${foto.thumbnail || foto.url || 'https://via.placeholder.com/300x200'}"
-                                                     class="gallery-img" alt="${foto.titulo || 'Foto'}"
-                                                     onerror="this.src='https://via.placeholder.com/300x200'">
-                                                <div class="gallery-caption">
-                                                    <h4>${foto.titulo || 'Foto sem título'}</h4>
-                                                    <p style="color: #666; font-size: 14px;">${formatDate(foto.data || foto.datacriacao)}</p>
-                                                    ${foto.descricao ? `<p style="margin-top: 5px; font-size: 14px;">${foto.descricao.substring(0, 50)}...</p>` : ''}
-                                                </div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                `;
-
-                    } catch (error) {
-                        console.error('Erro ao carregar galeria:', error);
-                        document.getElementById('galeria-container').innerHTML =
-                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar galeria.</p>';
-                    }
-                }
-
-                // Modal para imagens
-            function openImageModal(imageSrc, caption) {
-                const modal = document.getElementById('imageModal');
-                const modalImg = document.getElementById('modalImage');
-                const modalCaption = document.getElementById('modalCaption');
-                const closeBtn = modal.querySelector('.close'); // Mudança importante aqui
-
-                modal.style.display = "block";
-                modalImg.src = imageSrc;
-                modalCaption.innerHTML = caption || '';
-
-                // Fechar modal ao clicar no X - USAR stopPropagation
-                closeBtn.onclick = function (e) {
-                    e.stopPropagation(); // Impede que o clique propague para o modal
-                    modal.style.display = "none";
-                }
-
-                // Fechar modal ao clicar fora da imagem
-                modal.onclick = function (event) {
-                    if (event.target === modal) {
-                        modal.style.display = "none";
-                    }
-                }
-
-                // Prevenir fechamento ao clicar na imagem
-                modalImg.onclick = function (e) {
-                    e.stopPropagation();
-                }
+                `;
+                window.noticiasData = noticias;
+            } catch (error) {
+                console.error('Erro ao carregar notícias:', error);
+                document.getElementById('noticias-container').innerHTML = '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar notícias.</p>';
             }
+        }
 
-                // Carregar Atividades (Eventos)
-                async function loadAtividades() {
-                    try {
-                        const container = document.getElementById('atividades-container');
-                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando actividades...</p></div>';
+        // ========== FUNÇÃO loadGaleria CORRIGIDA (sem onclick inline) ==========
+        async function loadGaleria() {
+    try {
+        const container = document.getElementById('galeria-container');
+        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando galeria...</p></div>';
 
-                        const eventos = await callGAS('getEventos');
-                        loadedTabs.atividades = true;
+        const fotos = await callGAS('getGaleria');
+        loadedTabs.galeria = true;
 
-                        if (!eventos || eventos.length === 0) {
-                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma atividade disponível.</p>';
-                            return;
-                        }
+        if (!fotos || fotos.length === 0) {
+            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma foto na galeria.</p>';
+            return;
+        }
 
-                        // Ordenar por data mais próxima
-                        eventos.sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao));
+        // Ordenar por data mais recente
+        fotos.sort((a, b) => new Date(b.data || b.datacriacao) - new Date(a.data || a.datacriacao));
 
-                        container.innerHTML = `
-                                    <div class="activities-list">
-                                        ${eventos.map(evento => `
-                                            <div class="activity-item">
-                                                <div class="activity-icon">
-                                                    <i class="fas fa-${evento.tipo === 'workshop' ? 'chalkboard-teacher' : 'calendar-alt'}"></i>
-                                                </div>
-                                                <div style="flex: 1;">
-                                                    <h4>${evento.titulo || 'Evento sem título'}</h4>
-                                                    <p><strong><i class="far fa-clock"></i> Data:</strong> ${formatDateTime(evento.data || evento.datacriacao)}</p>
-                                                    <p><strong><i class="fas fa-map-marker-alt"></i> Local:</strong> ${evento.local || 'Local não informado'}</p>
-                                                    <p><strong>Tipo:</strong> ${evento.tipo || 'Evento'}</p>
-                                                    <p>${evento.descricao || 'Descrição não disponível'}</p>
-                                                    ${evento.link ? `<p><strong>Link:</strong> <a href="${evento.link}" target="_blank">${evento.link}</a></p>` : ''}
-                                                    <p><strong>Status:</strong> <span style="background: ${evento.status === 'agendado' ? '#28a745' : '#ffc107'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">${evento.status || 'agendado'}</span></p>
-                                                </div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                `;
+        let html = '<div class="gallery-grid">';
+        fotos.filter(foto => foto.status === 'ativo').forEach(foto => {
+            const imageUrl = getImageUrl(foto); // URL principal para o modal
+            const thumbnailUrl = foto.thumbnail || imageUrl; // miniatura (pode ser a mesma)
 
-                    } catch (error) {
-                        console.error('Erro ao carregar atividades:', error);
-                        document.getElementById('atividades-container').innerHTML =
-                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar atividades.</p>';
-                    }
+            html += `
+                <div class="gallery-item" data-url="${imageUrl}" data-titulo="${(foto.titulo || '').replace(/"/g, '&quot;')}">
+                    <img src="${thumbnailUrl}"
+                         class="gallery-img" alt="${foto.titulo || 'Foto'}"
+                         loading="lazy"
+                         onerror="this.src='https://via.placeholder.com/300x200?text=Erro'">
+                    <div class="gallery-caption">
+                        <h4>${foto.titulo || 'Foto sem título'}</h4>
+                        <p style="color: #666; font-size: 14px;">${formatDate(foto.data || foto.datacriacao)}</p>
+                        ${foto.descricao ? `<p style="margin-top: 5px; font-size: 14px;">${foto.descricao.substring(0, 50)}...</p>` : ''}
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+
+        // Adicionar event listeners
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const url = this.dataset.url;
+                const titulo = this.dataset.titulo;
+                openImageModal(url, titulo);
+            });
+        });
+
+    } catch (error) {
+        console.error('Erro ao carregar galeria:', error);
+        document.getElementById('galeria-container').innerHTML =
+            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar galeria.</p>';
+    }
+}
+
+        // ========== FUNÇÃO openImageModal APRIMORADA ==========
+        function openImageModal(imageSrc, caption) {
+    console.log('Abrindo modal com imagem:', imageSrc);
+    const modal = document.getElementById('imageModal');
+    if (!modal) {
+        console.error('Modal não encontrado');
+        return;
+    }
+    const modalImg = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    const closeBtn = modal.querySelector('.close');
+
+    // Se a URL estiver vazia, usa placeholder
+    if (!imageSrc) {
+        imageSrc = 'https://via.placeholder.com/800x600?text=Imagem+indisponível';
+    }
+
+    modal.style.display = "block";
+    modalImg.src = imageSrc;
+    modalCaption.innerHTML = caption || '';
+
+    // Se a imagem falhar ao carregar, troca para placeholder
+    modalImg.onerror = function() {
+        console.warn('Falha ao carregar imagem:', imageSrc);
+        this.src = 'https://via.placeholder.com/800x600?text=Erro+ao+carregar+imagem';
+    };
+
+    if (closeBtn) {
+        closeBtn.onclick = function (e) {
+            e.stopPropagation();
+            modal.style.display = "none";
+        }
+    }
+
+    modal.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    modalImg.onclick = function (e) {
+        e.stopPropagation();
+    }
+}
+
+function getImageUrl(item) {
+    // Prioridade: thumbnail -> url -> fileid -> fallback por categoria
+    if (item.thumbnail && item.thumbnail.trim() !== '') {
+        return item.thumbnail;
+    }
+    if (item.url && item.url.trim() !== '') {
+        return item.url;
+    }
+    if (item.fileid && item.fileid.trim() !== '') {
+        return `https://drive.google.com/thumbnail?id=${item.fileid}&sz=w800`;
+    }
+    // Fallback com base na categoria ou imagem padrão
+    const category = (item.categoria || 'geral').toLowerCase().replace(/[^a-z]/g, '');
+    const defaultImages = {
+        'eventos': 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'reunioes': 'https://images.unsplash.com/photo-1573164713714-d95e436ab994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'workshops': 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'encontros': 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'formaturas': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'default': 'https://images.unsplash.com/photo-1492684223066-e9e4aab4d25e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    };
+    return defaultImages[category] || defaultImages.default;
+}
+
+        async function loadAtividades() {
+            try {
+                const container = document.getElementById('atividades-container');
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando actividades...</p></div>';
+                const eventos = await callGAS('getEventos');
+                loadedTabs.atividades = true;
+                if (!eventos || eventos.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma atividade disponível.</p>';
+                    return;
                 }
-
-                // Carregar Vagas
-                async function loadVagas() {
-                    try {
-                        const container = document.getElementById('vagas-container');
-                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando vagas...</p></div>';
-
-                        const vagas = await callGAS('getVagas');
-                        loadedTabs.vagas = true;
-
-                        if (!vagas || vagas.length === 0) {
-                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma vaga disponível.</p>';
-                            return;
-                        }
-
-                        // Ordenar por data mais recente
-                        vagas.sort((a, b) => new Date(b.datacriacao) - new Date(a.datacriacao));
-
-                        // Armazenar vagas globalmente para acesso no modal
-                        window.todasVagasData = vagas;
-
-                        container.innerHTML = `
-                            <div class="jobs-list">
-                                ${vagas.map(vaga => `
-                                    <div class="job-item">
-                                        <div class="job-title">
-                                            <i class="fas fa-${vaga.tipo === 'integral' ? 'briefcase' : vaga.tipo === 'meio-periodo' ? 'clock' : 'user-tie'}"></i>
-                                            <span>${vaga.titulo || 'Vaga sem título'}</span>
-                                            ${vaga.status === 'ativa' ?
-                                '<span style="background: #28a745; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; margin-left: auto;">Ativa</span>' :
-                                '<span style="background: #dc3545; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; margin-left: auto;">Inativa</span>'}
-                                        </div>
-                                        <div class="job-company">
-                                            <i class="fas fa-building"></i> ${vaga.empresa || 'Empresa não informada'}
-                                        </div>
-                                        <div class="job-details">
-                                            <span class="job-detail"><i class="fas fa-map-marker-alt"></i> ${vaga.local || 'Local não informado'}</span>
-                                            <span class="job-detail"><i class="fas fa-clock"></i> ${vaga.tipo === 'integral' ? 'Período Integral' : vaga.tipo === 'meio-periodo' ? 'Meio Período' : vaga.tipo || 'Período Integral'}</span>
-                                            <span class="job-detail"><i class="fas fa-money-bill-wave"></i> ${vaga.salario || 'A combinar'}</span>
-                                        </div>
-
-                                        ${vaga.descricao ? `
-                                            <div style="margin: 15px 0;">
-                                                <strong><i class="fas fa-file-alt"></i> Descrição:</strong>
-                                                <p style="color: #555; margin-top: 5px; line-height: 1.5;">${vaga.descricao.substring(0, 150)}${vaga.descricao.length > 150 ? '...' : ''}</p>
-                                            </div>
-                                        ` : ''}
-
-                                        ${vaga.requisitos ? `
-                                            <div style="margin: 15px 0;">
-                                                <strong><i class="fas fa-list-check"></i> Requisitos:</strong>
-                                                <p style="color: #555; margin-top: 5px; line-height: 1.5;">${vaga.requisitos.substring(0, 100)}${vaga.requisitos.length > 100 ? '...' : ''}</p>
-                                            </div>
-                                        ` : ''}
-
-                                        <div style="display: flex; gap: 10px; margin-top: 15px;">
-                                            <button class="job-link" onclick="viewVagaDetalhes('${vaga.id}')">
-                                                <i class="fas fa-eye"></i> Ver Detalhes Completos
-                                            </button>
-                                            ${vaga.link ? `
-                                                <a href="${vaga.link}" target="_blank" class="job-link" style="background: var(--verde);">
-                                                    <i class="fas fa-paper-plane"></i> Candidatar-me
-                                                </a>
-                                            ` : ''}
-                                        </div>
-                                    </div>
-                                `).join('')}
+                eventos.sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao));
+                container.innerHTML = `
+                    <div class="activities-list">
+                        ${eventos.map(evento => `
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas fa-${evento.tipo === 'workshop' ? 'chalkboard-teacher' : 'calendar-alt'}"></i></div>
+                                <div style="flex: 1;">
+                                    <h4>${evento.titulo || 'Evento sem título'}</h4>
+                                    <p><strong><i class="far fa-clock"></i> Data:</strong> ${formatDateTime(evento.data || evento.datacriacao)}</p>
+                                    <p><strong><i class="fas fa-map-marker-alt"></i> Local:</strong> ${evento.local || 'Local não informado'}</p>
+                                    <p><strong>Tipo:</strong> ${evento.tipo || 'Evento'}</p>
+                                    <p>${evento.descricao || 'Descrição não disponível'}</p>
+                                    ${evento.link ? `<p><strong>Link:</strong> <a href="${evento.link}" target="_blank">${evento.link}</a></p>` : ''}
+                                    <p><strong>Status:</strong> <span style="background: ${evento.status === 'agendado' ? '#28a745' : '#ffc107'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">${evento.status || 'agendado'}</span></p>
+                                </div>
                             </div>
-                        `;
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Erro ao carregar atividades:', error);
+                document.getElementById('atividades-container').innerHTML = '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar atividades.</p>';
+            }
+        }
 
-                    } catch (error) {
-                        console.error('Erro ao carregar vagas:', error);
-                        document.getElementById('vagas-container').innerHTML =
-                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar vagas.</p>';
-                    }
+        async function loadVagas() {
+            try {
+                const container = document.getElementById('vagas-container');
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando vagas...</p></div>';
+                const vagas = await callGAS('getVagas');
+                loadedTabs.vagas = true;
+                if (!vagas || vagas.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma vaga disponível.</p>';
+                    return;
                 }
+                vagas.sort((a, b) => new Date(b.datacriacao) - new Date(a.datacriacao));
+                window.todasVagasData = vagas;
+                container.innerHTML = `
+                    <div class="jobs-list">
+                        ${vagas.map(vaga => `
+                            <div class="job-item">
+                                <div class="job-title">
+                                    <i class="fas fa-${vaga.tipo === 'integral' ? 'briefcase' : vaga.tipo === 'meio-periodo' ? 'clock' : 'user-tie'}"></i>
+                                    <span>${vaga.titulo || 'Vaga sem título'}</span>
+                                    ${vaga.status === 'ativa' ? '<span style="background: #28a745; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; margin-left: auto;">Ativa</span>' : '<span style="background: #dc3545; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; margin-left: auto;">Inativa</span>'}
+                                </div>
+                                <div class="job-company"><i class="fas fa-building"></i> ${vaga.empresa || 'Empresa não informada'}</div>
+                                <div class="job-details">
+                                    <span class="job-detail"><i class="fas fa-map-marker-alt"></i> ${vaga.local || 'Local não informado'}</span>
+                                    <span class="job-detail"><i class="fas fa-clock"></i> ${vaga.tipo === 'integral' ? 'Período Integral' : vaga.tipo === 'meio-periodo' ? 'Meio Período' : vaga.tipo || 'Período Integral'}</span>
+                                    <span class="job-detail"><i class="fas fa-money-bill-wave"></i> ${vaga.salario || 'A combinar'}</span>
+                                </div>
+                                ${vaga.descricao ? `<div style="margin: 15px 0;"><strong><i class="fas fa-file-alt"></i> Descrição:</strong><p style="color: #555; margin-top: 5px; line-height: 1.5;">${vaga.descricao.substring(0, 150)}${vaga.descricao.length > 150 ? '...' : ''}</p></div>` : ''}
+                                ${vaga.requisitos ? `<div style="margin: 15px 0;"><strong><i class="fas fa-list-check"></i> Requisitos:</strong><p style="color: #555; margin-top: 5px; line-height: 1.5;">${vaga.requisitos.substring(0, 100)}${vaga.requisitos.length > 100 ? '...' : ''}</p></div>` : ''}
+                                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                    <button class="job-link" onclick="viewVagaDetalhes('${vaga.id}')"><i class="fas fa-eye"></i> Ver Detalhes Completos</button>
+                                    ${vaga.link ? `<a href="${vaga.link}" target="_blank" class="job-link" style="background: var(--verde);"><i class="fas fa-paper-plane"></i> Candidatar-me</a>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Erro ao carregar vagas:', error);
+                document.getElementById('vagas-container').innerHTML = '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar vagas.</p>';
+            }
+        }
 
-
-                // Visualizar detalhes da vaga (para vagas em destaque no resumo)
-                async function viewVaga(vagaId) {
-                    try {
-                        // Se já tivermos os dados das vagas em destaque, usar eles
-                        if (window.vagasDestaqueData) {
-                            const vaga = window.vagasDestaqueData.find(v => v.id === vagaId);
-                            if (vaga) {
-                                openVagaModal(vagaId);
-                                return;
-                            }
-                        }
-
-                        // Caso contrário, buscar do GAS
-                        const vagas = await callGAS('getVagas');
-                        const vaga = vagas.find(v => v.id === vagaId);
-
-                        if (!vaga) {
-                            alert('Vaga não encontrada!');
-                            return;
-                        }
-
-                        openVagaModal(vagaId);
-
-                    } catch (error) {
-                        console.error('Erro ao carregar detalhes da vaga:', error);
-                        alert('Erro ao carregar detalhes da vaga.');
-                    }
+        async function viewVaga(vagaId) {
+            try {
+                if (window.vagasDestaqueData) {
+                    const vaga = window.vagasDestaqueData.find(v => v.id === vagaId);
+                    if (vaga) { openVagaModal(vagaId); return; }
                 }
+                const vagas = await callGAS('getVagas');
+                const vaga = vagas.find(v => v.id === vagaId);
+                if (!vaga) { alert('Vaga não encontrada!'); return; }
+                openVagaModal(vagaId);
+            } catch (error) {
+                console.error('Erro ao carregar detalhes da vaga:', error);
+                alert('Erro ao carregar detalhes da vaga.');
+            }
+        }
 
-
-                // Visualizar detalhes da vaga da aba de vagas
-                async function viewVagaDetalhes(vagaId) {
-                    try {
-                        console.log('🔍 Buscando detalhes da vaga:', vagaId);
-
-                        // Se já tivermos os dados carregados, usar eles
-                        if (window.todasVagasData) {
-                            const vaga = window.todasVagasData.find(v => v.id === vagaId);
-                            if (vaga) {
-                                console.log('✅ Vaga encontrada nos dados locais');
-                                // Usar uma cópia temporária para o modal
-                                window.vagaDetalheTemp = [vaga];
-                                openVagaModal(vagaId);
-                                return;
-                            }
-                        }
-
-                        console.log('📡 Vaga não encontrada localmente, buscando do GAS...');
-
-                        // Caso contrário, buscar do GAS
-                        const vagas = await callGAS('getVagas');
-                        const vaga = vagas.find(v => v.id === vagaId);
-
-                        if (!vaga) {
-                            alert('Vaga não encontrada!');
-                            return;
-                        }
-
-                        // Usar uma cópia temporária para o modal
+        async function viewVagaDetalhes(vagaId) {
+            try {
+                console.log('🔍 Buscando detalhes da vaga:', vagaId);
+                if (window.todasVagasData) {
+                    const vaga = window.todasVagasData.find(v => v.id === vagaId);
+                    if (vaga) {
+                        console.log('✅ Vaga encontrada nos dados locais');
                         window.vagaDetalheTemp = [vaga];
                         openVagaModal(vagaId);
-
-                    } catch (error) {
-                        console.error('Erro ao carregar detalhes da vaga:', error);
-                        alert('Erro ao carregar detalhes da vaga.');
+                        return;
                     }
                 }
+                console.log('📡 Vaga não encontrada localmente, buscando do GAS...');
+                const vagas = await callGAS('getVagas');
+                const vaga = vagas.find(v => v.id === vagaId);
+                if (!vaga) { alert('Vaga não encontrada!'); return; }
+                window.vagaDetalheTemp = [vaga];
+                openVagaModal(vagaId);
+            } catch (error) {
+                console.error('Erro ao carregar detalhes da vaga:', error);
+                alert('Erro ao carregar detalhes da vaga.');
+            }
+        }
 
-
-                // Carregar Links Úteis
-                async function loadLinksUteis() {
-                    try {
-                        const container = document.getElementById('links-container');
-                        container.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><div class="loading"><div class="loading-spinner"></div><p>Carregando links...</p></div></td></tr>';
-
-                        const links = await callGAS('getLinks');
-                        loadedTabs.linksuteis = true;
-
-                        if (!links || links.length === 0) {
-                            container.innerHTML = `
-                                <tr>
-                                    <td colspan="5" style="text-align: center; padding: 40px; color: #666;">
-                                        Nenhum link útil disponível.
-                                    </td>
-                                </tr>
-                            `;
-                            return;
-                        }
-
-                        container.innerHTML = links.map((link, index) => {
-                            // Criar um ID único baseado no índice
-                            const descricaoId = `desc-${index}`;
-
-                            return `
-                                <tr>
-                                    <td>
-                                        <strong>${link.titulo || 'Link sem título'}</strong>
-                                        ${link.icone ? `<br><small><i class="${link.icone}"></i> ${link.icone.replace('fas fa-', '')}</small>` : ''}
-                                    </td>
-                                    <td>
-                                        <span class="link-category">${link.categoria || 'outros'}</span>
-                                    </td>
-                                    <td>
-                                        <a href="${link.url || '#'}" target="_blank" style="color: var(--azul-primario); text-decoration: none;">
-                                            ${link.url ? (link.url.length > 40 ? link.url.substring(0, 40) + '...' : link.url) : 'URL não informada'}
-                                            <i class="fas fa-external-link-alt" style="font-size: 12px; margin-left: 5px;"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <span class="link-status ${link.status === 'ativo' ? 'status-active' : 'status-inactive'}">
-                                            ${link.status || 'ativo'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="descricao-btn" data-id="${descricaoId}" style="cursor: pointer;">
-                                            <i class="fas fa-info-circle"></i> Descrição
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr id="${descricaoId}" style="display: none; background-color: #f9f9f9;">
-                                    <td colspan="5" style="padding: 20px; border-bottom: 1px solid #ddd;">
-                                        <h4 style="color: var(--azul-primario); margin-bottom: 10px;">
-                                            <i class="fas fa-info-circle"></i> Descrição: ${link.titulo || 'Link sem título'}
-                                        </h4>
-                                        <p style="margin-bottom: 10px; line-height: 1.6;">
-                                            ${link.descricao || 'Nenhuma descrição disponível.'}
-                                        </p>
-                                        <p style="color: #666; font-size: 0.9em;">
-                                            <i class="far fa-clock"></i> Criado em: ${formatDateTime(link.datacriacao)}
-                                            ${link.dataatualizacao ? `<br><i class="fas fa-history"></i> Atualizado em: ${formatDateTime(link.dataatualizacao)}` : ''}
-                                        </p>
-                                    </td>
-                                </tr>
-                            `;
-                        }).join('');
-
-                        // Adicionar event listeners aos botões após carregar os links
-                        setupDescricaoButtons();
-
-                    } catch (error) {
-                        console.error('Erro ao carregar links úteis:', error);
-                        document.getElementById('links-container').innerHTML = `
-                            <tr>
-                                <td colspan="5" style="text-align: center; padding: 40px; color: #dc3545;">
-                                    Erro ao carregar links úteis.
-                                </td>
-                            </tr>
-                        `;
-                    }
+        async function loadLinksUteis() {
+            try {
+                const container = document.getElementById('links-container');
+                container.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><div class="loading"><div class="loading-spinner"></div><p>Carregando links...</p></div></td></tr>';
+                const links = await callGAS('getLinks');
+                loadedTabs.linksuteis = true;
+                if (!links || links.length === 0) {
+                    container.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #666;">Nenhum link útil disponível.</td></tr>`;
+                    return;
                 }
+                container.innerHTML = links.map((link, index) => {
+                    const descricaoId = `desc-${index}`;
+                    return `
+                        <tr>
+                            <td><strong>${link.titulo || 'Link sem título'}</strong>${link.icone ? `<br><small><i class="${link.icone}"></i> ${link.icone.replace('fas fa-', '')}</small>` : ''}</td>
+                            <td><span class="link-category">${link.categoria || 'outros'}</span></td>
+                            <td><a href="${link.url || '#'}" target="_blank" style="color: var(--azul-primario); text-decoration: none;">${link.url ? (link.url.length > 40 ? link.url.substring(0, 40) + '...' : link.url) : 'URL não informada'} <i class="fas fa-external-link-alt" style="font-size: 12px; margin-left: 5px;"></i></a></td>
+                            <td><span class="link-status ${link.status === 'ativo' ? 'status-active' : 'status-inactive'}">${link.status || 'ativo'}</span></td>
+                            <td><button class="descricao-btn" data-id="${descricaoId}" style="cursor: pointer;"><i class="fas fa-info-circle"></i> Descrição</button></td>
+                        </tr>
+                        <tr id="${descricaoId}" style="display: none; background-color: #f9f9f9;">
+                            <td colspan="5" style="padding: 20px; border-bottom: 1px solid #ddd;">
+                                <h4 style="color: var(--azul-primario); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Descrição: ${link.titulo || 'Link sem título'}</h4>
+                                <p style="margin-bottom: 10px; line-height: 1.6;">${link.descricao || 'Nenhuma descrição disponível.'}</p>
+                                <p style="color: #666; font-size: 0.9em;"><i class="far fa-clock"></i> Criado em: ${formatDateTime(link.datacriacao)}${link.dataatualizacao ? `<br><i class="fas fa-history"></i> Atualizado em: ${formatDateTime(link.dataatualizacao)}` : ''}</p>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+                setupDescricaoButtons();
+            } catch (error) {
+                console.error('Erro ao carregar links úteis:', error);
+                document.getElementById('links-container').innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar links úteis.</td></tr>`;
+            }
+        }
 
-                // Configurar botões de descrição dos links úteis
-                function setupDescricaoButtons() {
-                    const buttons = document.querySelectorAll('.descricao-btn');
-
-                    buttons.forEach(button => {
-                        button.addEventListener('click', function () {
-                            const descricaoId = this.getAttribute('data-id');
-                            const descricaoRow = document.getElementById(descricaoId);
-
-                            if (descricaoRow.style.display === 'none' || descricaoRow.style.display === '') {
-                                descricaoRow.style.display = 'table-row';
-                                this.innerHTML = '<i class="fas fa-times-circle"></i> Fechar';
-                                this.style.backgroundColor = 'var(--laranja)';
-                            } else {
-                                descricaoRow.style.display = 'none';
-                                this.innerHTML = '<i class="fas fa-info-circle"></i> Descrição';
-                                this.style.backgroundColor = 'var(--azul-primario)';
-                            }
-                        });
-                    });
-                }
-
-
-
-                // Carregar Agenda
-                async function loadAgenda() {
-                    try {
-                        const container = document.getElementById('agenda-eventos');
-                        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando eventos da agenda...</p></div>';
-
-                        const eventos = await callGAS('getEventos');
-                        loadedTabs.agenda = true;
-
-                        // Atualizar calendário
-                        initCalendar(eventos);
-
-                        // Filtrar eventos futuros para a lista
-                        const hoje = new Date();
-                        const eventosFuturos = eventos
-                            .filter(evento => {
-                                const dataEvento = new Date(evento.data || evento.datacriacao);
-                                return dataEvento >= hoje;
-                            })
-                            .sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao))
-                            .slice(0, 10); // Limitar a 10 eventos
-
-                        if (eventosFuturos.length === 0) {
-                            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhum evento futuro agendado.</p>';
-                            return;
-                        }
-
-                        container.innerHTML = eventosFuturos.map(evento => `
-                                    <div class="event-item">
-                                        <h4>${evento.titulo || 'Evento sem título'}</h4>
-                                        <p><i class="far fa-clock"></i> ${formatDateTime(evento.data || evento.datacriacao)}</p>
-                                        <p><i class="fas fa-map-marker-alt"></i> ${evento.local || 'Local não informado'}</p>
-                                        <p style="margin-top: 10px;">${evento.descricao ? evento.descricao.substring(0, 100) + '...' : ''}</p>
-                                        <p><small>Tipo: ${evento.tipo || 'Evento'} | Status: ${evento.status || 'agendado'}</small></p>
-                                    </div>
-                                `).join('');
-
-                    } catch (error) {
-                        console.error('Erro ao carregar agenda:', error);
-                        document.getElementById('agenda-eventos').innerHTML =
-                            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar agenda.</p>';
-                    }
-                }
-
-                // Inicializar Calendário
-                function initCalendar(eventos) {
-                    const calendar = document.getElementById('calendar');
-                    const hoje = new Date();
-                    const currentMonth = hoje.getMonth();
-                    const currentYear = hoje.getFullYear();
-
-                    // Filtrar eventos deste mês
-                    const eventosDoMes = eventos ? eventos.filter(evento => {
-                        const dataEvento = new Date(evento.data || evento.datacriacao);
-                        return dataEvento.getMonth() === currentMonth && dataEvento.getFullYear() === currentYear;
-                    }) : [];
-
-                    // Dias com eventos
-                    const diasComEventos = eventosDoMes.map(evento => {
-                        const data = new Date(evento.data || evento.datacriacao);
-                        return data.getDate();
-                    });
-
-                    // Criar estrutura do calendário
-                    calendar.innerHTML = `
-                                <div style="text-align: center; margin-bottom: 15px;">
-                                    <h4 style="color: var(--azul-primario);">${getMonthName(currentMonth)} ${currentYear}</h4>
-                                </div>
-                                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center;">
-                                    <div style="font-weight: bold; padding: 8px; color: #666;">Dom</div>
-                                    <div style="font-weight: bold; padding: 8px; color: #666;">Seg</div>
-                                    <div style="font-weight: bold; padding: 8px; color: #666;">Ter</div>
-                                    <div style="font-weight: bold; padding: 8px; color: #666;">Qua</div>
-                                    <div style="font-weight: bold; padding: 8px; color: #666;">Qui</div>
-                                    <div style="font-weight: bold; padding: 8px; color: #666;">Sex</div>
-                                    <div style="font-weight: bold; padding: 8px; color: #666;">Sáb</div>
-
-                                    ${generateCalendarDays(currentYear, currentMonth, diasComEventos, hoje.getDate())}
-                                </div>
-                            `;
-                }
-
-                function getMonthName(monthIndex) {
-                    const months = [
-                        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-                    ];
-                    return months[monthIndex];
-                }
-
-                function generateCalendarDays(year, month, diasComEventos = [], diaAtual = 0) {
-                    let days = '';
-                    const firstDay = new Date(year, month, 1).getDay();
-                    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                    // Dias vazios do início
-                    for (let i = 0; i < firstDay; i++) {
-                        days += `<div style="padding: 10px; color: #ccc;"></div>`;
-                    }
-
-                    // Dias do mês
-                    for (let day = 1; day <= daysInMonth; day++) {
-                        const isToday = (day === diaAtual);
-                        const hasEvent = diasComEventos.includes(day);
-
-                        let dayStyle = 'padding: 10px; border-radius: 5px; cursor: pointer; transition: background 0.2s;';
-
-                        if (isToday) {
-                            dayStyle += 'background: var(--azul-primario); color: white; font-weight: bold;';
-                        } else if (hasEvent) {
-                            dayStyle += 'background: #e8f4ff; border: 1px solid var(--azul-primario);';
-                        }
-
-                        days += `<div style="${dayStyle}" data-day="${day}" onclick="showEventsForDay(${day}, ${month + 1}, ${year})">
-                                    ${day}
-                                    ${hasEvent ? '<div style="width: 5px; height: 5px; background: var(--verde); border-radius: 50%; margin: 2px auto;"></div>' : ''}
-                                </div>`;
-                    }
-
-                    return days;
-                }
-
-                function showEventsForDay(day, month, year) {
-                    alert(`Eventos do dia ${day}/${month}/${year}\n\nOs dias com um ponto verde abaixo do número, possuem um evento marcado. Consulte a aba das Actividades para mais detalhes.`);
-                }
-
-                // Função para mostrar erro
-                function showError(containerId, message) {
-                    const container = document.getElementById(containerId);
-                    if (container) {
-                        container.innerHTML = `<div style="text-align: center; padding: 20px; color: #dc3545;">
-                                    <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i>
-                                    <p>${message}</p>
-                                </div>`;
-                    }
-                }
-
-                // Testar conexão com GAS
-                async function testConnection() {
-                    try {
-                        await callGAS('getEstatisticas');
-                        console.log('✅ Conexão com GAS estabelecida com sucesso!');
-                        return true;
-                    } catch (error) {
-                        console.error('❌ Erro na conexão com GAS:', error);
-                        alert('Erro na conexão com o servidor. Verifique a URL do GAS.');
-                        return false;
-                    }
-                }
-
-                // Inicializar quando a página carregar
-                document.addEventListener('DOMContentLoaded', async function () {
-                    // Configurar sistema de login
-                    const loginForm = document.getElementById('loginForm');
-
-                    if (loginForm) {
-                        loginForm.addEventListener('submit', async function (e) {
-                            e.preventDefault();
-
-                            const nome = document.getElementById('loginNome').value;
-                            const senha = document.getElementById('loginSenha').value;
-
-                            if (!nome || !senha) {
-                                mostrarMensagem('error', 'Por favor, preencha nome e senha');
-                                return;
-                            }
-
-                            // Mostrar loading
-                            const submitBtn = this.querySelector('button[type="submit"]');
-                            const originalText = submitBtn.innerHTML;
-                            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
-                            submitBtn.disabled = true;
-
-                            try {
-                                const loginSucesso = await realizarLogin(nome, senha);
-
-                                if (loginSucesso) {
-                                    // Login bem-sucedido - inicializar o resto da aplicação
-                                    setupTabs();
-
-                                    // Testar conexão
-                                    const connected = await testConnection();
-
-                                    if (connected) {
-                                        // Carregar resumo inicial
-                                        await loadResumo();
-
-                                        // Carregar dados da aba ativa
-                                        const activeTab = document.querySelector('.tab-pane.active').id;
-                                        loadTabData(activeTab);
-                                    } else {
-                                        // Mostrar erro de conexão
-                                        mostrarMensagem('error', 'Não foi possível conectar ao servidor. Verifique a conexão com a internet.');
-                                    }
-                                }
-                            } catch (error) {
-                                console.error('Erro no login:', error);
-                            } finally {
-                                // Restaurar botão
-                                submitBtn.innerHTML = originalText;
-                                submitBtn.disabled = false;
-                            }
-                        });
-                    }
-
-                    // Verificar se já está logado
-                    const jaLogado = verificarLogin();
-
-                    if (jaLogado) {
-                        // Usuário já logado - inicializar normalmente
-                        setupTabs();
-
-                        // Testar conexão
-                        const connected = await testConnection();
-
-                        if (connected) {
-                            // Carregar resumo inicial
-                            await loadResumo();
-
-                            // Carregar dados da aba ativa
-                            const activeTab = document.querySelector('.tab-pane.active').id;
-                            loadTabData(activeTab);
-                        } else {
-                            // Mostrar erro de conexão
-                            mostrarMensagem('error', 'Não foi possível conectar ao servidor. Verifique a conexão com a internet.');
-                        }
-                    }
-
-                    
-
-                    // Fechar modais ao clicar fora
-                    window.onclick = function (event) {
-                        const imageModal = document.getElementById('imageModal');
-                        const newsModal = document.getElementById('newsModal');
-                        const vagaModal = document.getElementById('vagaModal');
-
-                        if (event.target === imageModal) {
-                            imageModal.style.display = "none";
-                        }
-
-                        if (event.target === newsModal) {
-                            newsModal.style.display = "none";
-                        }
-
-                        if (event.target === vagaModal) {
-                            vagaModal.style.display = "none";
-                        }
+        function setupDescricaoButtons() {
+            const buttons = document.querySelectorAll('.descricao-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const descricaoId = this.getAttribute('data-id');
+                    const descricaoRow = document.getElementById(descricaoId);
+                    if (descricaoRow.style.display === 'none' || descricaoRow.style.display === '') {
+                        descricaoRow.style.display = 'table-row';
+                        this.innerHTML = '<i class="fas fa-times-circle"></i> Fechar';
+                        this.style.backgroundColor = 'var(--laranja)';
+                    } else {
+                        descricaoRow.style.display = 'none';
+                        this.innerHTML = '<i class="fas fa-info-circle"></i> Descrição';
+                        this.style.backgroundColor = 'var(--azul-primario)';
                     }
                 });
-            
-        </script>
+            });
+        }
+
+        async function loadAgenda() {
+            try {
+                const container = document.getElementById('agenda-eventos');
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando eventos da agenda...</p></div>';
+                const eventos = await callGAS('getEventos');
+                loadedTabs.agenda = true;
+                initCalendar(eventos);
+                const hoje = new Date();
+                const eventosFuturos = eventos
+                    .filter(evento => {
+                        const dataEvento = new Date(evento.data || evento.datacriacao);
+                        return dataEvento >= hoje;
+                    })
+                    .sort((a, b) => new Date(a.data || a.datacriacao) - new Date(b.data || b.datacriacao))
+                    .slice(0, 10);
+                if (eventosFuturos.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhum evento futuro agendado.</p>';
+                    return;
+                }
+                container.innerHTML = eventosFuturos.map(evento => `
+                    <div class="event-item">
+                        <h4>${evento.titulo || 'Evento sem título'}</h4>
+                        <p><i class="far fa-clock"></i> ${formatDateTime(evento.data || evento.datacriacao)}</p>
+                        <p><i class="fas fa-map-marker-alt"></i> ${evento.local || 'Local não informado'}</p>
+                        <p style="margin-top: 10px;">${evento.descricao ? evento.descricao.substring(0, 100) + '...' : ''}</p>
+                        <p><small>Tipo: ${evento.tipo || 'Evento'} | Status: ${evento.status || 'agendado'}</small></p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Erro ao carregar agenda:', error);
+                document.getElementById('agenda-eventos').innerHTML = '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar agenda.</p>';
+            }
+        }
+
+        function initCalendar(eventos) {
+            const calendar = document.getElementById('calendar');
+            const hoje = new Date();
+            const currentMonth = hoje.getMonth();
+            const currentYear = hoje.getFullYear();
+            const eventosDoMes = eventos ? eventos.filter(evento => {
+                const dataEvento = new Date(evento.data || evento.datacriacao);
+                return dataEvento.getMonth() === currentMonth && dataEvento.getFullYear() === currentYear;
+            }) : [];
+            const diasComEventos = eventosDoMes.map(evento => {
+                const data = new Date(evento.data || evento.datacriacao);
+                return data.getDate();
+            });
+            calendar.innerHTML = `
+                <div style="text-align: center; margin-bottom: 15px;"><h4 style="color: var(--azul-primario);">${getMonthName(currentMonth)} ${currentYear}</h4></div>
+                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center;">
+                    <div style="font-weight: bold; padding: 8px; color: #666;">Dom</div>
+                    <div style="font-weight: bold; padding: 8px; color: #666;">Seg</div>
+                    <div style="font-weight: bold; padding: 8px; color: #666;">Ter</div>
+                    <div style="font-weight: bold; padding: 8px; color: #666;">Qua</div>
+                    <div style="font-weight: bold; padding: 8px; color: #666;">Qui</div>
+                    <div style="font-weight: bold; padding: 8px; color: #666;">Sex</div>
+                    <div style="font-weight: bold; padding: 8px; color: #666;">Sáb</div>
+                    ${generateCalendarDays(currentYear, currentMonth, diasComEventos, hoje.getDate())}
+                </div>
+            `;
+        }
+
+        function getMonthName(monthIndex) {
+            const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+            return months[monthIndex];
+        }
+
+        function generateCalendarDays(year, month, diasComEventos = [], diaAtual = 0) {
+            let days = '';
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            for (let i = 0; i < firstDay; i++) days += `<div style="padding: 10px; color: #ccc;"></div>`;
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isToday = (day === diaAtual);
+                const hasEvent = diasComEventos.includes(day);
+                let dayStyle = 'padding: 10px; border-radius: 5px; cursor: pointer; transition: background 0.2s;';
+                if (isToday) dayStyle += 'background: var(--azul-primario); color: white; font-weight: bold;';
+                else if (hasEvent) dayStyle += 'background: #e8f4ff; border: 1px solid var(--azul-primario);';
+                days += `<div style="${dayStyle}" data-day="${day}" onclick="showEventsForDay(${day}, ${month + 1}, ${year})">${day}${hasEvent ? '<div style="width: 5px; height: 5px; background: var(--verde); border-radius: 50%; margin: 2px auto;"></div>' : ''}</div>`;
+            }
+            return days;
+        }
+
+        function showEventsForDay(day, month, year) {
+            alert(`Eventos do dia ${day}/${month}/${year}\n\nOs dias com um ponto verde abaixo do número, possuem um evento marcado. Consulte a aba das Actividades para mais detalhes.`);
+        }
+
+        function showError(containerId, message) {
+            const container = document.getElementById(containerId);
+            if (container) container.innerHTML = `<div style="text-align: center; padding: 20px; color: #dc3545;"><i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i><p>${message}</p></div>`;
+        }
+
+        async function testConnection() {
+            try {
+                await callGAS('getEstatisticas');
+                console.log('✅ Conexão com GAS estabelecida com sucesso!');
+                return true;
+            } catch (error) {
+                console.error('❌ Erro na conexão com GAS:', error);
+                alert('Erro na conexão com o servidor. Verifique a URL do GAS.');
+                return false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const nome = document.getElementById('loginNome').value;
+                    const senha = document.getElementById('loginSenha').value;
+                    if (!nome || !senha) { mostrarMensagem('error', 'Por favor, preencha nome e senha'); return; }
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+                    submitBtn.disabled = true;
+                    try {
+                        const loginSucesso = await realizarLogin(nome, senha);
+                        if (loginSucesso) {
+                            setupTabs();
+                            const connected = await testConnection();
+                            if (connected) {
+                                await loadResumo();
+                                const activeTab = document.querySelector('.tab-pane.active').id;
+                                loadTabData(activeTab);
+                            } else {
+                                mostrarMensagem('error', 'Não foi possível conectar ao servidor. Verifique a conexão com a internet.');
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Erro no login:', error);
+                    } finally {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }
+                });
+            }
+            const jaLogado = verificarLogin();
+            if (jaLogado) {
+                setupTabs();
+                const connected = await testConnection();
+                if (connected) {
+                    await loadResumo();
+                    const activeTab = document.querySelector('.tab-pane.active').id;
+                    loadTabData(activeTab);
+                } else {
+                    mostrarMensagem('error', 'Não foi possível conectar ao servidor. Verifique a conexão com a internet.');
+                }
+            }
+            window.onclick = function (event) {
+                const imageModal = document.getElementById('imageModal');
+                const newsModal = document.getElementById('newsModal');
+                const vagaModal = document.getElementById('vagaModal');
+                if (event.target === imageModal) imageModal.style.display = "none";
+                if (event.target === newsModal) newsModal.style.display = "none";
+                if (event.target === vagaModal) vagaModal.style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>
