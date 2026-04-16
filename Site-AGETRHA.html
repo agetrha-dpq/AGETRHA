@@ -15,23 +15,18 @@
         }
 
         :root {
-            /* Nova paleta escura e institucional */
-            --primary-dark: #0a1a2b;        /* Azul marinho profundo */
-            --primary-medium: #1a3a4f;       /* Azul petróleo */
-            --primary-light: #2c5a7a;        /* Azul médio para detalhes */
-            --accent-gold: #c9a959;           /* Dourado suave */
-            --accent-gold-light: #dbb87c;     /* Dourado mais claro */
-            --dark-bg: #0f1a24;                /* Fundo escuro principal */
-            --card-bg: #1e2c3a;                 /* Fundo para cards/elementos */
-            --text-light: #e6e9f0;              /* Texto claro */
-            --text-muted: #b0b8c5;               /* Texto secundário */
-            --border-dark: #2e3b4b;               /* Bordas */
+            --primary-dark: #0a1a2b;
+            --primary-medium: #1a3a4f;
+            --primary-light: #2c5a7a;
+            --accent-gold: #c9a959;
+            --accent-gold-light: #dbb87c;
+            --dark-bg: #0f1a24;
+            --card-bg: #1e2c3a;
+            --text-light: #e6e9f0;
+            --text-muted: #b0b8c5;
+            --border-dark: #2e3b4b;
             --white: #ffffff;
             --black: #000000;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --info: #17a2b8;
         }
 
         html {
@@ -233,6 +228,36 @@
         .nav-buttons {
             display: flex;
             gap: 15px;
+            align-items: center;
+        }
+
+        /* Seletor de idioma */
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            background: rgba(0,0,0,0.3);
+            padding: 4px 8px;
+            border-radius: 40px;
+            margin-right: 10px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .lang-btn.active {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+        .lang-btn:hover:not(.active) {
+            color: var(--accent-gold);
+            background: rgba(201,169,89,0.2);
         }
 
         .mobile-menu-btn {
@@ -330,17 +355,17 @@
 
         /* ===== HERO SECTION ===== */
         .hero {
-    background: linear-gradient(rgba(10, 26, 43, 0.85), rgba(10, 26, 43, 0.95)), 
-                url('https://drive.google.com/thumbnail?id=1QtQfsRB-tiX_LU6XNMGWw2o-NAfu6WxT&sz=w1600');
-    background-size: cover;
-    background-position: center 20%;
-    background-attachment: fixed;
-    color: var(--white);
-    padding: 180px 0 120px;
-    text-align: center;
-    position: relative;
-    border-bottom: 3px solid var(--accent-gold);
-}
+            background: linear-gradient(rgba(10, 26, 43, 0.85), rgba(10, 26, 43, 0.95)), 
+                        url('https://drive.google.com/thumbnail?id=1QtQfsRB-tiX_LU6XNMGWw2o-NAfu6WxT&sz=w1600');
+            background-size: cover;
+            background-position: center 20%;
+            background-attachment: fixed;
+            color: var(--white);
+            padding: 180px 0 120px;
+            text-align: center;
+            position: relative;
+            border-bottom: 3px solid var(--accent-gold);
+        }
 
         .hero-content {
             max-width: 800px;
@@ -411,17 +436,16 @@
             transform: scale(1.05);
         }
 
-        /* Missão, Visão, Valores */
         .valores {
-    background: var(--card-bg);
-    position: relative;
-    background-image: url('https://drive.google.com/thumbnail?id=1csbDHGLfWZhjKqkI6am2ElZuTxp95LZT&sz=w1600');
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    background-blend-mode: overlay;
-    background-color: rgba(30, 44, 58, 0.92);
-}
+            background: var(--card-bg);
+            position: relative;
+            background-image: url('https://drive.google.com/thumbnail?id=1csbDHGLfWZhjKqkI6am2ElZuTxp95LZT&sz=w1600');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(30, 44, 58, 0.92);
+        }
 
         .valores-container {
             display: grid;
@@ -461,7 +485,6 @@
             color: var(--text-muted);
         }
 
-        /* Objetivos */
         .objetivos {
             background: var(--primary-dark);
         }
@@ -505,15 +528,14 @@
             margin-left: 36px;
         }
 
-        /* Código de Ética */
         .etica {
-    background: var(--card-bg);
-    background-image: url('https://drive.google.com/thumbnail?id=1sMGglksbHKjawOyE0TS9swC9JDLJzcLy&sz=w1600');
-    background-size: cover;
-    background-attachment: fixed;
-    background-blend-mode: overlay;
-    background-color: rgba(30, 44, 58, 0.92);
-}
+            background: var(--card-bg);
+            background-image: url('https://drive.google.com/thumbnail?id=1sMGglksbHKjawOyE0TS9swC9JDLJzcLy&sz=w1600');
+            background-size: cover;
+            background-attachment: fixed;
+            background-blend-mode: overlay;
+            background-color: rgba(30, 44, 58, 0.92);
+        }
 
         .tabs {
             display: flex;
@@ -745,18 +767,18 @@
         }
 
         footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://drive.google.com/thumbnail?id=1LjeG177523uvuMo4X8BFaUQIIxle1Iyb&sz=w1600'), url('https://drive.google.com/thumbnail?id=1LjeG177523uvuMo4X8BFaUQIIxle1Iyb&sz=w160');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.05;
-    pointer-events: none;
-}
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://drive.google.com/thumbnail?id=1LjeG177523uvuMo4X8BFaUQIIxle1Iyb&sz=w1600');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.05;
+            pointer-events: none;
+        }
 
         .footer-content {
             display: grid;
@@ -885,7 +907,6 @@
             z-index: 2;
         }
 
-        /* ===== ANIMAÇÕES ===== */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -913,20 +934,17 @@
             transform: translateY(0);
         }
 
-        /* ===== RESPONSIVIDADE ===== */
+        /* ===== RESPONSIVIDADE COM BOTÕES DE IDIOMA ABAIXO DO ADMIN EM MOBILE ===== */
         @media (max-width: 992px) {
             .sobre-content {
                 flex-direction: column;
             }
-
             .hero h1 {
                 font-size: 42px;
             }
-
             .hero p {
                 font-size: 20px;
             }
-
             .nav-menu {
                 gap: 20px;
             }
@@ -936,7 +954,6 @@
             .sidebar-toggle {
                 display: block;
             }
-
             .nav-menu {
                 position: fixed;
                 top: 80px;
@@ -953,43 +970,50 @@
                 border-right: 1px solid var(--accent-gold);
                 display: none;
             }
-
-            .nav-buttons .btn-dourado {
-                display: none; /* esconde o botão Inscrever-se apenas em mobile */
-            }
-
             .nav-menu.active {
                 left: 0;
             }
-
             .mobile-menu-btn {
                 display: block;
             }
-
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
             .hero .btn {
                 width: 100%;
                 max-width: 300px;
             }
-
             section {
                 padding: 60px 0;
             }
-
             .footer-buttons .btn {
                 width: 100%;
             }
-
             .logo-text p {
                 display: none;
             }
-
             .logo-text h1 {
                 font-size: 18px;
+            }
+
+            /* ===== NOVO: botões de idioma ficam debaixo do botão Área Administrativa ===== */
+            .nav-buttons {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 8px;
+            }
+            .lang-switcher {
+                order: 2;
+                margin-right: 0;
+                background: rgba(0,0,0,0.5);
+            }
+            #openAdminArea {
+                order: 1;
+            }
+            /* O botão "Inscrever-se" já está oculto por padrão em mobile, mas garantimos */
+            .nav-buttons .btn-dourado {
+                display: none;
             }
         }
 
@@ -997,47 +1021,29 @@
             .hero h1 {
                 font-size: 32px;
             }
-
             .hero p {
                 font-size: 18px;
             }
-
             .hero {
                 padding: 150px 0 80px;
             }
-
             .section-title {
                 font-size: 28px;
             }
-
             .tabs {
                 justify-content: center;
             }
-
             .tab {
                 padding: 10px 15px;
                 font-size: 14px;
             }
-
             .departamentos-grid {
                 grid-template-columns: 1fr;
-            }
-        }
-
-        /* Ajustes para smartphones em landscape */
-        @media (max-width: 992px) and (max-height: 500px) {
-            .logo-text p {
-                display: none;
-            }
-            
-            .hero {
-                padding: 120px 0 60px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header id="header">
         <div class="container">
             <div class="nav-container">
@@ -1046,10 +1052,10 @@
                 </button>
 
                 <div class="logo">
-                    <img src="https://drive.google.com/thumbnail?id=1UsOKh3Gvd-br6w3KTesth08sgBqjCPEX&sz=w500" alt="AGETRHA Logo Branco">
+                    <img src="https://drive.google.com/thumbnail?id=1UsOKh3Gvd-br6w3KTesth08sgBqjCPEX&sz=w500" alt="AGETRHA Logo">
                     <div class="logo-text">
                         <h1>AGETRHA</h1>
-                        <p>Associação dos Gestores e Técnicos de Recursos Humanos de Angola</p>
+                        <p data-i18n="logo_subtitle">Associação dos Gestores e Técnicos de Recursos Humanos de Angola</p>
                     </div>
                 </div>
 
@@ -1059,343 +1065,197 @@
 
                 <nav>
                     <ul class="nav-menu" id="navMenu">
-                        <li><a href="#inicio">Início</a></li>
-                        <li><a href="#sobre">Sobre</a></li>
-                        <li><a href="#valores">Valores</a></li>
-                        <li><a href="#objetivos">Objectivos</a></li>
-                        <li><a href="#etica">C.Ética</a></li>
-                        <li><a href="#contato">Contacto</a></li>
+                        <li><a href="#inicio" data-i18n="nav_inicio">Início</a></li>
+                        <li><a href="#sobre" data-i18n="nav_sobre">Sobre</a></li>
+                        <li><a href="#valores" data-i18n="nav_valores">Valores</a></li>
+                        <li><a href="#objetivos" data-i18n="nav_objetivos">Objectivos</a></li>
+                        <li><a href="#etica" data-i18n="nav_etica">C.Ética</a></li>
+                        <li><a href="#contato" data-i18n="nav_contato">Contacto</a></li>
                     </ul>
                 </nav>
 
                 <div class="nav-buttons">
-                    <button class="btn btn-outline" id="openAdminArea">Área Administrativa</button>
-                    <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado">Inscrever-se</a>
+                    <div class="lang-switcher">
+                        <button class="lang-btn active" data-lang="pt">PT</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="fr">FR</button>
+                    </div>
+                    <button class="btn btn-outline" id="openAdminArea" data-i18n="btn_admin">Área Administrativa</button>
+                    <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado" data-i18n="btn_inscrever">Inscrever-se</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h3>Menu AGETRHA</h3>
-            <button class="close-sidebar" id="closeSidebar">
-                <i class="fas fa-times"></i>
-            </button>
+            <h3 data-i18n="menu_agetrha">Menu AGETRHA</h3>
+            <button class="close-sidebar" id="closeSidebar"><i class="fas fa-times"></i></button>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="#inicio"><i class="fas fa-home"></i> Início</a></li>
-            <li><a href="#sobre"><i class="fas fa-info-circle"></i> Quem Somos</a></li>
-            <li><a href="#valores"><i class="fas fa-star"></i> Valores</a></li>
-            <li><a href="#objetivos"><i class="fas fa-bullseye"></i> Objectivos</a></li>
-            <li><a href="#etica"><i class="fas fa-balance-scale"></i> Código de Ética</a></li>
-            <li><a href="#contato"><i class="fas fa-address-book"></i> Contacto</a></li>
-            <li><a href="#" id="sidebarAdminBtn"><i class="fas fa-lock"></i> Área Administrativa</a></li>
+            <li><a href="#inicio"><i class="fas fa-home"></i> <span data-i18n="nav_inicio">Início</span></a></li>
+            <li><a href="#sobre"><i class="fas fa-info-circle"></i> <span data-i18n="quem_somos">Quem Somos</span></a></li>
+            <li><a href="#valores"><i class="fas fa-star"></i> <span data-i18n="nav_valores">Valores</span></a></li>
+            <li><a href="#objetivos"><i class="fas fa-bullseye"></i> <span data-i18n="nav_objetivos">Objectivos</span></a></li>
+            <li><a href="#etica"><i class="fas fa-balance-scale"></i> <span data-i18n="codigo_etica">Código de Ética</span></a></li>
+            <li><a href="#contato"><i class="fas fa-address-book"></i> <span data-i18n="nav_contato">Contacto</span></a></li>
+            <li><a href="#" id="sidebarAdminBtn"><i class="fas fa-lock"></i> <span data-i18n="btn_admin">Área Administrativa</span></a></li>
         </ul>
-
-        <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado sidebar-btn">
-            <i class="fas fa-user-plus"></i> Inscrever-se
-        </a>
-
+        <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado sidebar-btn"><i class="fas fa-user-plus"></i> <span data-i18n="btn_inscrever">Inscrever-se</span></a>
         <div style="padding: 20px 0; border-top: 1px solid var(--border-dark); margin-top: 20px;">
-            <h4 style="color: var(--accent-gold); margin-bottom: 15px;">Departamentos</h4>
+            <h4 style="color: var(--accent-gold); margin-bottom: 15px;" data-i18n="departamentos_title">Departamentos</h4>
             <ul class="sidebar-menu">
-                <li><a href="#"><i class="fas fa-users"></i> Assembleia Geral</a></li>
-                <li><a href="#"><i class="fas fa-flag"></i> Direção Nacional</a></li>
-                <li><a href="#"><i class="fas fa-file-alt"></i> Secretaria Geral</a></li>
-                <li><a href="#"><i class="fas fa-gavel"></i> Conselho Fiscal</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> <span data-i18n="dept_assembleia">Assembleia Geral</span></a></li>
+                <li><a href="#"><i class="fas fa-flag"></i> <span data-i18n="dept_direcao">Direção Nacional</span></a></li>
+                <li><a href="#"><i class="fas fa-file-alt"></i> <span data-i18n="dept_secretaria">Secretaria Geral</span></a></li>
+                <li><a href="#"><i class="fas fa-gavel"></i> <span data-i18n="dept_conselho">Conselho Fiscal</span></a></li>
             </ul>
         </div>
     </div>
 
-    <!-- Modal Área Administrativa -->
     <div class="modal" id="adminModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-lock"></i> Área Administrativa - AGETRHA</h2>
-                <button class="close-modal" id="closeAdminModal">
-                    <i class="fas fa-times"></i>
-                </button>
+                <h2><i class="fas fa-lock"></i> <span data-i18n="admin_title">Área Administrativa - AGETRHA</span></h2>
+                <button class="close-modal" id="closeAdminModal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <div class="departamentos-grid">
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-users"></i>
-                        Assembleia Geral
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-flag"></i>
-                        Direção Nacional
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-file-alt"></i>
-                        Secretaria Geral
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-gavel"></i>
-                        Conselho Fiscal
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-comments"></i>
-                        Conselho Consultivo
-                    </a>
-                    <a href="https://agetrha-dpq.github.io/Dashboard-DPF/Dashboard-DPF" class="departamento-btn">
-                        <i class="fas fa-chart-line"></i>
-                        Planejamento e Finanças
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-balance-scale"></i>
-                        Departamento Jurídico
-                    </a>
-                    <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/Dashboard-DPQ" class="departamento-btn">
-                        <i class="fas fa-user-tie"></i>
-                        Pessoal e Quadros
-                    </a>
-                    <a href="https://agetrha-dpq.github.io/AGETRHA/painel-admin" class="departamento-btn">
-                        <i class="fas fa-bullhorn"></i>
-                        Comunicação Institucional
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-handshake"></i>
-                        Cooperação e Intercâmbio
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-graduation-cap"></i>
-                        Formação e Estudos Científicos
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-map-marked-alt"></i>
-                        Regional ou Provincial
-                    </a>
-                    <a href="#" class="departamento-btn">
-                        <i class="fas fa-user-shield"></i>
-                        Conduta e Disciplina
-                    </a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-users"></i> <span data-i18n="dept_assembleia">Assembleia Geral</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-flag"></i> <span data-i18n="dept_direcao">Direção Nacional</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-file-alt"></i> <span data-i18n="dept_secretaria">Secretaria Geral</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-gavel"></i> <span data-i18n="dept_conselho">Conselho Fiscal</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-comments"></i> <span data-i18n="dept_consultivo">Conselho Consultivo</span></a>
+                    <a href="https://agetrha-dpq.github.io/Dashboard-DPF/Dashboard-DPF" class="departamento-btn"><i class="fas fa-chart-line"></i> <span data-i18n="dept_financas">Planejamento e Finanças</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-balance-scale"></i> <span data-i18n="dept_juridico">Departamento Jurídico</span></a>
+                    <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/Dashboard-DPQ" class="departamento-btn"><i class="fas fa-user-tie"></i> <span data-i18n="dept_pessoal">Pessoal e Quadros</span></a>
+                    <a href="https://agetrha-dpq.github.io/AGETRHA/painel-admin" class="departamento-btn"><i class="fas fa-bullhorn"></i> <span data-i18n="dept_comunicacao">Comunicação Institucional</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-handshake"></i> <span data-i18n="dept_cooperacao">Cooperação e Intercâmbio</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-graduation-cap"></i> <span data-i18n="dept_formacao">Formação e Estudos Científicos</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-map-marked-alt"></i> <span data-i18n="dept_regional">Regional ou Provincial</span></a>
+                    <a href="#" class="departamento-btn"><i class="fas fa-user-shield"></i> <span data-i18n="dept_disciplina">Conduta e Disciplina</span></a>
                 </div>
-
                 <div class="aviso-area">
-                    <h3><i class="fas fa-exclamation-triangle"></i> ⚠️ Acesso Restrito – Área Administrativa.</h3>
+                    <h3><i class="fas fa-exclamation-triangle"></i> <span data-i18n="aviso_titulo">⚠️ Acesso Restrito – Área Administrativa.</span></h3>
                     <div class="marquee-container">
-                        <div class="marquee-content">
-                            O acesso aos Escritórios Online é exclusivo para membros e colaboradores autorizados da AGETRHA. Se você ainda não faz parte da nossa associação, convidamos-lhe a juntar-se a nós! Ao tornar-se associado, você terá acesso completo aos conteúdos internos, actividades do departamento e benefícios exclusivos destinados aos profissionais de Recursos Humanos em Angola.
-                        </div>
+                        <div class="marquee-content" data-i18n="aviso_texto">O acesso aos Escritórios Online é exclusivo para membros e colaboradores autorizados da AGETRHA. Se você ainda não faz parte da nossa associação, convidamos-lhe a juntar-se a nós! Ao tornar-se associado, você terá acesso completo aos conteúdos internos, actividades do departamento e benefícios exclusivos destinados aos profissionais de Recursos Humanos em Angola.</div>
                     </div>
                     <div class="convite-area">
-                        <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado">
-                            👉 Clique aqui para inscrever-se.
-                        </a>
-                        <p style="margin-top: 15px; font-style: italic; color: var(--text-muted);">
-                            Sua participação fortalece a nossa comunidade e contribui para o desenvolvimento da nossa área profissional. Faça parte da AGETRHA, seja a mudança que precisa acontecer.
-                        </p>
+                        <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado">👉 <span data-i18n="convite_btn">Clique aqui para inscrever-se.</span></a>
+                        <p style="margin-top: 15px; font-style: italic; color: var(--text-muted);" data-i18n="convite_texto">Sua participação fortalece a nossa comunidade e contribui para o desenvolvimento da nossa área profissional. Faça parte da AGETRHA, seja a mudança que precisa acontecer.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
     <section class="hero" id="inicio">
         <div class="container">
             <div class="hero-content">
-                <h1>Valorizando Profissionais de RH em Angola</h1>
-                <p>Promovendo a excelência, ética e desenvolvimento contínuo dos Gestores e Técnicos de Recursos Humanos</p>
+                <h1 data-i18n="hero_title">Valorizando Profissionais de RH em Angola</h1>
+                <p data-i18n="hero_text">Promovendo a excelência, ética e desenvolvimento contínuo dos Gestores e Técnicos de Recursos Humanos</p>
                 <div class="hero-buttons">
-                    <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado">Inscreva-se Agora</a>
-                    <a href="#sobre" class="btn btn-outline">Saiba Mais</a>
+                    <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado" data-i18n="hero_btn_inscrever">Inscreva-se Agora</a>
+                    <a href="#sobre" class="btn btn-outline" data-i18n="hero_btn_saiba">Saiba Mais</a>
                 </div>
             </div>
         </div>
     </section>
 
-<!-- Sobre Section -->
-<section class="sobre" id="sobre">
-    <div class="container">
-        <h2 class="section-title">Sobre a AGETRHA</h2>
-        <div class="sobre-content animate-on-scroll">
-            <div class="sobre-text">
-                <p>A <strong>Associação dos Gestores e Técnicos de Recursos Humanos de Angola (AGETRHA)</strong> é uma organização que reúne profissionais dedicados a promover a excelência na gestão de pessoas em Angola.</p>
-                <p>Fundada com base nos princípios de ética, idoneidade, rigor, competência e solidariedade, a AGETRHA tem como missão principal promover a implementação de políticas e boas práticas de Recursos Humanos, contribuindo para o desenvolvimento profissional, a valorização e a capacitação contínua dos Gestores e Técnicos de Recursos Humanos em Angola.</p>
-                <p>Nossa visão é ser a principal referência nacional na promoção e valorização dos profissionais de RH, impulsionando boas práticas, ética profissional e uma gestão eficaz, competente e humanizada.</p>
-                <a href="#valores" class="btn btn-dourado">Conheça Nossos Valores</a>
+    <section class="sobre" id="sobre">
+        <div class="container">
+            <h2 class="section-title" data-i18n="sobre_title">Sobre a AGETRHA</h2>
+            <div class="sobre-content animate-on-scroll">
+                <div class="sobre-text">
+                    <p data-i18n="sobre_p1">A <strong>Associação dos Gestores e Técnicos de Recursos Humanos de Angola (AGETRHA)</strong> é uma organização que reúne profissionais dedicados a promover a excelência na gestão de pessoas em Angola.</p>
+                    <p data-i18n="sobre_p2">Fundada com base nos princípios de ética, idoneidade, rigor, competência e solidariedade, a AGETRHA tem como missão principal promover a implementação de políticas e boas práticas de Recursos Humanos, contribuindo para o desenvolvimento profissional, a valorização e a capacitação contínua dos Gestores e Técnicos de Recursos Humanos em Angola.</p>
+                    <p data-i18n="sobre_p3">Nossa visão é ser a principal referência nacional na promoção e valorização dos profissionais de RH, impulsionando boas práticas, ética profissional e uma gestão eficaz, competente e humanizada.</p>
+                    <a href="#valores" class="btn btn-dourado" data-i18n="sobre_btn">Conheça Nossos Valores</a>
+                </div>
+                <div class="sobre-image">
+                    <img src="https://drive.google.com/thumbnail?id=1WimCuH7rWEnYeefQe8NTpXjUOYneTbd4&sz=w1000" alt="Equipa AGETRHA">
+                </div>
             </div>
-            <div class="sobre-image">
-                <!-- Imagem do Google Drive com fallback -->
-                <img src="https://drive.google.com/thumbnail?id=1WimCuH7rWEnYeefQe8NTpXjUOYneTbd4&sz=w1000"
-                     alt="Equipa AGETRHA"
-               </div>
         </div>
-    </div>
-</section>
+    </section>
 
-    <!-- Missão, Visão e Valores -->
     <section class="valores" id="valores">
         <div class="container">
-            <h2 class="section-title">Missão, Visão e Valores</h2>
+            <h2 class="section-title" data-i18n="valores_title">Missão, Visão e Valores</h2>
             <div class="valores-container">
                 <div class="valor-card animate-on-scroll">
-                    <div class="valor-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3>Missão</h3>
-                    <p>Promover a implementação de políticas e boas práticas de Recursos Humanos, contribuindo para o desenvolvimento profissional, a valorização e a capacitação contínua dos Gestores e Técnicos de Recursos Humanos em Angola.</p>
+                    <div class="valor-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3 data-i18n="missao_title">Missão</h3>
+                    <p data-i18n="missao_text">Promover a implementação de políticas e boas práticas de Recursos Humanos, contribuindo para o desenvolvimento profissional, a valorização e a capacitação contínua dos Gestores e Técnicos de Recursos Humanos em Angola.</p>
                 </div>
-
                 <div class="valor-card animate-on-scroll">
-                    <div class="valor-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>Visão</h3>
-                    <p>Ser a principal referência nacional na promoção e valorização dos Gestores e Técnicos de Recursos Humanos, impulsionando boas práticas, ética profissional e uma gestão eficaz, competente e humanizada.</p>
+                    <div class="valor-icon"><i class="fas fa-eye"></i></div>
+                    <h3 data-i18n="visao_title">Visão</h3>
+                    <p data-i18n="visao_text">Ser a principal referência nacional na promoção e valorização dos Gestores e Técnicos de Recursos Humanos, impulsionando boas práticas, ética profissional e uma gestão eficaz, competente e humanizada.</p>
                 </div>
-
                 <div class="valor-card animate-on-scroll">
-                    <div class="valor-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3>Valores</h3>
-                    <p>Respeito, Austeridade, Integridade, Competências, Inclusão e Unidade, Colaboração, Diversidade e Inclusão, Desenvolvimento Contínuo.</p>
+                    <div class="valor-icon"><i class="fas fa-heart"></i></div>
+                    <h3 data-i18n="valores_lista">Valores</h3>
+                    <p data-i18n="valores_text">Respeito, Austeridade, Integridade, Competências, Inclusão e Unidade, Colaboração, Diversidade e Inclusão, Desenvolvimento Contínuo.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Objetivos Section -->
     <section class="objetivos" id="objetivos">
         <div class="container">
-            <h2 class="section-title">Nossos Objectivos</h2>
+            <h2 class="section-title" data-i18n="objetivos_title">Nossos Objectivos</h2>
             <div class="objetivos-container">
-                <div class="objetivo-item animate-on-scroll">
-                    <h4><i class="fas fa-users"></i> Representação Profissional</h4>
-                    <p>Representar os profissionais e técnicos de Recursos Humanos em Angola.</p>
-                </div>
-
-                <div class="objetivo-item animate-on-scroll">
-                    <h4><i class="fas fa-graduation-cap"></i> Formação e Certificação</h4>
-                    <p>Promover a formação, certificação e valorização profissional dos associados.</p>
-                </div>
-
-                <div class="objetivo-item animate-on-scroll">
-                    <h4><i class="fas fa-landmark"></i> Políticas Públicas</h4>
-                    <p>Intervir na definição de políticas públicas ligadas à educação, trabalho e gestão de pessoas.</p>
-                </div>
-
-                <div class="objetivo-item animate-on-scroll">
-                    <h4><i class="fas fa-flask"></i> Pesquisa e Desenvolvimento</h4>
-                    <p>Fomentar a investigação e desenvolvimento técnico-científico na área de RH.</p>
-                </div>
-
-                <div class="objetivo-item animate-on-scroll">
-                    <h4><i class="fas fa-handshake"></i> Parcerias</h4>
-                    <p>Estabelecer parcerias nacionais e internacionais para o desenvolvimento da área.</p>
-                </div>
-
-                <div class="objetivo-item animate-on-scroll">
-                    <h4><i class="fas fa-building"></i> Institucionalização</h4>
-                    <p>Institucionalização da gestão de Recursos Humanos como profissão e criação da Ordem dos Gestores e Técnicos de RH de Angola.</p>
-                </div>
+                <div class="objetivo-item animate-on-scroll"><h4><i class="fas fa-users"></i> <span data-i18n="obj1_titulo">Representação Profissional</span></h4><p data-i18n="obj1_texto">Representar os profissionais e técnicos de Recursos Humanos em Angola.</p></div>
+                <div class="objetivo-item animate-on-scroll"><h4><i class="fas fa-graduation-cap"></i> <span data-i18n="obj2_titulo">Formação e Certificação</span></h4><p data-i18n="obj2_texto">Promover a formação, certificação e valorização profissional dos associados.</p></div>
+                <div class="objetivo-item animate-on-scroll"><h4><i class="fas fa-landmark"></i> <span data-i18n="obj3_titulo">Políticas Públicas</span></h4><p data-i18n="obj3_texto">Intervir na definição de políticas públicas ligadas à educação, trabalho e gestão de pessoas.</p></div>
+                <div class="objetivo-item animate-on-scroll"><h4><i class="fas fa-flask"></i> <span data-i18n="obj4_titulo">Pesquisa e Desenvolvimento</span></h4><p data-i18n="obj4_texto">Fomentar a investigação e desenvolvimento técnico-científico na área de RH.</p></div>
+                <div class="objetivo-item animate-on-scroll"><h4><i class="fas fa-handshake"></i> <span data-i18n="obj5_titulo">Parcerias</span></h4><p data-i18n="obj5_texto">Estabelecer parcerias nacionais e internacionais para o desenvolvimento da área.</p></div>
+                <div class="objetivo-item animate-on-scroll"><h4><i class="fas fa-building"></i> <span data-i18n="obj6_titulo">Institucionalização</span></h4><p data-i18n="obj6_texto">Institucionalização da gestão de Recursos Humanos como profissão e criação da Ordem dos Gestores e Técnicos de RH de Angola.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Código de Ética -->
     <section class="etica" id="etica">
         <div class="container">
-            <h2 class="section-title">Código de Ética e Deontologia</h2>
-
+            <h2 class="section-title" data-i18n="etica_title">Código de Ética e Deontologia</h2>
             <div class="tabs">
-                <button class="tab active" data-tab="preambulo">Preâmbulo</button>
-                <button class="tab" data-tab="principios">Princípios Fundamentais</button>
-                <button class="tab" data-tab="deveres">Deveres e Conduta</button>
-                <button class="tab" data-tab="conflitos">Conflitos de Interesse</button>
-                <button class="tab" data-tab="redes">Redes Sociais</button>
+                <button class="tab active" data-tab="preambulo" data-i18n="tab_preambulo">Preâmbulo</button>
+                <button class="tab" data-tab="principios" data-i18n="tab_principios">Princípios Fundamentais</button>
+                <button class="tab" data-tab="deveres" data-i18n="tab_deveres">Deveres e Conduta</button>
+                <button class="tab" data-tab="conflitos" data-i18n="tab_conflitos">Conflitos de Interesse</button>
+                <button class="tab" data-tab="redes" data-i18n="tab_redes">Redes Sociais</button>
             </div>
-
-            <div class="tab-content active" id="preambulo">
-                <p>A AGETRHA, pautando-se pelos princípios estatutários de ética, idoneidade, rigor, competência e solidariedade, e inspirando-se nos valores fundadores de solidariedade, inclusão, excelência e responsabilidade social, estabelece o presente Código de Ética e Deontologia.</p>
-                <p>Este instrumento normativo tem por objetivo orientar a conduta de seus associados, órgãos sociais, colaboradores, voluntários, parceiros e prestadores de serviço, no sentido de promover os mais elevados padrões de integridade, profissionalismo e responsabilidade social, em consonância com a legislação nacional aplicável.</p>
-            </div>
-
+            <div class="tab-content active" id="preambulo"><p data-i18n="preambulo_texto">A AGETRHA, pautando-se pelos princípios estatutários de ética, idoneidade, rigor, competência e solidariedade, e inspirando-se nos valores fundadores de solidariedade, inclusão, excelência e responsabilidade social, estabelece o presente Código de Ética e Deontologia. Este instrumento normativo tem por objetivo orientar a conduta de seus associados, órgãos sociais, colaboradores, voluntários, parceiros e prestadores de serviço, no sentido de promover os mais elevados padrões de integridade, profissionalismo e responsabilidade social, em consonância com a legislação nacional aplicável.</p></div>
             <div class="tab-content" id="principios">
-                <div class="etica-item">
-                    <h4>Probidade e Transparência</h4>
-                    <p>Agir com probidade, transparência e lealdade, abstendo-se de atitudes fraudulentas ou enganosas.</p>
-                </div>
-                <div class="etica-item">
-                    <h4>Justiça e Imparcialidade</h4>
-                    <p>Tratar de forma justa e imparcial todos os associados, parceiros, prestadores de serviços e terceiros, sem discriminação de qualquer natureza.</p>
-                </div>
-                <div class="etica-item">
-                    <h4>Qualidade e Excelência</h4>
-                    <p>Buscar a qualidade e a excelência no desempenho de suas funções, zelando pelo aprimoramento técnico-científico e ético da gestão de pessoas.</p>
-                </div>
-                <div class="etica-item">
-                    <h4>Privacidade e Sigilo</h4>
-                    <p>Respeitar a privacidade e sigilo das informações da Associação e de seus membros, protegendo dados pessoais e organizacionais contra uso indevido.</p>
-                </div>
-                <div class="etica-item">
-                    <h4>Responsabilidade Social</h4>
-                    <p>Promover ações de caráter social e ambientalmente responsáveis, contribuindo para o desenvolvimento sustentável da comunidade e o bem-estar coletivo.</p>
-                </div>
+                <div class="etica-item"><h4 data-i18n="principio1_titulo">Probidade e Transparência</h4><p data-i18n="principio1_texto">Agir com probidade, transparência e lealdade, abstendo-se de atitudes fraudulentas ou enganosas.</p></div>
+                <div class="etica-item"><h4 data-i18n="principio2_titulo">Justiça e Imparcialidade</h4><p data-i18n="principio2_texto">Tratar de forma justa e imparcial todos os associados, parceiros, prestadores de serviços e terceiros, sem discriminação de qualquer natureza.</p></div>
+                <div class="etica-item"><h4 data-i18n="principio3_titulo">Qualidade e Excelência</h4><p data-i18n="principio3_texto">Buscar a qualidade e a excelência no desempenho de suas funções, zelando pelo aprimoramento técnico-científico e ético da gestão de pessoas.</p></div>
+                <div class="etica-item"><h4 data-i18n="principio4_titulo">Privacidade e Sigilo</h4><p data-i18n="principio4_texto">Respeitar a privacidade e sigilo das informações da Associação e de seus membros, protegendo dados pessoais e organizacionais contra uso indevido.</p></div>
+                <div class="etica-item"><h4 data-i18n="principio5_titulo">Responsabilidade Social</h4><p data-i18n="principio5_texto">Promover ações de caráter social e ambientalmente responsáveis, contribuindo para o desenvolvimento sustentável da comunidade e o bem-estar coletivo.</p></div>
             </div>
-
             <div class="tab-content" id="deveres">
-                <div class="etica-item">
-                    <h4>Cumprimento das Normas</h4>
-                    <p>Os destinatários deste Código devem conhecer e cumprir a íntegra de suas disposições, bem como as demais normas internas da AGETRHA e a legislação vigente.</p>
-                </div>
-                <div class="etica-item">
-                    <h4>Proibições</h4>
-                    <p>É vedado ao associado ou colaborador:</p>
-                    <ul>
-                        <li>Usar indevidamente o cargo, função ou informações privilegiadas em benefício próprio ou de terceiros;</li>
-                        <li>Praticar atos de discriminação, assédio moral ou sexual, violência ou intimidação;</li>
-                        <li>Divulgar dados confidenciais da AGETRHA sem autorização;</li>
-                        <li>Realizar propaganda pessoal ou político-partidária que não seja de interesse da Associação durante eventos ou atividades oficiais.</li>
-                    </ul>
-                </div>
+                <div class="etica-item"><h4 data-i18n="dever1_titulo">Cumprimento das Normas</h4><p data-i18n="dever1_texto">Os destinatários deste Código devem conhecer e cumprir a íntegra de suas disposições, bem como as demais normas internas da AGETRHA e a legislação vigente.</p></div>
+                <div class="etica-item"><h4 data-i18n="dever2_titulo">Proibições</h4><p data-i18n="dever2_texto">É vedado ao associado ou colaborador:</p><ul><li data-i18n="proib1">Usar indevidamente o cargo, função ou informações privilegiadas em benefício próprio ou de terceiros;</li><li data-i18n="proib2">Praticar atos de discriminação, assédio moral ou sexual, violência ou intimidação;</li><li data-i18n="proib3">Divulgar dados confidenciais da AGETRHA sem autorização;</li><li data-i18n="proib4">Realizar propaganda pessoal ou político-partidária que não seja de interesse da Associação durante eventos ou atividades oficiais.</li></ul></div>
             </div>
-
             <div class="tab-content" id="conflitos">
-                <div class="etica-item">
-                    <h4>Definição de Conflito de Interesses</h4>
-                    <p>Considera-se conflito de interesses qualquer situação em que interesses pessoais ou de terceiros possam afetar, influenciar ou se sobrepor aos interesses da AGETRHA ou aos deveres inerentes às funções exercidas.</p>
-                </div>
-                <div class="etica-item">
-                    <h4>Prevenção e Comunicação</h4>
-                    <p>Os associados, dirigentes e colaboradores devem evitar situações de conflito de interesses. Quando houver dúvida sobre a existência de conflito real, potencial ou aparente, o interessado deverá imediatamente comunicar o fato à Direção Nacional.</p>
-                </div>
-                <div class="etica-item">
-                    <h4>Transparência nas Decisões</h4>
-                    <p>As decisões que afetem a AGETRHA devem ser tomadas com transparência e objetividade, sempre priorizando os interesses da Associação e da classe profissional que representa.</p>
-                </div>
+                <div class="etica-item"><h4 data-i18n="conflito1_titulo">Definição de Conflito de Interesses</h4><p data-i18n="conflito1_texto">Considera-se conflito de interesses qualquer situação em que interesses pessoais ou de terceiros possam afetar, influenciar ou se sobrepor aos interesses da AGETRHA ou aos deveres inerentes às funções exercidas.</p></div>
+                <div class="etica-item"><h4 data-i18n="conflito2_titulo">Prevenção e Comunicação</h4><p data-i18n="conflito2_texto">Os associados, dirigentes e colaboradores devem evitar situações de conflito de interesses. Quando houver dúvida sobre a existência de conflito real, potencial ou aparente, o interessado deverá imediatamente comunicar o fato à Direção Nacional.</p></div>
+                <div class="etica-item"><h4 data-i18n="conflito3_titulo">Transparência nas Decisões</h4><p data-i18n="conflito3_texto">As decisões que afetem a AGETRHA devem ser tomadas com transparência e objetividade, sempre priorizando os interesses da Associação e da classe profissional que representa.</p></div>
             </div>
-
             <div class="tab-content" id="redes">
-                <div class="etica-item">
-                    <h4>Uso Ético das Redes Sociais</h4>
-                    <p>O uso de redes sociais por associados, colaboradores e parceiros deve obedecer aos princípios deste Código, de modo a preservar a boa imagem da AGETRHA e a respeitar a privacidade de seus membros.</p>
-                </div>
-                <div class="etica-item">
-                    <h4>Recomendações</h4>
-                    <ul>
-                        <li>Não divulgar informações internas, estratégias, debates ou documentos da AGETRHA sem expressa autorização;</li>
-                        <li>Ao manifestar opiniões pessoais em redes sociais, deixar claro que se trata de posicionamento individual, não vinculando a Associação;</li>
-                        <li>Evitar postagens de conteúdo inapropriado, desrespeitoso ou ofensivo à imagem pessoal, profissional ou institucional da AGETRHA;</li>
-                        <li>Respeitar direitos autorais, confidencialidade e privacidade ao compartilhar conteúdo relacionado às atividades da Associação.</li>
-                    </ul>
-                </div>
+                <div class="etica-item"><h4 data-i18n="redes1_titulo">Uso Ético das Redes Sociais</h4><p data-i18n="redes1_texto">O uso de redes sociais por associados, colaboradores e parceiros deve obedecer aos princípios deste Código, de modo a preservar a boa imagem da AGETRHA e a respeitar a privacidade de seus membros.</p></div>
+                <div class="etica-item"><h4 data-i18n="redes2_titulo">Recomendações</h4><ul><li data-i18n="recom1">Não divulgar informações internas, estratégias, debates ou documentos da AGETRHA sem expressa autorização;</li><li data-i18n="recom2">Ao manifestar opiniões pessoais em redes sociais, deixar claro que se trata de posicionamento individual, não vinculando a Associação;</li><li data-i18n="recom3">Evitar postagens de conteúdo inapropriado, desrespeitoso ou ofensivo à imagem pessoal, profissional ou institucional da AGETRHA;</li><li data-i18n="recom4">Respeitar direitos autorais, confidencialidade e privacidade ao compartilhar conteúdo relacionado às atividades da Associação.</li></ul></div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer id="contato">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="https://drive.google.com/thumbnail?id=1UsOKh3Gvd-br6w3KTesth08sgBqjCPEX&sz=w500" alt="AGETRHA Logo Branco">
-                    <p>Associação dos Gestores e Técnicos de Recursos Humanos de Angola</p>
+                    <img src="https://drive.google.com/thumbnail?id=1UsOKh3Gvd-br6w3KTesth08sgBqjCPEX&sz=w500" alt="AGETRHA Logo">
+                    <p data-i18n="logo_subtitle">Associação dos Gestores e Técnicos de Recursos Humanos de Angola</p>
                     <div class="social-links">
                         <a href="https://www.facebook.com/profile.php?id=61579899331888"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
@@ -1403,276 +1263,235 @@
                         <a href="https://www.instagram.com/agetrha_oficial/"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-
                 <div class="footer-links">
-                    <h4>Links Rápidos</h4>
-                    <ul>
-                        <li><a href="#inicio">Início</a></li>
-                        <li><a href="#sobre">Sobre Nós</a></li>
-                        <li><a href="#valores">Valores</a></li>
-                        <li><a href="#objetivos">Objectivos</a></li>
-                        <li><a href="#etica">Código de Ética</a></li>
-                    </ul>
+                    <h4 data-i18n="footer_links_rapidos">Links Rápidos</h4>
+                    <ul><li><a href="#inicio" data-i18n="nav_inicio">Início</a></li><li><a href="#sobre" data-i18n="nav_sobre">Sobre Nós</a></li><li><a href="#valores" data-i18n="nav_valores">Valores</a></li><li><a href="#objetivos" data-i18n="nav_objetivos">Objectivos</a></li><li><a href="#etica" data-i18n="nav_etica">Código de Ética</a></li></ul>
                 </div>
-
                 <div class="footer-contact">
-                    <h4>Contacto</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Ulengo Center, Entrada 2, 2.º andar – Cidade Universitária, Luanda</p>
+                    <h4 data-i18n="footer_contacto">Contacto</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="endereco">Ulengo Center, Entrada 2, 2.º andar – Cidade Universitária, Luanda</span></p>
                     <p><i class="fas fa-phone"></i> +244 945 968 772 / 955 763 141</p>
                     <p><i class="fas fa-envelope"></i> agetrha@gmail.com</p>
                 </div>
             </div>
-
-            <!-- Botões do Footer (agora com 6 botões) -->
             <div class="footer-buttons">
-                <button class="btn" id="openPortfolioBtn">
-                    <i class="fas fa-briefcase"></i> Abrir Portfólio
-                </button>
-                <button class="btn" id="openGaleriaBtn">
-                    <i class="fas fa-images"></i> Galeria
-                </button>
-                <button class="btn" id="openMemberAreaBtn">
-                    <i class="fas fa-user-lock"></i> Área de Membro
-                </button>
-                <button class="btn" id="openSiteManagementBtn">
-                    <i class="fas fa-cogs"></i> Gestão do Site
-                </button>
-                <!-- NOVO BOTÃO: Organograma -->
-                <button class="btn" id="openOrganogramaBtn">
-                    <i class="fas fa-sitemap"></i> Organograma
-                </button>
-                <!-- NOVO BOTÃO: Documentos -->
-                <button class="btn" id="openDocumentosBtn">
-                    <i class="fas fa-file-alt"></i> Documentos
-                </button>
+                <button class="btn" id="openPortfolioBtn"><i class="fas fa-briefcase"></i> <span data-i18n="btn_portfolio">Abrir Portfólio</span></button>
+                <button class="btn" id="openGaleriaBtn"><i class="fas fa-images"></i> <span data-i18n="btn_galeria">Galeria</span></button>
+                <button class="btn" id="openMemberAreaBtn"><i class="fas fa-user-lock"></i> <span data-i18n="btn_area_membro">Área de Membro</span></button>
+                <button class="btn" id="openSiteManagementBtn"><i class="fas fa-cogs"></i> <span data-i18n="btn_gestao_site">Gestão do Site</span></button>
+                <button class="btn" id="openOrganogramaBtn"><i class="fas fa-sitemap"></i> <span data-i18n="btn_organograma">Organograma</span></button>
+                <button class="btn" id="openDocumentosBtn"><i class="fas fa-file-alt"></i> <span data-i18n="btn_documentos">Documentos</span></button>
             </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 AGETRHA - Todos os direitos reservados</p>
-            </div>
+            <div class="footer-bottom"><p data-i18n="copyright">&copy; 2026 AGETRHA - Todos os direitos reservados</p></div>
         </div>
     </footer>
 
     <script>
-        // ===== CONFIGURAÇÃO DO GAS =====
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbyNf8klJbqLrbKUNTqXQrtzHmllPaBq1wLohYUnxoIfDRweVoNsxr9KJGAx5xl_yEQr/exec';
-
-        // ===== FUNÇÃO PARA CHAMAR O GAS =====
-        async function callAPI(action, params = {}) {
-            try {
-                return await callAPI_Fetch(action, params);
-            } catch (fetchError) {
-                console.log('⚠️ Fetch falhou, tentando método antigo...', fetchError.message);
-                try {
-                    return await callAPI_JSONP(action, params);
-                } catch (jsonpError) {
-                    console.error('❌ Ambos os métodos falharam:', jsonpError.message);
-                    throw new Error('Não foi possível conectar ao servidor AGETRHA');
-                }
+        // ===== DICIONÁRIO DE TRADUÇÕES (PT, EN, FR) =====
+        const translations = {
+            pt: {
+                logo_subtitle: "Associação dos Gestores e Técnicos de Recursos Humanos de Angola",
+                nav_inicio: "Início", nav_sobre: "Sobre", nav_valores: "Valores", nav_objetivos: "Objectivos", nav_etica: "C.Ética", nav_contato: "Contacto",
+                btn_admin: "Área Administrativa", btn_inscrever: "Inscrever-se",
+                menu_agetrha: "Menu AGETRHA", quem_somos: "Quem Somos", codigo_etica: "Código de Ética",
+                departamentos_title: "Departamentos", dept_assembleia: "Assembleia Geral", dept_direcao: "Direção Nacional", dept_secretaria: "Secretaria Geral", dept_conselho: "Conselho Fiscal",
+                admin_title: "Área Administrativa - AGETRHA", dept_consultivo: "Conselho Consultivo", dept_financas: "Planejamento e Finanças", dept_juridico: "Departamento Jurídico", dept_pessoal: "Pessoal e Quadros", dept_comunicacao: "Comunicação Institucional", dept_cooperacao: "Cooperação e Intercâmbio", dept_formacao: "Formação e Estudos Científicos", dept_regional: "Regional ou Provincial", dept_disciplina: "Conduta e Disciplina",
+                aviso_titulo: "⚠️ Acesso Restrito – Área Administrativa.", aviso_texto: "O acesso aos Escritórios Online é exclusivo para membros e colaboradores autorizados da AGETRHA. Se você ainda não faz parte da nossa associação, convidamos-lhe a juntar-se a nós! Ao tornar-se associado, você terá acesso completo aos conteúdos internos, actividades do departamento e benefícios exclusivos destinados aos profissionais de Recursos Humanos em Angola.",
+                convite_btn: "Clique aqui para inscrever-se.", convite_texto: "Sua participação fortalece a nossa comunidade e contribui para o desenvolvimento da nossa área profissional. Faça parte da AGETRHA, seja a mudança que precisa acontecer.",
+                hero_title: "Valorizando Profissionais de RH em Angola", hero_text: "Promovendo a excelência, ética e desenvolvimento contínuo dos Gestores e Técnicos de Recursos Humanos",
+                hero_btn_inscrever: "Inscreva-se Agora", hero_btn_saiba: "Saiba Mais",
+                sobre_title: "Sobre a AGETRHA", sobre_p1: "A <strong>Associação dos Gestores e Técnicos de Recursos Humanos de Angola (AGETRHA)</strong> é uma organização que reúne profissionais dedicados a promover a excelência na gestão de pessoas em Angola.", sobre_p2: "Fundada com base nos princípios de ética, idoneidade, rigor, competência e solidariedade, a AGETRHA tem como missão principal promover a implementação de políticas e boas práticas de Recursos Humanos, contribuindo para o desenvolvimento profissional, a valorização e a capacitação contínua dos Gestores e Técnicos de Recursos Humanos em Angola.", sobre_p3: "Nossa visão é ser a principal referência nacional na promoção e valorização dos profissionais de RH, impulsionando boas práticas, ética profissional e uma gestão eficaz, competente e humanizada.", sobre_btn: "Conheça Nossos Valores",
+                valores_title: "Missão, Visão e Valores", missao_title: "Missão", missao_text: "Promover a implementação de políticas e boas práticas de Recursos Humanos, contribuindo para o desenvolvimento profissional, a valorização e a capacitação contínua dos Gestores e Técnicos de Recursos Humanos em Angola.", visao_title: "Visão", visao_text: "Ser a principal referência nacional na promoção e valorização dos Gestores e Técnicos de Recursos Humanos, impulsionando boas práticas, ética profissional e uma gestão eficaz, competente e humanizada.", valores_lista: "Valores", valores_text: "Respeito, Austeridade, Integridade, Competências, Inclusão e Unidade, Colaboração, Diversidade e Inclusão, Desenvolvimento Contínuo.",
+                objetivos_title: "Nossos Objectivos", obj1_titulo: "Representação Profissional", obj1_texto: "Representar os profissionais e técnicos de Recursos Humanos em Angola.", obj2_titulo: "Formação e Certificação", obj2_texto: "Promover a formação, certificação e valorização profissional dos associados.", obj3_titulo: "Políticas Públicas", obj3_texto: "Intervir na definição de políticas públicas ligadas à educação, trabalho e gestão de pessoas.", obj4_titulo: "Pesquisa e Desenvolvimento", obj4_texto: "Fomentar a investigação e desenvolvimento técnico-científico na área de RH.", obj5_titulo: "Parcerias", obj5_texto: "Estabelecer parcerias nacionais e internacionais para o desenvolvimento da área.", obj6_titulo: "Institucionalização", obj6_texto: "Institucionalização da gestão de Recursos Humanos como profissão e criação da Ordem dos Gestores e Técnicos de RH de Angola.",
+                etica_title: "Código de Ética e Deontologia", tab_preambulo: "Preâmbulo", tab_principios: "Princípios Fundamentais", tab_deveres: "Deveres e Conduta", tab_conflitos: "Conflitos de Interesse", tab_redes: "Redes Sociais",
+                preambulo_texto: "A AGETRHA, pautando-se pelos princípios estatutários de ética, idoneidade, rigor, competência e solidariedade, e inspirando-se nos valores fundadores de solidariedade, inclusão, excelência e responsabilidade social, estabelece o presente Código de Ética e Deontologia. Este instrumento normativo tem por objetivo orientar a conduta de seus associados, órgãos sociais, colaboradores, voluntários, parceiros e prestadores de serviço, no sentido de promover os mais elevados padrões de integridade, profissionalismo e responsabilidade social, em consonância com a legislação nacional aplicável.",
+                principio1_titulo: "Probidade e Transparência", principio1_texto: "Agir com probidade, transparência e lealdade, abstendo-se de atitudes fraudulentas ou enganosas.",
+                principio2_titulo: "Justiça e Imparcialidade", principio2_texto: "Tratar de forma justa e imparcial todos os associados, parceiros, prestadores de serviços e terceiros, sem discriminação de qualquer natureza.",
+                principio3_titulo: "Qualidade e Excelência", principio3_texto: "Buscar a qualidade e a excelência no desempenho de suas funções, zelando pelo aprimoramento técnico-científico e ético da gestão de pessoas.",
+                principio4_titulo: "Privacidade e Sigilo", principio4_texto: "Respeitar a privacidade e sigilo das informações da Associação e de seus membros, protegendo dados pessoais e organizacionais contra uso indevido.",
+                principio5_titulo: "Responsabilidade Social", principio5_texto: "Promover ações de caráter social e ambientalmente responsáveis, contribuindo para o desenvolvimento sustentável da comunidade e o bem-estar coletivo.",
+                dever1_titulo: "Cumprimento das Normas", dever1_texto: "Os destinatários deste Código devem conhecer e cumprir a íntegra de suas disposições, bem como as demais normas internas da AGETRHA e a legislação vigente.",
+                dever2_titulo: "Proibições", dever2_texto: "É vedado ao associado ou colaborador:", proib1: "Usar indevidamente o cargo, função ou informações privilegiadas em benefício próprio ou de terceiros;", proib2: "Praticar atos de discriminação, assédio moral ou sexual, violência ou intimidação;", proib3: "Divulgar dados confidenciais da AGETRHA sem autorização;", proib4: "Realizar propaganda pessoal ou político-partidária que não seja de interesse da Associação durante eventos ou atividades oficiais.",
+                conflito1_titulo: "Definição de Conflito de Interesses", conflito1_texto: "Considera-se conflito de interesses qualquer situação em que interesses pessoais ou de terceiros possam afetar, influenciar ou se sobrepor aos interesses da AGETRHA ou aos deveres inerentes às funções exercidas.",
+                conflito2_titulo: "Prevenção e Comunicação", conflito2_texto: "Os associados, dirigentes e colaboradores devem evitar situações de conflito de interesses. Quando houver dúvida sobre a existência de conflito real, potencial ou aparente, o interessado deverá imediatamente comunicar o fato à Direção Nacional.",
+                conflito3_titulo: "Transparência nas Decisões", conflito3_texto: "As decisões que afetem a AGETRHA devem ser tomadas com transparência e objetividade, sempre priorizando os interesses da Associação e da classe profissional que representa.",
+                redes1_titulo: "Uso Ético das Redes Sociais", redes1_texto: "O uso de redes sociais por associados, colaboradores e parceiros deve obedecer aos princípios deste Código, de modo a preservar a boa imagem da AGETRHA e a respeitar a privacidade de seus membros.",
+                redes2_titulo: "Recomendações", recom1: "Não divulgar informações internas, estratégias, debates ou documentos da AGETRHA sem expressa autorização;", recom2: "Ao manifestar opiniões pessoais em redes sociais, deixar claro que se trata de posicionamento individual, não vinculando a Associação;", recom3: "Evitar postagens de conteúdo inapropriado, desrespeitoso ou ofensivo à imagem pessoal, profissional ou institucional da AGETRHA;", recom4: "Respeitar direitos autorais, confidencialidade e privacidade ao compartilhar conteúdo relacionado às atividades da Associação.",
+                footer_links_rapidos: "Links Rápidos", footer_contacto: "Contacto", endereco: "Ulengo Center, Entrada 2, 2.º andar – Cidade Universitária, Luanda",
+                btn_portfolio: "Abrir Portfólio", btn_galeria: "Galeria", btn_area_membro: "Área de Membro", btn_gestao_site: "Gestão do Site", btn_organograma: "Organograma", btn_documentos: "Documentos",
+                copyright: "© 2026 AGETRHA - Todos os direitos reservados"
+            },
+            en: {
+                logo_subtitle: "Association of Human Resources Managers and Technicians of Angola",
+                nav_inicio: "Home", nav_sobre: "About", nav_valores: "Values", nav_objetivos: "Objectives", nav_etica: "Ethics", nav_contato: "Contact",
+                btn_admin: "Admin Area", btn_inscrever: "Join",
+                menu_agetrha: "AGETRHA Menu", quem_somos: "Who We Are", codigo_etica: "Code of Ethics",
+                departamentos_title: "Departments", dept_assembleia: "General Assembly", dept_direcao: "National Directorate", dept_secretaria: "General Secretariat", dept_conselho: "Fiscal Council",
+                admin_title: "Admin Area - AGETRHA", dept_consultivo: "Advisory Council", dept_financas: "Planning and Finance", dept_juridico: "Legal Department", dept_pessoal: "Personnel and Staff", dept_comunicacao: "Institutional Communication", dept_cooperacao: "Cooperation and Exchange", dept_formacao: "Training and Scientific Studies", dept_regional: "Regional or Provincial", dept_disciplina: "Conduct and Discipline",
+                aviso_titulo: "⚠️ Restricted Access – Admin Area.", aviso_texto: "Access to Online Offices is exclusive for authorized AGETRHA members and collaborators. If you are not yet a member, we invite you to join us! By becoming a member, you will have full access to internal content, departmental activities, and exclusive benefits for HR professionals in Angola.",
+                convite_btn: "Click here to sign up.", convite_texto: "Your participation strengthens our community and contributes to the development of our professional field. Join AGETRHA, be the change that needs to happen.",
+                hero_title: "Valuing HR Professionals in Angola", hero_text: "Promoting excellence, ethics and continuous development of Human Resources Managers and Technicians",
+                hero_btn_inscrever: "Sign Up Now", hero_btn_saiba: "Learn More",
+                sobre_title: "About AGETRHA", sobre_p1: "<strong>AGETRHA</strong> is an organization that brings together professionals dedicated to promoting excellence in people management in Angola.", sobre_p2: "Founded on the principles of ethics, probity, rigor, competence and solidarity, AGETRHA's main mission is to promote the implementation of HR policies and good practices, contributing to the professional development, valorization and continuous training of HR managers and technicians in Angola.", sobre_p3: "Our vision is to be the leading national reference in promoting and valuing HR professionals, driving good practices, professional ethics and effective, competent and humanized management.", sobre_btn: "Discover Our Values",
+                valores_title: "Mission, Vision and Values", missao_title: "Mission", missao_text: "To promote the implementation of HR policies and good practices, contributing to the professional development, valorization and continuous training of HR managers and technicians in Angola.", visao_title: "Vision", visao_text: "To be the leading national reference in promoting and valuing HR professionals, driving good practices, professional ethics and effective, competent and humanized management.", valores_lista: "Values", valores_text: "Respect, Austerity, Integrity, Competence, Inclusion and Unity, Collaboration, Diversity and Inclusion, Continuous Development.",
+                objetivos_title: "Our Objectives", obj1_titulo: "Professional Representation", obj1_texto: "Represent HR professionals and technicians in Angola.", obj2_titulo: "Training and Certification", obj2_texto: "Promote training, certification and professional development of members.", obj3_titulo: "Public Policies", obj3_texto: "Intervene in the definition of public policies related to education, labor and people management.", obj4_titulo: "Research and Development", obj4_texto: "Foster technical-scientific research and development in the HR field.", obj5_titulo: "Partnerships", obj5_texto: "Establish national and international partnerships for the development of the field.", obj6_titulo: "Institutionalization", obj6_texto: "Institutionalize HR management as a profession and create the Order of HR Managers and Technicians of Angola.",
+                etica_title: "Code of Ethics and Deontology", tab_preambulo: "Preamble", tab_principios: "Fundamental Principles", tab_deveres: "Duties and Conduct", tab_conflitos: "Conflicts of Interest", tab_redes: "Social Media",
+                preambulo_texto: "AGETRHA, guided by the statutory principles of ethics, probity, rigor, competence and solidarity, and inspired by the founding values of solidarity, inclusion, excellence and social responsibility, hereby establishes this Code of Ethics and Deontology. This normative instrument aims to guide the conduct of its members, governing bodies, employees, volunteers, partners and service providers, promoting the highest standards of integrity, professionalism and social responsibility, in accordance with applicable national legislation.",
+                principio1_titulo: "Probity and Transparency", principio1_texto: "Act with probity, transparency and loyalty, refraining from fraudulent or misleading actions.",
+                principio2_titulo: "Justice and Impartiality", principio2_texto: "Treat all members, partners, service providers and third parties fairly and impartially, without any discrimination.",
+                principio3_titulo: "Quality and Excellence", principio3_texto: "Seek quality and excellence in performing duties, ensuring technical-scientific and ethical improvement of people management.",
+                principio4_titulo: "Privacy and Secrecy", principio4_texto: "Respect the privacy and confidentiality of the Association's and its members' information, protecting personal and organizational data against misuse.",
+                principio5_titulo: "Social Responsibility", principio5_texto: "Promote socially and environmentally responsible actions, contributing to sustainable community development and collective well-being.",
+                dever1_titulo: "Compliance with Rules", dever1_texto: "Recipients of this Code must know and fully comply with its provisions, as well as other internal AGETRHA rules and applicable legislation.",
+                dever2_titulo: "Prohibitions", dever2_texto: "Members or collaborators are prohibited from:", proib1: "Improperly using office, function or privileged information for personal or third-party benefit;", proib2: "Practicing acts of discrimination, moral or sexual harassment, violence or intimidation;", proib3: "Disclosing confidential AGETRHA data without authorization;", proib4: "Carrying out personal or political-party propaganda that is not in the Association's interest during official events or activities.",
+                conflito1_titulo: "Definition of Conflict of Interest", conflito1_texto: "Conflict of interest is any situation where personal or third-party interests may affect, influence or override the interests of AGETRHA or the duties inherent to the position.",
+                conflito2_titulo: "Prevention and Communication", conflito2_texto: "Members, directors and collaborators must avoid situations of conflict of interest. If there is doubt about the existence of a real, potential or apparent conflict, the interested party must immediately notify the National Directorate.",
+                conflito3_titulo: "Transparency in Decisions", conflito3_texto: "Decisions affecting AGETRHA must be made with transparency and objectivity, always prioritizing the interests of the Association and the professional class it represents.",
+                redes1_titulo: "Ethical Use of Social Media", redes1_texto: "The use of social media by members, collaborators and partners must comply with the principles of this Code, preserving the good image of AGETRHA and respecting the privacy of its members.",
+                redes2_titulo: "Recommendations", recom1: "Do not disclose internal information, strategies, debates or documents of AGETRHA without express authorization;", recom2: "When expressing personal opinions on social media, make it clear that it is an individual position, not binding the Association;", recom3: "Avoid posting inappropriate, disrespectful or offensive content to the personal, professional or institutional image of AGETRHA;", recom4: "Respect copyright, confidentiality and privacy when sharing content related to the Association's activities.",
+                footer_links_rapidos: "Quick Links", footer_contacto: "Contact", endereco: "Ulengo Center, Entrance 2, 2nd floor – Cidade Universitária, Luanda",
+                btn_portfolio: "Open Portfolio", btn_galeria: "Gallery", btn_area_membro: "Member Area", btn_gestao_site: "Site Management", btn_organograma: "Organogram", btn_documentos: "Documents",
+                copyright: "© 2026 AGETRHA - All rights reserved"
+            },
+            fr: {
+                logo_subtitle: "Association des gestionnaires et techniciens des ressources humaines d'Angola",
+                nav_inicio: "Accueil", nav_sobre: "À propos", nav_valores: "Valeurs", nav_objetivos: "Objectifs", nav_etica: "Éthique", nav_contato: "Contact",
+                btn_admin: "Zone Admin", btn_inscrever: "Adhérer",
+                menu_agetrha: "Menu AGETRHA", quem_somos: "Qui sommes-nous", codigo_etica: "Code d'éthique",
+                departamentos_title: "Départements", dept_assembleia: "Assemblée générale", dept_direcao: "Direction nationale", dept_secretaria: "Secrétariat général", dept_conselho: "Conseil fiscal",
+                admin_title: "Zone administrative - AGETRHA", dept_consultivo: "Conseil consultatif", dept_financas: "Planification et finances", dept_juridico: "Département juridique", dept_pessoal: "Personnel et cadres", dept_comunicacao: "Communication institutionnelle", dept_cooperacao: "Coopération et échange", dept_formacao: "Formation et études scientifiques", dept_regional: "Régional ou provincial", dept_disciplina: "Conduite et discipline",
+                aviso_titulo: "⚠️ Accès restreint – Zone administrative.", aviso_texto: "L'accès aux bureaux en ligne est exclusif aux membres et collaborateurs autorisés d'AGETRHA. Si vous ne faites pas encore partie de notre association, nous vous invitons à nous rejoindre ! En devenant membre, vous aurez un accès complet aux contenus internes, aux activités départementales et aux avantages exclusifs destinés aux professionnels des RH en Angola.",
+                convite_btn: "Cliquez ici pour vous inscrire.", convite_texto: "Votre participation renforce notre communauté et contribue au développement de notre domaine professionnel. Rejoignez AGETRHA, soyez le changement qui doit avoir lieu.",
+                hero_title: "Valoriser les professionnels RH en Angola", hero_text: "Promouvoir l'excellence, l'éthique et le développement continu des gestionnaires et techniciens des ressources humaines",
+                hero_btn_inscrever: "Inscrivez-vous maintenant", hero_btn_saiba: "En savoir plus",
+                sobre_title: "À propos d'AGETRHA", sobre_p1: "<strong>AGETRHA</strong> est une organisation qui rassemble des professionnels dédiés à promouvoir l'excellence dans la gestion des personnes en Angola.", sobre_p2: "Fondée sur les principes d'éthique, d'honnêteté, de rigueur, de compétence et de solidarité, AGETRHA a pour mission principale de promouvoir la mise en œuvre de politiques et de bonnes pratiques en matière de RH, contribuant ainsi au développement professionnel, à la valorisation et à la formation continue des gestionnaires et techniciens RH en Angola.", sobre_p3: "Notre vision est d'être la principale référence nationale dans la promotion et la valorisation des professionnels RH, en favorisant les bonnes pratiques, l'éthique professionnelle et une gestion efficace, compétente et humanisée.", sobre_btn: "Découvrez nos valeurs",
+                valores_title: "Mission, Vision et Valeurs", missao_title: "Mission", missao_text: "Promouvoir la mise en œuvre de politiques et de bonnes pratiques RH, contribuant au développement professionnel, à la valorisation et à la formation continue des gestionnaires et techniciens RH en Angola.", visao_title: "Vision", visao_text: "Être la principale référence nationale dans la promotion et la valorisation des professionnels RH, en favorisant les bonnes pratiques, l'éthique professionnelle et une gestion efficace, compétente et humanisée.", valores_lista: "Valeurs", valores_text: "Respect, Austérité, Intégrité, Compétences, Inclusion et Unité, Collaboration, Diversité et Inclusion, Développement continu.",
+                objetivos_title: "Nos objectifs", obj1_titulo: "Représentation professionnelle", obj1_texto: "Représenter les professionnels et techniciens RH en Angola.", obj2_titulo: "Formation et certification", obj2_texto: "Promouvoir la formation, la certification et la valorisation professionnelle des membres.", obj3_titulo: "Politiques publiques", obj3_texto: "Intervenir dans la définition des politiques publiques liées à l'éducation, au travail et à la gestion des personnes.", obj4_titulo: "Recherche et développement", obj4_texto: "Favoriser la recherche et le développement technico-scientifique dans le domaine des RH.", obj5_titulo: "Partenariats", obj5_texto: "Établir des partenariats nationaux et internationaux pour le développement du domaine.", obj6_titulo: "Institutionnalisation", obj6_texto: "Institutionnaliser la gestion des RH en tant que profession et créer l'Ordre des gestionnaires et techniciens RH d'Angola.",
+                etica_title: "Code d'éthique et de déontologie", tab_preambulo: "Préambule", tab_principios: "Principes fondamentaux", tab_deveres: "Devoirs et conduite", tab_conflitos: "Conflits d'intérêts", tab_redes: "Médias sociaux",
+                preambulo_texto: "AGETRHA, guidée par les principes statutaires d'éthique, d'honnêteté, de rigueur, de compétence et de solidarité, et inspirée par les valeurs fondatrices de solidarité, d'inclusion, d'excellence et de responsabilité sociale, établit le présent Code d'éthique et de déontologie. Cet instrument normatif vise à guider la conduite de ses membres, organes dirigeants, employés, bénévoles, partenaires et prestataires de services, en promouvant les plus hauts standards d'intégrité, de professionnalisme et de responsabilité sociale, conformément à la législation nationale applicable.",
+                principio1_titulo: "Probité et transparence", principio1_texto: "Agir avec probité, transparence et loyauté, en s'abstenant de toute action frauduleuse ou trompeuse.",
+                principio2_titulo: "Justice et impartialité", principio2_texto: "Traiter tous les membres, partenaires, prestataires et tiers de manière juste et impartiale, sans aucune discrimination.",
+                principio3_titulo: "Qualité et excellence", principio3_texto: "Rechercher la qualité et l'excellence dans l'exercice de ses fonctions, en veillant à l'amélioration technico-scientifique et éthique de la gestion des personnes.",
+                principio4_titulo: "Confidentialité et secret", principio4_texto: "Respecter la confidentialité et le secret des informations de l'Association et de ses membres, en protégeant les données personnelles et organisationnelles contre toute utilisation abusive.",
+                principio5_titulo: "Responsabilité sociale", principio5_texto: "Promouvoir des actions socialement et environnementalement responsables, contribuant au développement durable de la communauté et au bien-être collectif.",
+                dever1_titulo: "Respect des règles", dever1_texto: "Les destinataires de ce Code doivent connaître et respecter intégralement ses dispositions, ainsi que les autres règles internes d'AGETRHA et la législation en vigueur.",
+                dever2_titulo: "Interdictions", dever2_texto: "Il est interdit au membre ou collaborateur :", proib1: "Utiliser indûment sa fonction ou des informations privilégiées à son profit ou au profit de tiers ;", proib2: "Pratiquer des actes de discrimination, harcèlement moral ou sexuel, violence ou intimidation ;", proib3: "Divulguer des données confidentielles d'AGETRHA sans autorisation ;", proib4: "Faire de la propagande personnelle ou politico-partisane qui n'est pas dans l'intérêt de l'Association lors d'événements ou d'activités officiels.",
+                conflito1_titulo: "Définition du conflit d'intérêts", conflito1_texto: "Est considéré comme conflit d'intérêts toute situation où des intérêts personnels ou de tiers peuvent affecter, influencer ou prévaloir sur les intérêts d'AGETRHA ou sur les devoirs inhérents à la fonction.",
+                conflito2_titulo: "Prévention et communication", conflito2_texto: "Les membres, dirigeants et collaborateurs doivent éviter les situations de conflit d'intérêts. En cas de doute sur l'existence d'un conflit réel, potentiel ou apparent, la personne concernée doit immédiatement en informer la Direction nationale.",
+                conflito3_titulo: "Transparence dans les décisions", conflito3_texto: "Les décisions affectant AGETRHA doivent être prises avec transparence et objectivité, en privilégiant toujours les intérêts de l'Association et de la classe professionnelle qu'elle représente.",
+                redes1_titulo: "Utilisation éthique des réseaux sociaux", redes1_texto: "L'utilisation des réseaux sociaux par les membres, collaborateurs et partenaires doit respecter les principes de ce Code, afin de préserver la bonne image d'AGETRHA et de respecter la vie privée de ses membres.",
+                redes2_titulo: "Recommandations", recom1: "Ne pas divulguer d'informations internes, stratégies, débats ou documents d'AGETRHA sans autorisation expresse ;", recom2: "Lorsque vous exprimez des opinions personnelles sur les réseaux sociaux, précisez qu'il s'agit d'une position individuelle, n'engageant pas l'Association ;", recom3: "Éviter les publications inappropriées, irrespectueuses ou offensantes pour l'image personnelle, professionnelle ou institutionnelle d'AGETRHA ;", recom4: "Respecter les droits d'auteur, la confidentialité et la vie privée lors du partage de contenu lié aux activités de l'Association.",
+                footer_links_rapidos: "Liens rapides", footer_contacto: "Contact", endereco: "Ulengo Center, Entrée 2, 2ème étage – Cidade Universitária, Luanda",
+                btn_portfolio: "Ouvrir le portfolio", btn_galeria: "Galerie", btn_area_membro: "Espace membre", btn_gestao_site: "Gestion du site", btn_organograma: "Organigramme", btn_documentos: "Documents",
+                copyright: "© 2026 AGETRHA - Tous droits réservés"
             }
-        }
+        };
 
-        // MÉTODO 1: Usando Fetch API
-        async function callAPI_Fetch(action, params = {}) {
-            const url = new URL(GAS_URL);
-            url.searchParams.append('action', action);
-            Object.keys(params).forEach(key => {
-                if (params[key] !== undefined && params[key] !== null) {
-                    url.searchParams.append(key, params[key]);
+        function setLanguage(lang) {
+            localStorage.setItem('agetrha_lang', lang);
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key] !== undefined) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        if (key === 'sobre_p1' || key === 'sobre_p2' || key === 'sobre_p3') {
+                            el.innerHTML = translations[lang][key];
+                        } else {
+                            el.innerText = translations[lang][key];
+                        }
+                    }
                 }
             });
-            url.searchParams.append('_t', Date.now());
-
-            const response = await fetch(url.toString(), {
-                method: 'GET',
-                mode: 'cors',
-                headers: { 'Accept': 'application/json' }
-            });
-
-            if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            const text = await response.text();
-            try {
-                return JSON.parse(text);
-            } catch (error) {
-                const jsonpMatch = text.match(/^\w+\((.*)\)$/);
-                if (jsonpMatch) return JSON.parse(jsonpMatch[1]);
-                throw new Error('Resposta não é JSON válido');
-            }
-        }
-
-        // MÉTODO 2: Usando JSONP
-        function callAPI_JSONP(action, params = {}) {
-            return new Promise((resolve, reject) => {
-                const callbackName = 'GAS_Callback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-                window[callbackName] = function (response) {
-                    delete window[callbackName];
-                    if (script.parentNode) script.parentNode.removeChild(script);
-                    clearTimeout(timeoutId);
-                    if (response && response.success !== undefined) resolve(response);
-                    else reject(new Error('Resposta inválida do servidor'));
-                };
-
-                let url = GAS_URL + '?action=' + encodeURIComponent(action);
-                Object.keys(params).forEach(key => {
-                    if (params[key] !== undefined && params[key] !== null) {
-                        url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-                    }
-                });
-                url += '&callback=' + callbackName + '&_t=' + Date.now();
-
-                const script = document.createElement('script');
-                script.src = url;
-                const timeoutId = setTimeout(() => {
-                    if (window[callbackName]) {
-                        delete window[callbackName];
-                        if (script.parentNode) script.parentNode.removeChild(script);
-                        reject(new Error('Timeout na conexão com o servidor'));
-                    }
-                }, 15000);
-
-                script.onerror = () => {
-                    clearTimeout(timeoutId);
-                    if (window[callbackName]) delete window[callbackName];
-                    if (script.parentNode) script.parentNode.removeChild(script);
-                    reject(new Error('Falha ao carregar o script do servidor'));
-                };
-                document.head.appendChild(script);
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
             });
         }
 
-        // ===== FUNÇÕES PRINCIPAIS (incluindo os novos botões) =====
-        function abrirPortfolio() {
-            window.open('https://drive.google.com/file/d/1O6RjsTqL-CM8iLIDghcShokxl3GOu9Ch/view', '_blank');
-        }
-        function abrirGaleria() {
-            window.open('https://agetrha-dpq.github.io/AGETRHA/Galeria', '_blank');
-        }
-        function abrirAreaMembro() {
-            window.open('https://agetrha-dpq.github.io/AGETRHA/Area_membro', '_blank');
-        }
-        function abrirGestaoSite() {
-            window.open('https://agetrha-dpq.github.io/AGETRHA/painel-admin', '_blank');
-        }
-        // Funções para os novos botões (substitua as URLs pelos links reais quando disponíveis)
-        function abrirOrganograma() {
-            // Exemplo: redirecionar para a página do organograma
-            window.open('https://agetrha-dpq.github.io/AGETRHA/organograma', '_blank'); // URL fictícia
-            // Enquanto não há link, pode exibir um alerta:
-            // alert('Página do organograma em construção');
-        }
-        function abrirDocumentos() {
-            // Exemplo: redirecionar para a página de documentos
-            window.open('https://agetrha-dpq.github.io/AGETRHA/documentos', '_blank'); // URL fictícia
-            // alert('Área de documentos em construção');
-        }
-
-        // ===== EVENT LISTENERS =====
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('openPortfolioBtn')?.addEventListener('click', abrirPortfolio);
-            document.getElementById('openGaleriaBtn')?.addEventListener('click', abrirGaleria);
-            document.getElementById('openMemberAreaBtn')?.addEventListener('click', abrirAreaMembro);
-            document.getElementById('openSiteManagementBtn')?.addEventListener('click', abrirGestaoSite);
-            // Listeners para os novos botões
-            document.getElementById('openOrganogramaBtn')?.addEventListener('click', abrirOrganograma);
-            document.getElementById('openDocumentosBtn')?.addEventListener('click', abrirDocumentos);
-        });
+            const savedLang = localStorage.getItem('agetrha_lang') || 'pt';
+            setLanguage(savedLang);
 
-        // ===== CÓDIGO ORIGINAL DO SITE (MENU, SIDEBAR, MODAL, ETC.) =====
-        // Menu mobile
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.getElementById('navMenu');
-        mobileMenuBtn?.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navMenu.classList.contains('active')
-                ? '<i class="fas fa-times"></i>'
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const lang = btn.getAttribute('data-lang');
+                    setLanguage(lang);
+                });
             });
-        });
 
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-        });
-
-        // Sistema de abas
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const target = tab.getAttribute('data-tab');
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(target).classList.add('active');
+            // Menu mobile
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            if(mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    mobileMenuBtn.innerHTML = navMenu.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+                });
+            }
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    if(mobileMenuBtn) mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
             });
-        });
 
-        // Animação ao scroll
-        const animateElements = document.querySelectorAll('.animate-on-scroll');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('animated');
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('header');
+                if (window.scrollY > 100) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
             });
-        }, { threshold: 0.1 });
-        animateElements.forEach(element => observer.observe(element));
 
-        // Sidebar toggle
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('closeSidebar');
-        sidebarToggle?.addEventListener('click', () => sidebar.classList.add('active'));
-        closeSidebar?.addEventListener('click', () => sidebar.classList.remove('active'));
-        document.addEventListener('click', (e) => {
-            if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-                sidebar.classList.remove('active');
-            }
-        });
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
 
-        // Modal da Área Administrativa
-        const openAdminArea = document.getElementById('openAdminArea');
-        const sidebarAdminBtn = document.getElementById('sidebarAdminBtn');
-        const adminModal = document.getElementById('adminModal');
-        const closeAdminModal = document.getElementById('closeAdminModal');
-        openAdminArea?.addEventListener('click', () => {
-            adminModal.style.display = 'block';
-            sidebar.classList.remove('active');
-        });
-        sidebarAdminBtn?.addEventListener('click', () => {
-            adminModal.style.display = 'block';
-            sidebar.classList.remove('active');
-        });
-        closeAdminModal?.addEventListener('click', () => adminModal.style.display = 'none');
-        window.addEventListener('click', (e) => {
-            if (e.target === adminModal) adminModal.style.display = 'none';
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                adminModal.style.display = 'none';
-                sidebar.classList.remove('active');
-            }
-        });
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('animated'); });
+            }, { threshold: 0.1 });
+            animateElements.forEach(el => observer.observe(el));
 
-        // Links de inscrição
-        const inscricaoLinks = document.querySelectorAll('a[href*="formulario_candidatura"], .btn-dourado');
-        inscricaoLinks.forEach(link => {
-            // Não modifica links que são âncoras internas (começam com #)
-            if (link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
-                return; // mantém o href original
-            }
-            if (!link.getAttribute('href') || !link.getAttribute('href').includes('Dashboard')) {
-                link.setAttribute('href', 'https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura');
-                link.setAttribute('target', '_blank');
-            }
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('closeSidebar');
+            if(sidebarToggle) sidebarToggle.addEventListener('click', () => sidebar.classList.add('active'));
+            if(closeSidebar) closeSidebar.addEventListener('click', () => sidebar.classList.remove('active'));
+            document.addEventListener('click', (e) => {
+                if(sidebar && sidebarToggle && !sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) sidebar.classList.remove('active');
+            });
+
+            const openAdminArea = document.getElementById('openAdminArea');
+            const sidebarAdminBtn = document.getElementById('sidebarAdminBtn');
+            const adminModal = document.getElementById('adminModal');
+            const closeAdminModal = document.getElementById('closeAdminModal');
+            if(openAdminArea) openAdminArea.addEventListener('click', () => { adminModal.style.display = 'block'; sidebar.classList.remove('active'); });
+            if(sidebarAdminBtn) sidebarAdminBtn.addEventListener('click', () => { adminModal.style.display = 'block'; sidebar.classList.remove('active'); });
+            if(closeAdminModal) closeAdminModal.addEventListener('click', () => adminModal.style.display = 'none');
+            window.addEventListener('click', (e) => { if(e.target === adminModal) adminModal.style.display = 'none'; });
+            document.addEventListener('keydown', (e) => { if(e.key === 'Escape') { adminModal.style.display = 'none'; sidebar.classList.remove('active'); } });
+
+            const openPortfolio = () => window.open('https://drive.google.com/file/d/1O6RjsTqL-CM8iLIDghcShokxl3GOu9Ch/view', '_blank');
+            const openGaleria = () => window.open('https://agetrha-dpq.github.io/AGETRHA/Galeria', '_blank');
+            const openMemberArea = () => window.open('https://agetrha-dpq.github.io/AGETRHA/Area_membro', '_blank');
+            const openSiteManagement = () => window.open('https://agetrha-dpq.github.io/AGETRHA/painel-admin', '_blank');
+            const openOrganograma = () => window.open('https://agetrha-dpq.github.io/AGETRHA/organograma', '_blank');
+            const openDocumentos = () => window.open('https://agetrha-dpq.github.io/AGETRHA/documentos', '_blank');
+            document.getElementById('openPortfolioBtn')?.addEventListener('click', openPortfolio);
+            document.getElementById('openGaleriaBtn')?.addEventListener('click', openGaleria);
+            document.getElementById('openMemberAreaBtn')?.addEventListener('click', openMemberArea);
+            document.getElementById('openSiteManagementBtn')?.addEventListener('click', openSiteManagement);
+            document.getElementById('openOrganogramaBtn')?.addEventListener('click', openOrganograma);
+            document.getElementById('openDocumentosBtn')?.addEventListener('click', openDocumentos);
         });
     </script>
 </body>
 </html>
-
