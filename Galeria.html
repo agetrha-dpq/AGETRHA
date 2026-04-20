@@ -379,8 +379,11 @@
         .modal-content {
             margin: auto;
             display: block;
-            max-width: 90%;
+            max-width: 95%;
             max-height: 90%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
             border-radius: 8px;
             animation: zoomIn 0.3s;
             border: 2px solid var(--accent-gold);
@@ -653,7 +656,7 @@
                     <button class="filter-btn" data-filter="encontros">
                         <i class="fas fa-glass-cheers"></i> Encontros
                     </button>
-                    <button class="filter-btn" data-filter="formaturas">
+                    <button class="filter-btn" data-filter="formatura">
                         <i class="fas fa-graduation-cap"></i> Formatura
                     </button>
                 </div>
@@ -730,6 +733,39 @@
         let currentImageIndex = 0;
         let filteredItems = [];
         
+        // Normaliza categoria (remove acentos, minúsculas, trata plurais específicos)
+        function normalizeCategory(cat) {
+            if (!cat) return 'geral';
+            let normalized = cat.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+                .replace(/[^a-z]/g, '');
+            
+            // Mapeamento de plurais comuns para singular
+            const pluralMap = {
+                'formaturas': 'formatura',
+                'reunioes': 'reuniao',   // caso venha "reuniões"
+                'workshops': 'workshop',
+                'encontros': 'encontro',
+                'eventos': 'evento'
+            };
+            
+            if (pluralMap[normalized]) {
+                normalized = pluralMap[normalized];
+            }
+            
+            // Ajustes específicos: garantir que 'reuniao' vire 'reunioes'? Não, queremos manter padronizado.
+            // O filtro espera 'reunioes', 'workshops', etc. Vamos padronizar para os nomes usados nos botões:
+            const standardCategories = {
+                'evento': 'eventos',
+                'reuniao': 'reunioes',
+                'workshop': 'workshops',
+                'encontro': 'encontros',
+                'formatura': 'formatura'  // este já está no singular conforme botão
+            };
+            
+            return standardCategories[normalized] || normalized;
+        }
+        
         // Inicialização
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('openPortfolioBtn')?.addEventListener('click', abrirPortfolio);
@@ -750,15 +786,20 @@
                 const response = await callAPI('getGaleria');
                 
                 if (response.success && response.data) {
-                    galleryItems = response.data.map(item => ({
-                        id: item.id || '',
-                        title: item.titulo || 'Sem título',
-                        date: formatDate(item.data) || formatDate(item.datacriacao) || 'Data não disponível',
-                        description: item.descricao || 'Sem descrição',
-                        image: getImageUrl(item),
-                        category: item.categoria ? item.categoria.toLowerCase().replace(/[^a-z]/g, '') : 'geral',
-                        originalData: item
-                    }));
+                    galleryItems = response.data.map(item => {
+                        const rawCategory = item.categoria || '';
+                        const normalizedCategory = normalizeCategory(rawCategory);
+                        
+                        return {
+                            id: item.id || '',
+                            title: item.titulo || 'Sem título',
+                            date: formatDate(item.data) || formatDate(item.datacriacao) || 'Data não disponível',
+                            description: item.descricao || 'Sem descrição',
+                            image: getImageUrl(item),
+                            category: normalizedCategory,
+                            originalData: item
+                        };
+                    });
                     
                     updateStatistics();
                     renderGalleryItems();
@@ -812,10 +853,10 @@
                 'reunioes': 'https://images.unsplash.com/photo-1573164713714-d95e436ab994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
                 'workshops': 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
                 'encontros': 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-                'formaturas': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'formatura': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
                 'default': 'https://images.unsplash.com/photo-1492684223066-e9e4aab4d25e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
             };
-            const cat = category ? category.toLowerCase().replace(/[^a-z]/g, '') : 'default';
+            const cat = category ? normalizeCategory(category) : 'default';
             return defaultImages[cat] || defaultImages.default;
         }
         
@@ -889,7 +930,7 @@
                 'reunioes': 'Reuniões',
                 'workshops': 'Workshops',
                 'encontros': 'Encontros',
-                'formaturas': 'Formaturas',
+                'formatura': 'Formatura',
                 'geral': 'Geral'
             };
             return names[category] || category.charAt(0).toUpperCase() + category.slice(1);
