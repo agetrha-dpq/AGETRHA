@@ -381,7 +381,7 @@
             display: block;
             max-width: 95%;
             max-height: 90%;
-            width: auto;
+            width: 100%;
             height: auto;
             object-fit: contain;
             border-radius: 8px;
@@ -843,7 +843,7 @@
         function getImageUrl(item) {
             if (item.thumbnail?.trim()) return item.thumbnail;
             if (item.url?.trim()) return item.url;
-            if (item.fileid?.trim()) return `https://drive.google.com/thumbnail?id=${item.fileid}&sz=w800`;
+            if (item.fileid?.trim()) return `https://drive.google.com/thumbnail?id=${item.fileid}&sz=w2000`;
             return getDefaultImageByCategory(item.categoria);
         }
         
@@ -1068,14 +1068,21 @@
         }
         
         function updateModalContent(index) {
-            if (filteredItems.length > 0 && index < filteredItems.length) {
-                const item = filteredItems[index];
-                document.getElementById('modalImage').src = item.image;
-                document.getElementById('modalTitle').textContent = item.title;
-                document.getElementById('modalDate').innerHTML = `<i class="far fa-calendar"></i> ${item.date}`;
-                document.getElementById('modalDescription').textContent = item.description;
-            }
+    if (filteredItems.length > 0 && index < filteredItems.length) {
+        const item = filteredItems[index];
+        
+        let imgSrc = item.image;
+        // Se for uma URL do Google Drive com thumbnail, tenta obter em resolução maior
+        if (imgSrc.includes('drive.google.com/thumbnail')) {
+            imgSrc = imgSrc.replace(/sz=w\d+/, 'sz=w2000');
         }
+        
+        document.getElementById('modalImage').src = imgSrc;
+        document.getElementById('modalTitle').textContent = item.title;
+        document.getElementById('modalDate').innerHTML = `<i class="far fa-calendar"></i> ${item.date}`;
+        document.getElementById('modalDescription').textContent = item.description;
+    }
+}
         
         // Funções dos botões do rodapé
         function abrirPortfolio() {
