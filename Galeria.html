@@ -88,6 +88,35 @@
             font-weight: bold;
         }
 
+        /* ===== SELETOR DE IDIOMA ===== */
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            background: rgba(0,0,0,0.3);
+            padding: 4px 8px;
+            border-radius: 40px;
+            margin-right: 10px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .lang-btn.active {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+        .lang-btn:hover:not(.active) {
+            color: var(--accent-gold);
+            background: rgba(201,169,89,0.2);
+        }
+
         /* ===== NAVEGAÇÃO ===== */
         .page-navigation {
             display: flex;
@@ -572,6 +601,16 @@
                 height: 40px;
                 font-size: 20px;
             }
+            
+            /* Botões de idioma ajustados em mobile */
+            .user-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .lang-switcher {
+                order: 1;
+                margin-right: 0;
+            }
         }
         
         @media (max-width: 480px) {
@@ -602,16 +641,22 @@
             <div class="container">
                 <div class="header-content">
                     <div>
-                        <h1><i class="fas fa-images" style="color: var(--accent-gold);"></i> Galeria de Fotos AGETRHA</h1>
-                        <p>Memórias e momentos especiais da nossa comunidade</p>
+                        <h1><i class="fas fa-images" style="color: var(--accent-gold);"></i> <span data-i18n="header_title">Galeria de Fotos AGETRHA</span></h1>
+                        <p data-i18n="header_subtitle">Memórias e momentos especiais da nossa comunidade</p>
                     </div>
                     <div class="user-info">
+                        <!-- SELETOR DE IDIOMA ADICIONADO -->
+                        <div class="lang-switcher">
+                            <button class="lang-btn active" data-lang="pt">PT</button>
+                            <button class="lang-btn" data-lang="en">EN</button>
+                            <button class="lang-btn" data-lang="fr">FR</button>
+                        </div>
                         <div class="user-avatar">
                             <i class="fas fa-user"></i>
                         </div>
                         <div>
-                            <h3 style="color: var(--white);">Acesso EXTERNO</h3>
-                            <p><a href="https://agetrha-dpq.github.io/AGETRHA/Site-AGETRHA" style="color: var(--accent-gold); text-decoration: none;">← Voltar à Página Principal</a></p>
+                            <h3 style="color: var(--white);" data-i18n="acesso_externo">Acesso EXTERNO</h3>
+                            <p><a href="https://agetrha-dpq.github.io/AGETRHA/Site-AGETRHA" style="color: var(--accent-gold); text-decoration: none;" data-i18n="voltar_principal">← Voltar à Página Principal</a></p>
                         </div>
                     </div>
                 </div>
@@ -622,12 +667,12 @@
             <!-- Navegação e título -->
             <div class="page-navigation">
                 <button class="back-button" onclick="window.location.href='https://agetrha-dpq.github.io/AGETRHA/Site-AGETRHA'">
-                    <i class="fas fa-arrow-left"></i> Voltar à Página Principal
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="voltar_principal">Voltar à Página Principal</span>
                 </button>
                 
                 <div>
-                    <h1 class="page-title">Galeria de Fotos</h1>
-                    <p class="page-subtitle">Explore os melhores momentos dos eventos, encontros e atividades da AGETRHA. Fotos de reuniões, workshops, encontros e muito mais.</p>
+                    <h1 class="page-title" data-i18n="page_title">Galeria de Fotos</h1>
+                    <p class="page-subtitle" data-i18n="page_subtitle">Explore os melhores momentos dos eventos, encontros e atividades da AGETRHA. Fotos de reuniões, workshops, encontros e muito mais.</p>
                 </div>
                 
                 <div></div> <!-- Espaçador para alinhamento -->
@@ -637,27 +682,27 @@
             <div class="stats-filters-container">
                 <div class="stats-card">
                     <div class="stats-number" id="totalPhotos">0</div>
-                    <div class="stats-label">Fotos na Galeria</div>
+                    <div class="stats-label" data-i18n="fotos_galeria">Fotos na Galeria</div>
                 </div>
                 
                 <div class="gallery-filters">
                     <button class="filter-btn active" data-filter="all">
-                        <i class="fas fa-th"></i> Todas
+                        <i class="fas fa-th"></i> <span data-i18n="filtro_todas">Todas</span>
                     </button>
                     <button class="filter-btn" data-filter="eventos">
-                        <i class="fas fa-calendar-alt"></i> Eventos
+                        <i class="fas fa-calendar-alt"></i> <span data-i18n="filtro_eventos">Eventos</span>
                     </button>
                     <button class="filter-btn" data-filter="reunioes">
-                        <i class="fas fa-users"></i> Reuniões
+                        <i class="fas fa-users"></i> <span data-i18n="filtro_reunioes">Reuniões</span>
                     </button>
                     <button class="filter-btn" data-filter="workshops">
-                        <i class="fas fa-chalkboard-teacher"></i> Workshops
+                        <i class="fas fa-chalkboard-teacher"></i> <span data-i18n="filtro_workshops">Workshops</span>
                     </button>
                     <button class="filter-btn" data-filter="encontros">
-                        <i class="fas fa-glass-cheers"></i> Encontros
+                        <i class="fas fa-glass-cheers"></i> <span data-i18n="filtro_encontros">Encontros</span>
                     </button>
                     <button class="filter-btn" data-filter="formatura">
-                        <i class="fas fa-graduation-cap"></i> Formatura
+                        <i class="fas fa-graduation-cap"></i> <span data-i18n="filtro_formatura">Formatura</span>
                     </button>
                 </div>
             </div>
@@ -665,7 +710,7 @@
             <!-- Indicador de carregamento -->
             <div class="loading-indicator" id="loadingIndicator">
                 <div class="loader"></div>
-                <p>Carregando galeria de fotos...</p>
+                <p data-i18n="carregando">Carregando galeria de fotos...</p>
             </div>
             
             <!-- Grid de fotos -->
@@ -675,7 +720,7 @@
             
             <!-- Álbuns em destaque -->
             <div class="featured-albums" id="featuredAlbumsSection" style="display: none;">
-                <h2 class="section-title">Álbuns em Destaque</h2>
+                <h2 class="section-title" data-i18n="albuns_destaque">Álbuns em Destaque</h2>
                 <div class="albums-grid" id="albumsGrid">
                     <!-- Os álbuns serão carregados aqui via JavaScript -->
                 </div>
@@ -704,27 +749,164 @@
     
     <!-- Footer -->
     <footer>
-        <h3>Compartilhe seus momentos!</h3>
-        <p>Envie suas fotos dos eventos da AGETRHA para serem publicadas nesta galeria.</p>
+        <h3 data-i18n="footer_compartilhe">Compartilhe seus momentos!</h3>
+        <p data-i18n="footer_envie">Envie suas fotos dos eventos da AGETRHA para serem publicadas nesta galeria.</p>
         
         <div class="footer-buttons">
             <button class="btn" id="openPortfolioBtn">
-                <i class="fas fa-briefcase"></i> Abrir Portfólio
+                <i class="fas fa-briefcase"></i> <span data-i18n="btn_portfolio">Abrir Portfólio</span>
             </button>
             <button class="btn" id="openMemberAreaBtn">
-                <i class="fas fa-user-lock"></i> Área de Membro
+                <i class="fas fa-user-lock"></i> <span data-i18n="btn_area_membro">Área de Membro</span>
             </button>
             <button class="btn" id="openSiteManagementBtn">
-                <i class="fas fa-cogs"></i> Gestão do Site
+                <i class="fas fa-cogs"></i> <span data-i18n="btn_gestao_site">Gestão do Site</span>
             </button>
         </div>
         
-        <p style="margin-top: 20px; font-size: 14px;">
+        <p style="margin-top: 20px; font-size: 14px;" data-i18n="copyright">
             &copy; 2026 AGETRHA - Galeria de Fotos. Todas as fotos são propriedade da associação.
         </p>
     </footer>
     
     <script>
+        // ===== DICIONÁRIO DE TRADUÇÕES (PT, EN, FR) =====
+        const translations = {
+            pt: {
+                header_title: "Galeria de Fotos AGETRHA",
+                header_subtitle: "Memórias e momentos especiais da nossa comunidade",
+                acesso_externo: "Acesso EXTERNO",
+                voltar_principal: "← Voltar à Página Principal",
+                page_title: "Galeria de Fotos",
+                page_subtitle: "Explore os melhores momentos dos eventos, encontros e atividades da AGETRHA. Fotos de reuniões, workshops, encontros e muito mais.",
+                fotos_galeria: "Fotos na Galeria",
+                filtro_todas: "Todas",
+                filtro_eventos: "Eventos",
+                filtro_reunioes: "Reuniões",
+                filtro_workshops: "Workshops",
+                filtro_encontros: "Encontros",
+                filtro_formatura: "Formatura",
+                carregando: "Carregando galeria de fotos...",
+                albuns_destaque: "Álbuns em Destaque",
+                footer_compartilhe: "Compartilhe seus momentos!",
+                footer_envie: "Envie suas fotos dos eventos da AGETRHA para serem publicadas nesta galeria.",
+                btn_portfolio: "Abrir Portfólio",
+                btn_area_membro: "Área de Membro",
+                btn_gestao_site: "Gestão do Site",
+                copyright: "© 2026 AGETRHA - Galeria de Fotos. Todas as fotos são propriedade da associação.",
+                erro_carregar: "Não foi possível carregar a galeria. Usando dados de exemplo.",
+                nenhuma_foto: "Nenhuma foto disponível",
+                nenhuma_foto_desc: "Não há fotos na galeria no momento.",
+                erro_titulo: "Erro ao carregar galeria",
+                tentar_novamente: "Tentar novamente",
+                sem_titulo: "Sem título",
+                sem_descricao: "Sem descrição",
+                data_nao_disponivel: "Data não disponível",
+                categoria_eventos: "Eventos",
+                categoria_reunioes: "Reuniões",
+                categoria_workshops: "Workshops",
+                categoria_encontros: "Encontros",
+                categoria_formatura: "Formatura",
+                categoria_geral: "Geral"
+            },
+            en: {
+                header_title: "AGETRHA Photo Gallery",
+                header_subtitle: "Memories and special moments of our community",
+                acesso_externo: "EXTERNAL Access",
+                voltar_principal: "← Back to Main Page",
+                page_title: "Photo Gallery",
+                page_subtitle: "Explore the best moments of AGETRHA events, meetings and activities. Photos of meetings, workshops, gatherings and more.",
+                fotos_galeria: "Photos in Gallery",
+                filtro_todas: "All",
+                filtro_eventos: "Events",
+                filtro_reunioes: "Meetings",
+                filtro_workshops: "Workshops",
+                filtro_encontros: "Gatherings",
+                filtro_formatura: "Graduation",
+                carregando: "Loading photo gallery...",
+                albuns_destaque: "Featured Albums",
+                footer_compartilhe: "Share your moments!",
+                footer_envie: "Send your photos from AGETRHA events to be published in this gallery.",
+                btn_portfolio: "Open Portfolio",
+                btn_area_membro: "Member Area",
+                btn_gestao_site: "Site Management",
+                copyright: "© 2026 AGETRHA - Photo Gallery. All photos are property of the association.",
+                erro_carregar: "Could not load gallery. Using sample data.",
+                nenhuma_foto: "No photos available",
+                nenhuma_foto_desc: "There are no photos in the gallery at the moment.",
+                erro_titulo: "Error loading gallery",
+                tentar_novamente: "Try again",
+                sem_titulo: "Untitled",
+                sem_descricao: "No description",
+                data_nao_disponivel: "Date not available",
+                categoria_eventos: "Events",
+                categoria_reunioes: "Meetings",
+                categoria_workshops: "Workshops",
+                categoria_encontros: "Gatherings",
+                categoria_formatura: "Graduation",
+                categoria_geral: "General"
+            },
+            fr: {
+                header_title: "Galerie Photos AGETRHA",
+                header_subtitle: "Souvenirs et moments spéciaux de notre communauté",
+                acesso_externo: "Accès EXTERNE",
+                voltar_principal: "← Retour à la page principale",
+                page_title: "Galerie Photos",
+                page_subtitle: "Découvrez les meilleurs moments des événements, rencontres et activités d'AGETRHA. Photos de réunions, ateliers, rassemblements et bien plus.",
+                fotos_galeria: "Photos dans la galerie",
+                filtro_todas: "Toutes",
+                filtro_eventos: "Événements",
+                filtro_reunioes: "Réunions",
+                filtro_workshops: "Ateliers",
+                filtro_encontros: "Rencontres",
+                filtro_formatura: "Remise des diplômes",
+                carregando: "Chargement de la galerie photos...",
+                albuns_destaque: "Albums en vedette",
+                footer_compartilhe: "Partagez vos moments !",
+                footer_envie: "Envoyez vos photos des événements AGETRHA pour être publiées dans cette galerie.",
+                btn_portfolio: "Ouvrir le portfolio",
+                btn_area_membro: "Espace membre",
+                btn_gestao_site: "Gestion du site",
+                copyright: "© 2026 AGETRHA - Galerie Photos. Toutes les photos sont la propriété de l'association.",
+                erro_carregar: "Impossible de charger la galerie. Utilisation de données d'exemple.",
+                nenhuma_foto: "Aucune photo disponible",
+                nenhuma_foto_desc: "Il n'y a pas de photos dans la galerie pour le moment.",
+                erro_titulo: "Erreur de chargement de la galerie",
+                tentar_novamente: "Réessayer",
+                sem_titulo: "Sans titre",
+                sem_descricao: "Sans description",
+                data_nao_disponivel: "Date non disponible",
+                categoria_eventos: "Événements",
+                categoria_reunioes: "Réunions",
+                categoria_workshops: "Ateliers",
+                categoria_encontros: "Rencontres",
+                categoria_formatura: "Remise des diplômes",
+                categoria_geral: "Général"
+            }
+        };
+
+        // Função para aplicar traduções
+        function setLanguage(lang) {
+            localStorage.setItem('galeria_lang', lang);
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key] !== undefined) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+            
+            // Re-renderizar a galeria se existir para atualizar textos de categorias e mensagens
+            if (galleryItems.length > 0) {
+                renderGalleryItems();
+                generateCategoryAlbums();
+                updateStatistics();
+            }
+        }
+
         // ===== CONFIGURAÇÕES DO GAS =====
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbx-KJdZk7z3Qwo79kbvVVXngOqphapGUuSTNKoqU3LXENMNDlS8-Ro16WUmXPu2z4U/exec';
         
@@ -737,13 +919,12 @@
         function normalizeCategory(cat) {
             if (!cat) return 'geral';
             let normalized = cat.toLowerCase()
-                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                 .replace(/[^a-z]/g, '');
             
-            // Mapeamento de plurais comuns para singular
             const pluralMap = {
                 'formaturas': 'formatura',
-                'reunioes': 'reuniao',   // caso venha "reuniões"
+                'reunioes': 'reuniao',
                 'workshops': 'workshop',
                 'encontros': 'encontro',
                 'eventos': 'evento'
@@ -753,14 +934,12 @@
                 normalized = pluralMap[normalized];
             }
             
-            // Ajustes específicos: garantir que 'reuniao' vire 'reunioes'? Não, queremos manter padronizado.
-            // O filtro espera 'reunioes', 'workshops', etc. Vamos padronizar para os nomes usados nos botões:
             const standardCategories = {
                 'evento': 'eventos',
                 'reuniao': 'reunioes',
                 'workshop': 'workshops',
                 'encontro': 'encontros',
-                'formatura': 'formatura'  // este já está no singular conforme botão
+                'formatura': 'formatura'
             };
             
             return standardCategories[normalized] || normalized;
@@ -768,6 +947,17 @@
         
         // Inicialização
         document.addEventListener('DOMContentLoaded', function () {
+            // Configurar idioma
+            const savedLang = localStorage.getItem('galeria_lang') || 'pt';
+            setLanguage(savedLang);
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const lang = btn.getAttribute('data-lang');
+                    setLanguage(lang);
+                });
+            });
+            
             document.getElementById('openPortfolioBtn')?.addEventListener('click', abrirPortfolio);
             document.getElementById('openMemberAreaBtn')?.addEventListener('click', abrirAreaMembro);
             document.getElementById('openSiteManagementBtn')?.addEventListener('click', abrirGestaoSite);   
@@ -789,12 +979,13 @@
                     galleryItems = response.data.map(item => {
                         const rawCategory = item.categoria || '';
                         const normalizedCategory = normalizeCategory(rawCategory);
+                        const lang = localStorage.getItem('galeria_lang') || 'pt';
                         
                         return {
                             id: item.id || '',
-                            title: item.titulo || 'Sem título',
-                            date: formatDate(item.data) || formatDate(item.datacriacao) || 'Data não disponível',
-                            description: item.descricao || 'Sem descrição',
+                            title: item.titulo || translations[lang].sem_titulo,
+                            date: formatDate(item.data) || formatDate(item.datacriacao) || translations[lang].data_nao_disponivel,
+                            description: item.descricao || translations[lang].sem_descricao,
                             image: getImageUrl(item),
                             category: normalizedCategory,
                             originalData: item
@@ -810,7 +1001,8 @@
                 }
             } catch (error) {
                 console.error('Erro ao carregar galeria:', error);
-                showErrorMessage('Não foi possível carregar a galeria. Usando dados de exemplo.');
+                const lang = localStorage.getItem('galeria_lang') || 'pt';
+                showErrorMessage(translations[lang].erro_carregar);
                 loadFallbackData();
             } finally {
                 document.getElementById('loadingIndicator').classList.remove('active');
@@ -881,13 +1073,14 @@
         function renderGalleryItems() {
             const galleryGrid = document.getElementById('galleryGrid');
             galleryGrid.innerHTML = '';
+            const lang = localStorage.getItem('galeria_lang') || 'pt';
             
             if (galleryItems.length === 0) {
                 galleryGrid.innerHTML = `
                     <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted);">
                         <i class="fas fa-images" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                        <h3>Nenhuma foto disponível</h3>
-                        <p>Não há fotos na galeria no momento.</p>
+                        <h3>${translations[lang].nenhuma_foto}</h3>
+                        <p>${translations[lang].nenhuma_foto_desc}</p>
                     </div>
                 `;
                 return;
@@ -925,13 +1118,14 @@
         }
         
         function formatCategoryName(category) {
+            const lang = localStorage.getItem('galeria_lang') || 'pt';
             const names = {
-                'eventos': 'Eventos',
-                'reunioes': 'Reuniões',
-                'workshops': 'Workshops',
-                'encontros': 'Encontros',
-                'formatura': 'Formatura',
-                'geral': 'Geral'
+                'eventos': translations[lang].categoria_eventos,
+                'reunioes': translations[lang].categoria_reunioes,
+                'workshops': translations[lang].categoria_workshops,
+                'encontros': translations[lang].categoria_encontros,
+                'formatura': translations[lang].categoria_formatura,
+                'geral': translations[lang].categoria_geral
             };
             return names[category] || category.charAt(0).toUpperCase() + category.slice(1);
         }
@@ -989,19 +1183,21 @@
         }
         
         function showErrorMessage(message) {
+            const lang = localStorage.getItem('galeria_lang') || 'pt';
             document.getElementById('galleryGrid').innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted);">
                     <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px; color: var(--accent-gold);"></i>
-                    <h3>Erro ao carregar galeria</h3>
+                    <h3>${translations[lang].erro_titulo}</h3>
                     <p>${message}</p>
                     <button onclick="loadGalleryFromGAS()" style="margin-top: 20px; padding: 10px 20px; background: var(--accent-gold); color: var(--primary-dark); border: none; border-radius: 30px; cursor: pointer;">
-                        <i class="fas fa-redo"></i> Tentar novamente
+                        <i class="fas fa-redo"></i> ${translations[lang].tentar_novamente}
                     </button>
                 </div>
             `;
         }
         
         function loadFallbackData() {
+            const lang = localStorage.getItem('galeria_lang') || 'pt';
             galleryItems = [
                 { id: 1, title: "Reunião Geral Ordinária 2024", date: "15 de Março de 2024", description: "Momento importante da reunião geral.", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", category: "reunioes" },
                 { id: 2, title: "Workshop de Inovação Tecnológica", date: "22 de Março de 2024", description: "Workshop sobre tendências em tecnologia.", image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", category: "workshops" },
@@ -1068,21 +1264,20 @@
         }
         
         function updateModalContent(index) {
-    if (filteredItems.length > 0 && index < filteredItems.length) {
-        const item = filteredItems[index];
-        
-        let imgSrc = item.image;
-        // Se for uma URL do Google Drive com thumbnail, tenta obter em resolução maior
-        if (imgSrc.includes('drive.google.com/thumbnail')) {
-            imgSrc = imgSrc.replace(/sz=w\d+/, 'sz=w2000');
+            if (filteredItems.length > 0 && index < filteredItems.length) {
+                const item = filteredItems[index];
+                
+                let imgSrc = item.image;
+                if (imgSrc.includes('drive.google.com/thumbnail')) {
+                    imgSrc = imgSrc.replace(/sz=w\d+/, 'sz=w2000');
+                }
+                
+                document.getElementById('modalImage').src = imgSrc;
+                document.getElementById('modalTitle').textContent = item.title;
+                document.getElementById('modalDate').innerHTML = `<i class="far fa-calendar"></i> ${item.date}`;
+                document.getElementById('modalDescription').textContent = item.description;
+            }
         }
-        
-        document.getElementById('modalImage').src = imgSrc;
-        document.getElementById('modalTitle').textContent = item.title;
-        document.getElementById('modalDate').innerHTML = `<i class="far fa-calendar"></i> ${item.date}`;
-        document.getElementById('modalDescription').textContent = item.description;
-    }
-}
         
         // Funções dos botões do rodapé
         function abrirPortfolio() {
