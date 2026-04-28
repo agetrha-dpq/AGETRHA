@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
+        /* ... (todo o CSS original permanece igual) ... */
         * {
             margin: 0;
             padding: 0;
@@ -32,7 +33,6 @@
             overflow-x: hidden;
         }
 
-        /* Conteúdo Principal */
         .main-content {
             display: block;
             opacity: 1;
@@ -77,7 +77,6 @@
             padding: 0 20px;
         }
 
-        /* Sistema de Abas */
         .tabs-container {
             background: var(--branco);
             border-radius: 15px;
@@ -110,14 +109,14 @@
             gap: 10px;
         }
 
-            .tab-btn:hover {
-                background: rgba(255,255,255,0.1);
-            }
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
 
-            .tab-btn.active {
-                background: rgba(255,255,255,0.2);
-                border-bottom: 3px solid var(--dourado);
-            }
+        .tab-btn.active {
+            background: rgba(255,255,255,0.2);
+            border-bottom: 3px solid var(--dourado);
+        }
 
         .tabs-content {
             padding: 0;
@@ -130,20 +129,14 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .tab-pane.active {
             display: block;
         }
 
-        /* Estilos Específicos para Cada Seção */
         .section-title {
             color: var(--azul-primario);
             margin-bottom: 25px;
@@ -151,7 +144,6 @@
             border-bottom: 2px solid #eee;
         }
 
-        /* Galeria - Estilo para grid de imagens */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -167,10 +159,10 @@
             cursor: pointer;
         }
 
-            .gallery-item:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-            }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
 
         .gallery-img {
             width: 100%;
@@ -188,12 +180,11 @@
             background: white;
         }
 
-            .gallery-caption h4 {
-                color: var(--azul-primario);
-                margin-bottom: 5px;
-            }
+        .gallery-caption h4 {
+            color: var(--azul-primario);
+            margin-bottom: 5px;
+        }
 
-        /* Notícias */
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -208,10 +199,10 @@
             transition: all 0.3s;
         }
 
-            .news-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-            }
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
 
         .news-img {
             width: 100%;
@@ -232,7 +223,6 @@
             gap: 5px;
         }
 
-        /* Atividades/Eventos */
         .activities-list {
             display: flex;
             flex-direction: column;
@@ -262,7 +252,6 @@
             color: var(--azul-primario);
         }
 
-        /* Resumo */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -280,9 +269,9 @@
             cursor: pointer;
         }
 
-            .stat-card:hover {
-                transform: translateY(-5px);
-            }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
 
         .stat-number {
             font-size: 36px;
@@ -291,7 +280,6 @@
             margin-bottom: 10px;
         }
 
-        /* Vagas de Emprego */
         .jobs-list {
             display: flex;
             flex-direction: column;
@@ -308,10 +296,10 @@
             transition: transform 0.3s;
         }
 
-            .job-item:hover {
-                transform: translateX(5px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            }
+        .job-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
 
         .job-title {
             color: var(--azul-primario);
@@ -359,11 +347,10 @@
             cursor: pointer;
         }
 
-            .job-link:hover {
-                background: #218838;
-            }
+        .job-link:hover {
+            background: #218838;
+        }
 
-        /* Agenda e Calendário */
         .calendar-container {
             display: grid;
             grid-template-columns: 300px 1fr;
@@ -396,11 +383,10 @@
             transition: transform 0.2s;
         }
 
-            .event-item:hover {
-                transform: translateX(5px);
-            }
+        .event-item:hover {
+            transform: translateX(5px);
+        }
 
-        /* Links Úteis */
         .links-table-container {
             overflow-x: auto;
             margin-top: 20px;
@@ -412,24 +398,24 @@
             margin-top: 10px;
         }
 
-            .links-table th {
-                background-color: var(--cinza-claro);
-                padding: 15px;
-                text-align: left;
-                border-bottom: 2px solid #ddd;
-                color: var(--azul-primario);
-                font-weight: 600;
-            }
+        .links-table th {
+            background-color: var(--cinza-claro);
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            color: var(--azul-primario);
+            font-weight: 600;
+        }
 
-            .links-table td {
-                padding: 15px;
-                border-bottom: 1px solid #eee;
-                vertical-align: top;
-            }
+        .links-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
 
-            .links-table tr:hover {
-                background-color: #f9f9f9;
-            }
+        .links-table tr:hover {
+            background-color: #f9f9f9;
+        }
 
         .link-category {
             background-color: #e8f4ff;
@@ -467,9 +453,9 @@
             transition: background 0.3s;
         }
 
-            .descricao-btn:hover {
-                background-color: var(--azul-secundario);
-            }
+        .descricao-btn:hover {
+            background-color: var(--azul-secundario);
+        }
 
         .descricao-content {
             display: none;
@@ -480,7 +466,6 @@
             border-left: 4px solid var(--dourado);
         }
 
-        /* Modal para imagens */
         .modal {
             display: none;
             position: fixed;
@@ -521,12 +506,10 @@
             cursor: pointer;
         }
 
-            .close:hover {
-                color: #bbb;
-            }
+        .close:hover {
+            color: #bbb;
+        }
 
-
-        /* Modal de Notícias */
         #newsModal .modal-content {
             max-width: 800px;
             background: white;
@@ -551,11 +534,11 @@
             font-size: 14px;
         }
 
-            .news-modal-meta span {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
+        .news-modal-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
         .news-modal-content {
             line-height: 1.8;
@@ -586,11 +569,10 @@
             transition: background 0.3s;
         }
 
-            .news-read-more-btn:hover {
-                background-color: var(--azul-secundario);
-            }
+        .news-read-more-btn:hover {
+            background-color: var(--azul-secundario);
+        }
 
-        /* Modal de Vagas */
         #vagaModal .modal-content {
             max-width: 800px;
             background: white;
@@ -624,10 +606,10 @@
             color: #333;
         }
 
-            .vaga-modal-meta-item i {
-                color: var(--azul-primario);
-                width: 20px;
-            }
+        .vaga-modal-meta-item i {
+            color: var(--azul-primario);
+            width: 20px;
+        }
 
         .vaga-modal-content {
             line-height: 1.8;
@@ -666,22 +648,21 @@
             margin-top: 20px;
         }
 
-            .apply-button:hover {
-                background-color: #218838;
-                color: white;
-            }
+        .apply-button:hover {
+            background-color: #218838;
+            color: white;
+        }
 
         .requirements-list {
             padding-left: 20px;
             margin: 10px 0;
         }
 
-            .requirements-list li {
-                margin-bottom: 8px;
-                line-height: 1.6;
-            }
+        .requirements-list li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
 
-        /* ========== ESTILOS PARA MODAL DE VAGAS ========== */
         #vagaModal .modal-content {
             max-width: 850px;
             background: white;
@@ -718,27 +699,27 @@
             color: #333;
         }
 
-            .vaga-modal-meta-item i {
-                color: var(--azul-primario);
-                width: 25px;
-                font-size: 18px;
-                text-align: center;
-            }
+        .vaga-modal-meta-item i {
+            color: var(--azul-primario);
+            width: 25px;
+            font-size: 18px;
+            text-align: center;
+        }
 
-            .vaga-modal-meta-item strong {
-                display: block;
-                font-size: 14px;
-                color: #666;
-                margin-bottom: 5px;
-                font-weight: 600;
-            }
+        .vaga-modal-meta-item strong {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
 
-            .vaga-modal-meta-item p {
-                margin: 0;
-                font-size: 16px;
-                font-weight: 500;
-                color: #333;
-            }
+        .vaga-modal-meta-item p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
 
         .vaga-modal-section {
             margin-bottom: 30px;
@@ -746,11 +727,11 @@
             border-bottom: 1px solid #eee;
         }
 
-            .vaga-modal-section:last-child {
-                border-bottom: none;
-                margin-bottom: 0;
-                padding-bottom: 0;
-            }
+        .vaga-modal-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
 
         .vaga-modal-section-title {
             color: var(--azul-primario);
@@ -762,10 +743,10 @@
             font-weight: 600;
         }
 
-            .vaga-modal-section-title i {
-                color: var(--azul-primario);
-                font-size: 18px;
-            }
+        .vaga-modal-section-title i {
+            color: var(--azul-primario);
+            font-size: 18px;
+        }
 
         .vaga-modal-content {
             line-height: 1.8;
@@ -773,44 +754,42 @@
             font-size: 16px;
         }
 
-            .vaga-modal-content p {
-                margin-bottom: 15px;
-                line-height: 1.7;
-            }
+        .vaga-modal-content p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
 
-        /* Estilos para lista de requisitos */
         .requirements-list {
             list-style-type: none;
             padding-left: 0;
             margin: 15px 0;
         }
 
-            .requirements-list li {
-                position: relative;
-                padding-left: 30px;
-                margin-bottom: 12px;
-                line-height: 1.6;
-                color: #333;
-                font-size: 16px;
-            }
+        .requirements-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: #333;
+            font-size: 16px;
+        }
 
-                .requirements-list li:before {
-                    content: "✓";
-                    position: absolute;
-                    left: 0;
-                    color: var(--verde);
-                    font-weight: bold;
-                    font-size: 16px;
-                    width: 20px;
-                    height: 20px;
-                    background: rgba(40, 167, 69, 0.1);
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
+        .requirements-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--verde);
+            font-weight: bold;
+            font-size: 16px;
+            width: 20px;
+            height: 20px;
+            background: rgba(40, 167, 69, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        /* Botão de candidatura */
         .apply-button {
             background: linear-gradient(135deg, var(--verde) 0%, #1e7e34 100%);
             color: white;
@@ -830,20 +809,19 @@
             letter-spacing: 0.5px;
         }
 
-            .apply-button:hover {
-                background: linear-gradient(135deg, #218838 0%, #1c7430 100%);
-                transform: translateY(-3px);
-                box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
-                color: white;
-                text-decoration: none;
-            }
+        .apply-button:hover {
+            background: linear-gradient(135deg, #218838 0%, #1c7430 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+            color: white;
+            text-decoration: none;
+        }
 
-            .apply-button:active {
-                transform: translateY(-1px);
-                box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
-            }
+        .apply-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+        }
 
-        /* Ações do modal */
         .modal-actions {
             display: flex;
             justify-content: center;
@@ -869,13 +847,12 @@
             transition: all 0.3s ease;
         }
 
-            .btn-secondary:hover {
-                background: #5a6268;
-                color: white;
-                transform: translateY(-2px);
-            }
+        .btn-secondary:hover {
+            background: #5a6268;
+            color: white;
+            transform: translateY(-2px);
+        }
 
-        /* Responsividade do modal */
         @media (max-width: 768px) {
             #vagaModal .modal-content {
                 padding: 25px 20px;
@@ -908,7 +885,6 @@
             }
         }
 
-        /* Loading */
         .loading {
             text-align: center;
             padding: 40px;
@@ -926,16 +902,10 @@
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* Botões de ação */
         .action-buttons {
             display: flex;
             gap: 10px;
@@ -960,27 +930,27 @@
             color: white;
         }
 
-            .btn-primary:hover {
-                background-color: var(--azul-secundario);
-            }
+        .btn-primary:hover {
+            background-color: var(--azul-secundario);
+        }
 
         .btn-success {
             background-color: var(--verde);
             color: white;
         }
 
-            .btn-success:hover {
-                background-color: #218838;
-            }
+        .btn-success:hover {
+            background-color: #218838;
+        }
 
         .btn-danger {
             background-color: #dc3545;
             color: white;
         }
 
-            .btn-danger:hover {
-                background-color: #c82333;
-            }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
 
         .btn-refresh {
             background-color: var(--dourado);
@@ -995,11 +965,10 @@
             margin-left: 10px;
         }
 
-            .btn-refresh:hover {
-                background-color: #b8941a;
-            }
+        .btn-refresh:hover {
+            background-color: #b8941a;
+        }
 
-        /* Responsividade */
         @media (max-width: 1024px) {
             .calendar-container {
                 grid-template-columns: 1fr;
@@ -1060,7 +1029,6 @@
             }
         }
 
-        /* ========== ESTILOS DO MODAL DE LOGIN ========== */
         #loginModal {
             position: fixed;
             top: 0;
@@ -1074,22 +1042,21 @@
             align-items: center;
         }
 
-            #loginModal .modal-content {
-                background: white;
-                padding: 40px;
-                border-radius: 12px;
-                max-width: 450px;
-                width: 90%;
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-                animation: modalFadeIn 0.5s;
-            }
+        #loginModal .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.5s;
+        }
 
         @keyframes modalFadeIn {
             from {
                 opacity: 0;
                 transform: translateY(-20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1101,51 +1068,51 @@
             margin-bottom: 30px;
         }
 
-            .login-logo i {
-                font-size: 48px;
-                color: var(--azul-primario);
-                margin-bottom: 15px;
-            }
+        .login-logo i {
+            font-size: 48px;
+            color: var(--azul-primario);
+            margin-bottom: 15px;
+        }
 
-            .login-logo h2 {
-                color: var(--azul-primario);
-                margin-bottom: 10px;
-            }
+        .login-logo h2 {
+            color: var(--azul-primario);
+            margin-bottom: 10px;
+        }
 
-            .login-logo p {
-                color: #666;
-                font-size: 16px;
-            }
+        .login-logo p {
+            color: #666;
+            font-size: 16px;
+        }
 
         .login-form {
             margin-top: 20px;
         }
 
-            .login-form .form-group {
-                margin-bottom: 20px;
-            }
+        .login-form .form-group {
+            margin-bottom: 20px;
+        }
 
-            .login-form label {
-                display: block;
-                margin-bottom: 8px;
-                font-weight: 600;
-                color: #333;
-            }
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
 
-            .login-form .form-control {
-                width: 100%;
-                padding: 12px 15px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                font-size: 16px;
-                transition: border 0.3s;
-            }
+        .login-form .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
 
-                .login-form .form-control:focus {
-                    border-color: var(--azul-primario);
-                    outline: none;
-                    box-shadow: 0 0 0 3px rgba(26, 78, 142, 0.1);
-                }
+        .login-form .form-control:focus {
+            border-color: var(--azul-primario);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 78, 142, 0.1);
+        }
 
         .password-hint {
             font-size: 12px;
@@ -1164,11 +1131,10 @@
             border-left: 4px solid var(--azul-primario);
         }
 
-            .login-instructions strong {
-                color: var(--azul-primario);
-            }
+        .login-instructions strong {
+            color: var(--azul-primario);
+        }
 
-        /* Botão de login */
         .login-form .btn {
             width: 100%;
             margin-top: 10px;
@@ -1187,12 +1153,11 @@
             transition: all 0.3s ease;
         }
 
-            .login-form .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(26, 78, 142, 0.3);
-            }
+        .login-form .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 78, 142, 0.3);
+        }
 
-        /* Classe para controlar visibilidade */
         body:not(.logged-in) #mainContent {
             display: none;
         }
@@ -1208,7 +1173,6 @@
         body.logged-in #mainContent {
             display: block;
         }
-        
     </style>
 </head>
 <body>
@@ -1242,7 +1206,7 @@
         </div>
     </div>
 
-    <!-- Conteúdo Principal - AGORA CORRETAMENTE ENVOLTO PELA DIV -->
+    <!-- Conteúdo Principal -->
     <div id="mainContent" class="main-content">
         <header>
             <div class="container">
@@ -1518,7 +1482,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- Fim do mainContent -->
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
@@ -1526,7 +1490,6 @@
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbx-KJdZk7z3Qwo79kbvVVXngOqphapGUuSTNKoqU3LXENMNDlS8-Ro16WUmXPu2z4U/exec';
         const GAS_URL_ADMIN = 'https://script.google.com/macros/s/AKfycbwgdVpnKCLAhNQpmKJ1ofTw_FT6tYLunltzN9zCJ4_eJET54gZKQ0bmeBI4YUUjIsaKWg/exec';
 
-        // Função para mostrar mensagens
         function mostrarMensagem(tipo, texto) {
             let mensagemDiv = document.getElementById('loginMessage');
             if (!mensagemDiv) {
@@ -2050,129 +2013,148 @@
             }
         }
 
-        // ========== FUNÇÃO loadGaleria CORRIGIDA (sem onclick inline) ==========
-        async function loadGaleria() {
-    try {
-        const container = document.getElementById('galeria-container');
-        container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando galeria...</p></div>';
-
-        const fotos = await callGAS('getGaleria');
-        loadedTabs.galeria = true;
-
-        if (!fotos || fotos.length === 0) {
-            container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma foto na galeria.</p>';
-            return;
+        // ========== FUNÇÃO getImageUrl CORRIGIDA (ALTA RESOLUÇÃO) ==========
+        function getImageUrl(item) {
+            // Prioridade: thumbnail -> url -> fileid -> fallback por categoria
+            if (item.thumbnail && item.thumbnail.trim() !== '') {
+                // Se for uma URL do Google Drive com parâmetro sz, aumentar a resolução
+                let thumbUrl = item.thumbnail;
+                if (thumbUrl.includes('drive.google.com/thumbnail')) {
+                    thumbUrl = thumbUrl.replace(/sz=w\d+/, 'sz=w2000');
+                    // Se não tiver o parâmetro sz, adiciona
+                    if (!thumbUrl.includes('sz=')) {
+                        thumbUrl += (thumbUrl.includes('?') ? '&' : '?') + 'sz=w2000';
+                    }
+                }
+                return thumbUrl;
+            }
+            if (item.url && item.url.trim() !== '') {
+                return item.url;
+            }
+            if (item.fileid && item.fileid.trim() !== '') {
+                return `https://drive.google.com/thumbnail?id=${item.fileid}&sz=w2000`;
+            }
+            // Fallback com base na categoria ou imagem padrão
+            const category = (item.categoria || 'geral').toLowerCase().replace(/[^a-z]/g, '');
+            const defaultImages = {
+                'eventos': 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'reunioes': 'https://images.unsplash.com/photo-1573164713714-d95e436ab994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'workshops': 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'encontros': 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'formaturas': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                'default': 'https://images.unsplash.com/photo-1492684223066-e9e4aab4d25e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            };
+            return defaultImages[category] || defaultImages.default;
         }
 
-        // Ordenar por data mais recente
-        fotos.sort((a, b) => new Date(b.data || b.datacriacao) - new Date(a.data || a.datacriacao));
+        // ========== FUNÇÃO loadGaleria CORRIGIDA ==========
+        async function loadGaleria() {
+            try {
+                const container = document.getElementById('galeria-container');
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Carregando galeria...</p></div>';
 
-        let html = '<div class="gallery-grid">';
-        fotos.filter(foto => foto.status === 'ativo').forEach(foto => {
-            const imageUrl = getImageUrl(foto); // URL principal para o modal
-            const thumbnailUrl = foto.thumbnail || imageUrl; // miniatura (pode ser a mesma)
+                const fotos = await callGAS('getGaleria');
+                loadedTabs.galeria = true;
 
-            html += `
-                <div class="gallery-item" data-url="${imageUrl}" data-titulo="${(foto.titulo || '').replace(/"/g, '&quot;')}">
-                    <img src="${thumbnailUrl}"
-                         class="gallery-img" alt="${foto.titulo || 'Foto'}"
-                         loading="lazy"
-                         onerror="this.src='https://via.placeholder.com/300x200?text=Erro'">
-                    <div class="gallery-caption">
-                        <h4>${foto.titulo || 'Foto sem título'}</h4>
-                        <p style="color: #666; font-size: 14px;">${formatDate(foto.data || foto.datacriacao)}</p>
-                        ${foto.descricao ? `<p style="margin-top: 5px; font-size: 14px;">${foto.descricao.substring(0, 50)}...</p>` : ''}
-                    </div>
-                </div>
-            `;
-        });
-        html += '</div>';
-        container.innerHTML = html;
+                if (!fotos || fotos.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Nenhuma foto na galeria.</p>';
+                    return;
+                }
 
-        // Adicionar event listeners
-        document.querySelectorAll('.gallery-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                const url = this.dataset.url;
-                const titulo = this.dataset.titulo;
-                openImageModal(url, titulo);
-            });
-        });
+                // Ordenar por data mais recente
+                fotos.sort((a, b) => new Date(b.data || b.datacriacao) - new Date(a.data || a.datacriacao));
 
-    } catch (error) {
-        console.error('Erro ao carregar galeria:', error);
-        document.getElementById('galeria-container').innerHTML =
-            '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar galeria.</p>';
-    }
-}
+                let html = '<div class="gallery-grid">';
+                fotos.filter(foto => foto.status === 'ativo').forEach(foto => {
+                    const imageUrl = getImageUrl(foto); // URL principal para o modal
+                    const thumbnailUrl = foto.thumbnail || imageUrl; // miniatura (pode ser a mesma)
+
+                    html += `
+                        <div class="gallery-item" data-url="${imageUrl}" data-titulo="${(foto.titulo || '').replace(/"/g, '&quot;')}">
+                            <img src="${thumbnailUrl}"
+                                 class="gallery-img" alt="${foto.titulo || 'Foto'}"
+                                 loading="lazy"
+                                 onerror="this.src='https://via.placeholder.com/300x200?text=Erro'">
+                            <div class="gallery-caption">
+                                <h4>${foto.titulo || 'Foto sem título'}</h4>
+                                <p style="color: #666; font-size: 14px;">${formatDate(foto.data || foto.datacriacao)}</p>
+                                ${foto.descricao ? `<p style="margin-top: 5px; font-size: 14px;">${foto.descricao.substring(0, 50)}...</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+
+                // Adicionar event listeners
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        const url = this.dataset.url;
+                        const titulo = this.dataset.titulo;
+                        openImageModal(url, titulo);
+                    });
+                });
+
+            } catch (error) {
+                console.error('Erro ao carregar galeria:', error);
+                document.getElementById('galeria-container').innerHTML =
+                    '<p style="text-align: center; padding: 40px; color: #dc3545;">Erro ao carregar galeria.</p>';
+            }
+        }
 
         // ========== FUNÇÃO openImageModal APRIMORADA ==========
         function openImageModal(imageSrc, caption) {
-    console.log('Abrindo modal com imagem:', imageSrc);
-    const modal = document.getElementById('imageModal');
-    if (!modal) {
-        console.error('Modal não encontrado');
-        return;
-    }
-    const modalImg = document.getElementById('modalImage');
-    const modalCaption = document.getElementById('modalCaption');
-    const closeBtn = modal.querySelector('.close');
+            console.log('Abrindo modal com imagem:', imageSrc);
+            const modal = document.getElementById('imageModal');
+            if (!modal) {
+                console.error('Modal não encontrado');
+                return;
+            }
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            const closeBtn = modal.querySelector('.close');
 
-    // Se a URL estiver vazia, usa placeholder
-    if (!imageSrc) {
-        imageSrc = 'https://via.placeholder.com/800x600?text=Imagem+indisponível';
-    }
+            // Se for uma URL do Google Drive com thumbnail, garantir alta resolução
+            if (imageSrc && imageSrc.includes('drive.google.com/thumbnail')) {
+                imageSrc = imageSrc.replace(/sz=w\d+/, 'sz=w2000');
+                // Se não tiver o parâmetro sz, adiciona
+                if (!imageSrc.includes('sz=')) {
+                    imageSrc += (imageSrc.includes('?') ? '&' : '?') + 'sz=w2000';
+                }
+            }
 
-    modal.style.display = "block";
-    modalImg.src = imageSrc;
-    modalCaption.innerHTML = caption || '';
+            // Se a URL estiver vazia, usa placeholder
+            if (!imageSrc) {
+                imageSrc = 'https://via.placeholder.com/800x600?text=Imagem+indisponível';
+            }
 
-    // Se a imagem falhar ao carregar, troca para placeholder
-    modalImg.onerror = function() {
-        console.warn('Falha ao carregar imagem:', imageSrc);
-        this.src = 'https://via.placeholder.com/800x600?text=Erro+ao+carregar+imagem';
-    };
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+            modalCaption.innerHTML = caption || '';
 
-    if (closeBtn) {
-        closeBtn.onclick = function (e) {
-            e.stopPropagation();
-            modal.style.display = "none";
+            // Se a imagem falhar ao carregar, troca para placeholder
+            modalImg.onerror = function() {
+                console.warn('Falha ao carregar imagem:', imageSrc);
+                this.src = 'https://via.placeholder.com/800x600?text=Erro+ao+carregar+imagem';
+            };
+
+            if (closeBtn) {
+                closeBtn.onclick = function (e) {
+                    e.stopPropagation();
+                    modal.style.display = "none";
+                }
+            }
+
+            modal.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            modalImg.onclick = function (e) {
+                e.stopPropagation();
+            }
         }
-    }
-
-    modal.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    modalImg.onclick = function (e) {
-        e.stopPropagation();
-    }
-}
-
-function getImageUrl(item) {
-    // Prioridade: thumbnail -> url -> fileid -> fallback por categoria
-    if (item.thumbnail && item.thumbnail.trim() !== '') {
-        return item.thumbnail;
-    }
-    if (item.url && item.url.trim() !== '') {
-        return item.url;
-    }
-    if (item.fileid && item.fileid.trim() !== '') {
-        return `https://drive.google.com/thumbnail?id=${item.fileid}&sz=w2000`;
-    }
-    // Fallback com base na categoria ou imagem padrão
-    const category = (item.categoria || 'geral').toLowerCase().replace(/[^a-z]/g, '');
-    const defaultImages = {
-        'eventos': 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'reunioes': 'https://images.unsplash.com/photo-1573164713714-d95e436ab994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'workshops': 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'encontros': 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'formaturas': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'default': 'https://images.unsplash.com/photo-1492684223066-e9e4aab4d25e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    };
-    return defaultImages[category] || defaultImages.default;
-}
 
         async function loadAtividades() {
             try {
