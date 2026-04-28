@@ -2159,7 +2159,7 @@ function getImageUrl(item) {
         return item.url;
     }
     if (item.fileid && item.fileid.trim() !== '') {
-        return `https://drive.google.com/thumbnail?id=${item.fileid}&sz=w800`;
+        return `https://drive.google.com/thumbnail?id=${item.fileid}&sz=w2000`;
     }
     // Fallback com base na categoria ou imagem padrão
     const category = (item.categoria || 'geral').toLowerCase().replace(/[^a-z]/g, '');
