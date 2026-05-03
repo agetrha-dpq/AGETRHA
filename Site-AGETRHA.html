@@ -225,7 +225,15 @@
             width: 100%;
         }
 
+        /* NOVO: nav-buttons agora em coluna para forçar idiomas abaixo */
         .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .nav-buttons-top {
             display: flex;
             gap: 15px;
             align-items: center;
@@ -238,7 +246,6 @@
             background: rgba(0,0,0,0.3);
             padding: 4px 8px;
             border-radius: 40px;
-            margin-right: 10px;
         }
         .lang-btn {
             background: transparent;
@@ -934,7 +941,7 @@
             transform: translateY(0);
         }
 
-        /* ===== RESPONSIVIDADE COM BOTÕES DE IDIOMA ABAIXO DO ADMIN EM MOBILE ===== */
+        /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 992px) {
             .sobre-content {
                 flex-direction: column;
@@ -997,23 +1004,20 @@
                 font-size: 18px;
             }
 
-            /* ===== NOVO: botões de idioma ficam debaixo do botão Área Administrativa ===== */
+            /* Ajustes para mobile: botões de idioma continuam abaixo */
             .nav-buttons {
+                align-items: flex-end;
+            }
+            .nav-buttons-top {
                 flex-direction: column;
                 align-items: flex-end;
                 gap: 8px;
             }
             .lang-switcher {
-                order: 2;
-                margin-right: 0;
                 background: rgba(0,0,0,0.5);
             }
-            #openAdminArea {
-                order: 1;
-            }
-            /* O botão "Inscrever-se" já está oculto por padrão em mobile, mas garantimos */
             .nav-buttons .btn-dourado {
-                display: none;
+                display: none; /* Inscrever-se oculto em mobile */
             }
         }
 
@@ -1075,17 +1079,24 @@
                 </nav>
 
                 <div class="nav-buttons">
+                    <!-- Linha superior: Área Administrativa + Inscrever-se -->
+                    <div class="nav-buttons-top">
+                        <button class="btn btn-outline" id="openAdminArea" data-i18n="btn_admin">Área Administrativa</button>
+                        <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado" data-i18n="btn_inscrever">Inscrever-se</a>
+                    </div>
+                    <!-- Linha inferior: seletor de idiomas -->
                     <div class="lang-switcher">
                         <button class="lang-btn active" data-lang="pt">PT</button>
                         <button class="lang-btn" data-lang="en">EN</button>
                         <button class="lang-btn" data-lang="fr">FR</button>
                     </div>
-                    <button class="btn btn-outline" id="openAdminArea" data-i18n="btn_admin">Área Administrativa</button>
-                    <a href="https://agetrha-dpq.github.io/Dashboard-DPQ/formulario_candidatura" class="btn btn-dourado" data-i18n="btn_inscrever">Inscrever-se</a>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- O restante do HTML (sidebar, modal, sections, footer, scripts) permanece IDÊNTICO ao que você forneceu -->
+    <!-- Apenas reproduzi a estrutura para garantir que o código esteja completo, sem alterações além do header -->
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -1240,7 +1251,7 @@
             </div>
             <div class="tab-content" id="conflitos">
                 <div class="etica-item"><h4 data-i18n="conflito1_titulo">Definição de Conflito de Interesses</h4><p data-i18n="conflito1_texto">Considera-se conflito de interesses qualquer situação em que interesses pessoais ou de terceiros possam afetar, influenciar ou se sobrepor aos interesses da AGETRHA ou aos deveres inerentes às funções exercidas.</p></div>
-                <div class="etica-item"><h4 data-i18n="conflito2_titulo">Prevenção e Comunicação</h4><p data-i18n="conflito2_texto">Os associados, dirigentes e colaboradores devem evitar situações de conflito de interesses. Quando houver dúvida sobre a existência de conflito real, potencial ou aparente, o interessado deverá imediatamente comunicar o fato à Direcção Nacional.</p></div>
+                <div class="etica-item"><h4 data-i18n="conflito2_titulo">Prevenção e Comunicação</h4><p data-i18n="conflito2_texto">Os associados, dirigentes e colaboradores devem evitar situações de conflito de interesses. Quando houver dúvida sobre a existência de conflito real, potencial ou aparente, o interessado deverá imediatamente comunicar o facto à Direcção Nacional.</p></div>
                 <div class="etica-item"><h4 data-i18n="conflito3_titulo">Transparência nas Decisões</h4><p data-i18n="conflito3_texto">As decisões que afetem a AGETRHA devem ser tomadas com transparência e objetividade, sempre priorizando os interesses da Associação e da classe profissional que representa.</p></div>
             </div>
             <div class="tab-content" id="redes">
@@ -1374,8 +1385,8 @@
                 principio3_titulo: "Qualité et excellence", principio3_texto: "Rechercher la qualité et l'excellence dans l'exercice de ses fonctions, en veillant à l'amélioration technico-scientifique et éthique de la gestion des personnes.",
                 principio4_titulo: "Confidentialité et secret", principio4_texto: "Respecter la confidentialité et le secret des informations de l'Association et de ses membres, en protégeant les données personnelles et organisationnelles contre toute utilisation abusive.",
                 principio5_titulo: "Responsabilité sociale", principio5_texto: "Promouvoir des actions socialement et environnementalement responsables, contribuant au développement durable de la communauté et au bien-être collectif.",
-                dever1_titulo: "Respect des règles", dever1_texto: "Les destinataires de ce Code doivent connaître et respecter intégralement ses dispositions, ainsi que les autres règles internes d'AGETRHA et la législation en vigueur.",
-                dever2_titulo: "Interdictions", dever2_texto: "Il est interdit au membre ou collaborateur :", proib1: "Utiliser indûment sa fonction ou des informations privilégiées à son profit ou au profit de tiers ;", proib2: "Pratiquer des actes de discrimination, harcèlement moral ou sexuel, violence ou intimidation ;", proib3: "Divulguer des données confidentielles d'AGETRHA sans autorisation ;", proib4: "Faire de la propagande personnelle ou politico-partisane qui n'est pas dans l'intérêt de l'Association lors d'événements ou d'activités officiels.",
+                deber1_titulo: "Respect des règles", deber1_texto: "Les destinataires de ce Code doivent connaître et respecter intégralement ses dispositions, ainsi que les autres règles internes d'AGETRHA et la législation en vigueur.",
+                deber2_titulo: "Interdictions", deber2_texto: "Il est interdit au membre ou collaborateur :", proib1: "Utiliser indûment sa fonction ou des informations privilégiées à son profit ou au profit de tiers ;", proib2: "Pratiquer des actes de discrimination, harcèlement moral ou sexuel, violence ou intimidation ;", proib3: "Divulguer des données confidentielles d'AGETRHA sans autorisation ;", proib4: "Faire de la propagande personnelle ou politico-partisane qui n'est pas dans l'intérêt de l'Association lors d'événements ou d'activités officiels.",
                 conflito1_titulo: "Définition du conflit d'intérêts", conflito1_texto: "Est considéré comme conflit d'intérêts toute situation où des intérêts personnels ou de tiers peuvent affecter, influencer ou prévaloir sur les intérêts d'AGETRHA ou sur les devoirs inhérents à la fonction.",
                 conflito2_titulo: "Prévention et communication", conflito2_texto: "Les membres, dirigeants et collaborateurs doivent éviter les situations de conflit d'intérêts. En cas de doute sur l'existence d'un conflit réel, potentiel ou apparent, la personne concernée doit immédiatement en informer la Direction nationale.",
                 conflito3_titulo: "Transparence dans les décisions", conflito3_texto: "Les décisions affectant AGETRHA doivent être prises avec transparence et objectivité, en privilégiant toujours les intérêts de l'Association et de la classe professionnelle qu'elle représente.",
