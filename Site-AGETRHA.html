@@ -752,6 +752,80 @@
             color: var(--text-light);
         }
 
+
+
+/* ===== SEÇÃO PARCEIROS ===== */
+
+.parceiros {
+    background: var(--primary-dark);
+    padding: 60px 0;
+    border-top: 1px solid var(--accent-gold);
+    border-bottom: 1px solid var(--accent-gold);
+}
+
+.parceiros-carousel {
+    overflow: hidden;
+    margin-top: 30px;
+    padding: 10px 0;
+}
+
+.parceiros-track {
+    display: flex;
+    width: max-content;
+    animation: scrollParceiros 30s linear infinite;
+}
+
+.parceiros-track:hover {
+    animation-play-state: paused;
+}
+
+.parceiros-slide {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.parceiros-slide img {
+    height: 100px;
+    width: auto;
+    filter: grayscale(100%) brightness(0.8);
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    padding: 15px 25px;
+}
+
+.parceiros-slide img:hover {
+    filter: grayscale(0%) brightness(1);
+    background: rgba(255,255,255,0.15);
+    transform: scale(1.05);
+}
+
+@keyframes scrollParceiros {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .parceiros-slide {
+        gap: 20px;
+    }
+                .parceiros-slide img {
+                filter: none;               /* remove o preto e branco no telemóvel */
+                /* Mantenha os valores de height e padding que já ajustou */
+            }
+            .parceiros-slide img:hover {
+                filter: none;
+                transform: none;
+            }
+}
+
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
@@ -1095,9 +1169,6 @@
         </div>
     </header>
 
-    <!-- O restante do HTML (sidebar, modal, sections, footer, scripts) permanece IDÊNTICO ao que você forneceu -->
-    <!-- Apenas reproduzi a estrutura para garantir que o código esteja completo, sem alterações além do header -->
-
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3 data-i18n="menu_agetrha">Menu AGETRHA</h3>
@@ -1227,6 +1298,45 @@
         </div>
     </section>
 
+
+<!-- ===== SEÇÃO PARCEIROS ===== -->
+<section class="parceiros" id="parceiros">
+    <div class="container">
+        <h2 class="section-title" data-i18n="parceiros_title">Nossos Parceiros</h2>
+        <div class="parceiros-carousel">
+            <div class="parceiros-track">
+
+                <!-- Conjunto 1 de logos -->
+                <div class="parceiros-slide">
+                    <img src="https://drive.google.com/thumbnail?id=1rOx_uf4V8NVVPMyHx-_rb6EwcA0lelrQ&sz=w300v=2" alt="UDC">
+                    <img src="https://drive.google.com/thumbnail?id=1H0eEP90nfjjcBuurksGA0Iq9m_1MsJ1q&sz=w300v=2" alt="JM.GM Francisc">
+                    <img src="https://drive.google.com/thumbnail?id=1oAsirUPMWl4VWjJDInf2MKqwZayL8PmM&sz=w300v=2" alt="Talk Ispo">
+                    <img src="https://drive.google.com/thumbnail?id=1ygNXbX7RqkXhlJ0M3B2tcWg4HJMRSz1t&sz=w300v=2" alt="Cassambi & Ganga">
+                    <img src="https://drive.google.com/thumbnail?id=1I50qZgiXHxwYfZbPJXmVUSnCrLKT2Gc1&sz=w300v=2" alt="Wanana">
+                    <img src="https://drive.google.com/thumbnail?id=1xMSaTx6W98gi5JxKxNhR_DZeX5n5Z2xv&sz=w300v=2" alt="Gerar">
+                    <img src="https://drive.google.com/thumbnail?id=19-jfj9zzPh_dybx5heMax4ju7WhzFOSi&sz=w300v=2" alt="Daisy Junqueira">
+                    <img src="https://drive.google.com/thumbnail?id=1Lfi4r1_XcJ7Vsz95_byTfR1if9vQ4Rwo&sz=w300v=2" alt="Rita Henriques">
+		    <img src="https://drive.google.com/thumbnail?id=1uRBXlPxNUyDr1_onhn_RWCWvkSHT8cws&sz=w300v=2" alt="RH Global">
+                </div>
+
+                <!-- Conjunto 2 (duplicado para efeito infinito) -->
+                <div class="parceiros-slide">
+                    <img src="https://drive.google.com/thumbnail?id=1rOx_uf4V8NVVPMyHx-_rb6EwcA0lelrQ&sz=w300v=2" alt="UDC">
+                    <img src="https://drive.google.com/thumbnail?id=1H0eEP90nfjjcBuurksGA0Iq9m_1MsJ1q&sz=w300v=2" alt="JM.GM Francisc">
+                    <img src="https://drive.google.com/thumbnail?id=1oAsirUPMWl4VWjJDInf2MKqwZayL8PmM&sz=w300v=2" alt="Talk Ispo">
+                    <img src="https://drive.google.com/thumbnail?id=1ygNXbX7RqkXhlJ0M3B2tcWg4HJMRSz1t&sz=w300v=2" alt="Cassambi & Ganga">
+                    <img src="https://drive.google.com/thumbnail?id=1I50qZgiXHxwYfZbPJXmVUSnCrLKT2Gc1&sz=w300v=2" alt="Wanana">
+                    <img src="https://drive.google.com/thumbnail?id=1xMSaTx6W98gi5JxKxNhR_DZeX5n5Z2xv&sz=w300v=2" alt="Gerar">
+                    <img src="https://drive.google.com/thumbnail?id=19-jfj9zzPh_dybx5heMax4ju7WhzFOSi&sz=w300v=2" alt="Daisy Junqueira">
+                    <img src="https://drive.google.com/thumbnail?id=1Lfi4r1_XcJ7Vsz95_byTfR1if9vQ4Rwo&sz=w300v=2" alt="Rita Henriques">
+                    <img src="https://drive.google.com/thumbnail?id=1uRBXlPxNUyDr1_onhn_RWCWvkSHT8cws&sz=w300v=2" alt="RH Global">
+		</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
     <section class="etica" id="etica">
         <div class="container">
             <h2 class="section-title" data-i18n="etica_title">Código de Ética e Deontologia</h2>
@@ -1328,6 +1438,7 @@
                 conflito3_titulo: "Transparência nas Decisões", conflito3_texto: "As decisões que afetem a AGETRHA devem ser tomadas com transparência e objetividade, sempre priorizando os interesses da Associação e da classe profissional que representa.",
                 redes1_titulo: "Uso Ético das Redes Sociais", redes1_texto: "O uso de redes sociais por associados, colaboradores e parceiros deve obedecer aos princípios deste Código, de modo a preservar a boa imagem da AGETRHA e a respeitar a privacidade de seus membros.",
                 redes2_titulo: "Recomendações", recom1: "Não divulgar informações internas, estratégias, debates ou documentos da AGETRHA sem expressa autorização;", recom2: "Ao manifestar opiniões pessoais em redes sociais, deixar claro que se trata de posicionamento individual, não vinculando a Associação;", recom3: "Evitar postagens de conteúdo inapropriado, desrespeitoso ou ofensivo à imagem pessoal, profissional ou institucional da AGETRHA;", recom4: "Respeitar direitos autorais, confidencialidade e privacidade ao compartilhar conteúdo relacionado às atividades da Associação.",
+                parceiros_title: "Nossos Parceiros",
                 footer_links_rapidos: "Links Rápidos", footer_contacto: "Contacto", endereco: "Ulengo Center, Entrada 2, 2.º andar – Cidade Universitária, Luanda",
                 btn_portfolio: "Abrir Portfólio", btn_galeria: "Galeria", btn_area_membro: "Área de Membro", btn_gestao_site: "Gestão do Site", btn_organograma: "Organograma", btn_documentos: "Documentos",
                 copyright: "© 2026 AGETRHA - Todos os direitos reservados"
@@ -1360,6 +1471,7 @@
                 conflito3_titulo: "Transparency in Decisions", conflito3_texto: "Decisions affecting AGETRHA must be made with transparency and objectivity, always prioritizing the interests of the Association and the professional class it represents.",
                 redes1_titulo: "Ethical Use of Social Media", redes1_texto: "The use of social media by members, collaborators and partners must comply with the principles of this Code, preserving the good image of AGETRHA and respecting the privacy of its members.",
                 redes2_titulo: "Recommendations", recom1: "Do not disclose internal information, strategies, debates or documents of AGETRHA without express authorization;", recom2: "When expressing personal opinions on social media, make it clear that it is an individual position, not binding the Association;", recom3: "Avoid posting inappropriate, disrespectful or offensive content to the personal, professional or institutional image of AGETRHA;", recom4: "Respect copyright, confidentiality and privacy when sharing content related to the Association's activities.",
+                parceiros_title: "Our Partners",
                 footer_links_rapidos: "Quick Links", footer_contacto: "Contact", endereco: "Ulengo Center, Entrance 2, 2nd floor – Cidade Universitária, Luanda",
                 btn_portfolio: "Open Portfolio", btn_galeria: "Gallery", btn_area_membro: "Member Area", btn_gestao_site: "Site Management", btn_organograma: "Organogram", btn_documentos: "Documents",
                 copyright: "© 2026 AGETRHA - All rights reserved"
@@ -1392,6 +1504,7 @@
                 conflito3_titulo: "Transparence dans les décisions", conflito3_texto: "Les décisions affectant AGETRHA doivent être prises avec transparence et objectivité, en privilégiant toujours les intérêts de l'Association et de la classe professionnelle qu'elle représente.",
                 redes1_titulo: "Utilisation éthique des réseaux sociaux", redes1_texto: "L'utilisation des réseaux sociaux par les membres, collaborateurs et partenaires doit respecter les principes de ce Code, afin de préserver la bonne image d'AGETRHA et de respecter la vie privée de ses membres.",
                 redes2_titulo: "Recommandations", recom1: "Ne pas divulguer d'informations internes, stratégies, débats ou documents d'AGETRHA sans autorisation expresse ;", recom2: "Lorsque vous exprimez des opinions personnelles sur les réseaux sociaux, précisez qu'il s'agit d'une position individuelle, n'engageant pas l'Association ;", recom3: "Éviter les publications inappropriées, irrespectueuses ou offensantes pour l'image personnelle, professionnelle ou institutionnelle d'AGETRHA ;", recom4: "Respecter les droits d'auteur, la confidentialité et la vie privée lors du partage de contenu lié aux activités de l'Association.",
+                parceiros_title: "Nos Partenaires",
                 footer_links_rapidos: "Liens rapides", footer_contacto: "Contact", endereco: "Ulengo Center, Entrée 2, 2ème étage – Cidade Universitária, Luanda",
                 btn_portfolio: "Ouvrir le portfolio", btn_galeria: "Galerie", btn_area_membro: "Espace membre", btn_gestao_site: "Gestion du site", btn_organograma: "Organigramme", btn_documentos: "Documents",
                 copyright: "© 2026 AGETRHA - Tous droits réservés"
